@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jewellery Collection | AHCollections4U</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+
+<style>
+
+*, *::before, *::after{ margin:0; padding:0; box-sizing:border-box; }
+
+:root{
+    --cream:      #F8F3EC;
+    --champagne:  #EFE0C4;
+    --blush:      #E8C9BE;
+    --gold:       #C49A3C;
+    --gold-light: #E2C27D;
+    --ink:        #1A1208;
+    --ink-soft:   #3D2F1E;
+    --terracotta: #B8603F;
+    --terracotta-light:#D88A66;
+    --wine:       #6B2737;
+    --wine-soft:  #8C3E4D;
+    --rose:       #B76E79;
+    --rose-light: #D8B58A;
+    --glass-bg:   rgba(255,248,235,.18);
+    --glass-bdr:  rgba(196,154,60,.22);
+}
+
+html{ scroll-behavior:smooth; font-size:18px; }
+
+body{
+    font-family:'Jost', sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+    cursor:none;
+    background: linear-gradient(170deg, #FAF4E9 0%, #F6EEDF 40%, #F2E4D2 100%);
+    color: var(--ink);
+}
+
+/* ===== CUSTOM CURSOR ===== */
+.cursor-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--rose);
+    position:fixed;top:0;left:0;
+    pointer-events:none;z-index:9999;
+    transform:translate(-50%,-50%);
+}
+.cursor-ring{
+    width:36px;height:36px;border-radius:50%;
+    border:1px solid var(--rose);
+    position:fixed;top:0;left:0;
+    pointer-events:none;z-index:9998;
+    transform:translate(-50%,-50%);
+    opacity:.6;
+    transition:width .25s, height .25s, opacity .25s, border-color .25s;
+}
+body:has(a:hover) .cursor-ring{
+    width:60px;height:60px;
+    border-color:var(--gold-light);
+    opacity:1;
+}
+
+/* ===== NOISE OVERLAY ===== */
+.noise{
+    position:fixed;inset:0;
+    pointer-events:none;
+    z-index:5;
+    opacity:.028;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat:repeat;
+    background-size:180px;
+}
+
+/* ===== NAVBAR ===== */
+nav{
+    position:fixed; top:0; left:0; width:100%;
+    padding:20px 7%;
+    display:flex; justify-content:space-between; align-items:center;
+    z-index:900;
+}
+nav::before{
+    content:'';
+    position:absolute; inset:0;
+    background:rgba(250,240,225,.55);
+    backdrop-filter:blur(16px) saturate(140%);
+    border-bottom:1px solid rgba(196,154,60,.18);
+    pointer-events:none;
+    z-index:-1;
+}
+.logo-text{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.7rem;
+    font-style:italic;
+    font-weight:500;
+    color:var(--rose);
+    position:relative; z-index:1;
+}
+.nav-links{
+    display:flex; gap:36px;
+    position:relative; z-index:1;
+}
+.nav-links a{
+    text-decoration:none;
+    font-size:.82rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    transition:color .3s;
+}
+.nav-links a:hover{ color:var(--rose); }
+.contact-btn{
+    position:relative; z-index:1;
+    padding:12px 30px;
+    border-radius:50px;
+    background:rgba(255,255,255,.5);
+    border:1px solid rgba(183,110,121,.35);
+    text-decoration:none;
+    color:var(--rose);
+    font-size:.8rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    transition:background .35s, color .35s, transform .35s;
+}
+.contact-btn:hover{
+    background:var(--rose);
+    color:var(--cream);
+    transform:translateY(-3px);
+}
+
+/* ===== HERO ===== */
+.hero{
+    position:relative;
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:160px 7% 100px;
+    overflow:hidden;
+}
+.hero-blob{
+    position:absolute; border-radius:50%;
+    filter:blur(100px);
+    pointer-events:none;
+}
+.hero-blob.b1{
+    width:900px;height:900px;
+    background:radial-gradient(circle, rgba(183,110,121,.18), transparent 70%);
+    top:-320px; right:-220px;
+}
+.hero-blob.b2{
+    width:700px;height:700px;
+    background:radial-gradient(circle, rgba(216,181,138,.18), transparent 70%);
+    bottom:-260px; left:-160px;
+}
+.hero-blob.b3{
+    width:500px;height:500px;
+    background:radial-gradient(circle, rgba(196,154,60,.15), transparent 70%);
+    top:40%; left:35%;
+}
+
+.sparkle{
+    position:absolute;
+    border-radius:50%;
+    background:var(--gold-light);
+    box-shadow:0 0 12px rgba(226,194,125,.8);
+    opacity:.7;
+    pointer-events:none;
+}
+.sparkle:nth-child(1){ width:8px;height:8px; top:18%; left:12%; }
+.sparkle:nth-child(2){ width:12px;height:12px; top:32%; right:18%; }
+.sparkle:nth-child(3){ width:6px;height:6px; bottom:24%; left:24%; }
+.sparkle:nth-child(4){ width:10px;height:10px; top:60%; right:8%; }
+
+.hero-content{
+    max-width:680px;
+    position:relative; z-index:5;
+}
+.hero-tag{
+    overflow:hidden;
+    margin-bottom:20px;
+}
+.hero-tag span{
+    display:inline-block;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    font-size:.8rem;
+    color:var(--rose);
+    font-weight:400;
+}
+.hero-title-wrap{ overflow:hidden; }
+.hero-content h1{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(3.4rem, 7vw, 6.6rem);
+    line-height:.95;
+    font-style:italic;
+    font-weight:500;
+    background:linear-gradient(135deg, var(--rose) 0%, var(--gold) 55%, var(--rose) 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    display:block;
+}
+.hero-line{
+    width:0;
+    height:2px;
+    margin:32px 0;
+    border-radius:50px;
+    background:linear-gradient(90deg, var(--rose-light), var(--champagne), var(--rose-light));
+}
+.hero-content p{
+    font-size:1.05rem;
+    line-height:2;
+    max-width:520px;
+    color:var(--ink-soft);
+    opacity:0;
+}
+.hero-btn{
+    display:inline-flex;
+    align-items:center; gap:12px;
+    margin-top:38px;
+    padding:18px 42px;
+    border-radius:50px;
+    background:rgba(255,255,255,.5);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(183,110,121,.3);
+    text-decoration:none;
+    color:var(--rose);
+    font-size:.85rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    transition:.4s;
+    opacity:0;
+}
+.hero-btn:hover{
+    transform:translateY(-6px);
+    background:var(--rose);
+    color:var(--cream);
+    box-shadow:0 20px 40px rgba(183,110,121,.3);
+}
+
+.hero-image{
+    position:relative; z-index:5;
+}
+.hero-image-wrap{
+    position:relative;
+    width:560px; max-width:42vw;
+}
+.hero-image-wrap::before{
+    content:'';
+    position:absolute; inset:-30px;
+    border-radius:50%;
+    border:1px solid rgba(196,154,60,.3);
+    z-index:-1;
+}
+.hero-image img{
+    width:100%;
+    border-radius:30px;
+    filter:drop-shadow(0 35px 70px rgba(26,18,8,.18));
+    display:block;
+}
+
+/* ===== FEATURED SECTION ===== */
+.featured-product{
+    display:flex; align-items:center; justify-content:center;
+    gap:90px;
+    padding:140px 7%;
+    position:relative;
+}
+.featured-image{
+    position:relative;
+}
+.featured-image img{
+    width:560px; max-width:100%;
+    border-radius:30px;
+    box-shadow:0 30px 70px rgba(26,18,8,.12);
+    display:block;
+}
+.featured-badge{
+    position:absolute;
+    top:24px; left:24px;
+    background:var(--gold);
+    color:var(--cream);
+    font-size:.62rem;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    padding:8px 18px;
+    border-radius:30px;
+}
+.featured-content{ max-width:560px; }
+.featured-content span{
+    display:block;
+    letter-spacing:.26em;
+    font-size:.78rem;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:18px;
+}
+.featured-content h2{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(2.6rem, 4.5vw, 4.2rem);
+    line-height:.95;
+    margin-bottom:24px;
+    font-style:italic;
+    color:var(--rose);
+}
+.featured-content ul{
+    list-style:none;
+    margin-bottom:8px;
+}
+.featured-content ul li{
+    line-height:2.1;
+    padding-left:4px;
+    color:var(--ink-soft);
+}
+.featured-content ul li::before{
+    content:'✦ ';
+    color:var(--gold);
+}
+.featured-content .note{
+    margin-top:10px;
+    font-style:italic;
+    color:var(--ink-soft);
+    opacity:.8;
+}
+.featured-price{
+    margin-top:28px;
+    font-size:2.2rem;
+    font-family:'Cormorant Garamond',serif;
+    color:var(--terracotta);
+    font-weight:500;
+}
+
+/* ===== GLASS BUTTON ===== */
+.glass-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    gap:10px;
+    padding:16px 36px;
+    border-radius:50px;
+    background:rgba(255,255,255,.3);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(215,181,138,.4);
+    text-decoration:none;
+    color:var(--rose);
+    font-size:.82rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    margin-top:26px;
+    transition:.45s ease;
+    box-shadow:0 10px 25px rgba(26,18,8,.06);
+}
+.glass-btn:hover{
+    transform:translateY(-6px);
+    background:linear-gradient(135deg, #25D366, #1fa855);
+    color:white;
+    box-shadow:0 18px 40px rgba(37,211,102,.3);
+}
+
+/* ===== SECTION HEADER (for product grid) ===== */
+.section-head{
+    text-align:center;
+    padding:0 7%;
+    margin-bottom:70px;
+}
+.section-head span{
+    display:block;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    font-size:.78rem;
+    color:var(--wine-soft);
+    margin-bottom:16px;
+}
+.section-head h2{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(2.4rem, 4vw, 3.6rem);
+    font-style:italic;
+    color:var(--rose);
+}
+
+/* ===== PRODUCT GRID ===== */
+.products{
+    padding:0 7% 130px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:40px;
+}
+.product-card{
+    background:rgba(255,255,255,.45);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(196,154,60,.18);
+    border-radius:30px;
+    overflow:hidden;
+    box-shadow:0 20px 45px rgba(26,18,8,.07);
+    transform-style:preserve-3d;
+    transition:box-shadow .5s ease, border-color .5s ease;
+    opacity:0;
+    transform:translateY(70px);
+}
+.product-card:hover{
+    border-color:rgba(196,154,60,.4);
+    box-shadow:0 35px 70px rgba(26,18,8,.12), 0 0 30px rgba(196,154,60,.1);
+}
+.product-img-wrap{ overflow:hidden; position:relative; }
+.product-card img{
+    width:100%; height:340px;
+    object-fit:cover;
+    display:block;
+    transition:transform 1s cubic-bezier(.22,.61,.36,1);
+}
+.product-card:hover img{ transform:scale(1.09); }
+.product-img-wrap::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(to top, rgba(26,18,8,.35) 0%, transparent 50%);
+}
+.product-content{
+    padding:32px;
+    text-align:center;
+}
+.product-content h3{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.85rem;
+    font-style:italic;
+    color:var(--rose);
+    margin-bottom:14px;
+}
+.product-content p{
+    line-height:1.85;
+    color:var(--ink-soft);
+    font-size:.92rem;
+}
+
+/* ===== CTA ===== */
+.cta{
+    padding:150px 7%;
+    text-align:center;
+    position:relative;
+    background:linear-gradient(160deg, #1A1208 0%, #241510 55%, #2B1419 100%);
+    overflow:hidden;
+}
+.cta::before{
+    content:'';
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse at 50% 30%, rgba(183,110,121,.12) 0%, transparent 60%);
+}
+.cta h2{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(2.8rem, 4.5vw, 4.6rem);
+    font-style:italic;
+    color:var(--champagne);
+    position:relative; z-index:1;
+}
+.cta p{
+    max-width:620px;
+    margin:25px auto 0;
+    line-height:2;
+    color:rgba(239,224,196,.7);
+    position:relative; z-index:1;
+}
+.cta .glass-btn{
+    position:relative; z-index:1;
+    color:var(--gold-light);
+    border-color:rgba(226,194,125,.3);
+}
+
+/* ===== FOOTER ===== */
+footer{
+    padding:60px 7%;
+    text-align:center;
+    background:rgba(255,255,255,.4);
+    backdrop-filter:blur(15px);
+}
+footer h3{
+    font-family:'Cormorant Garamond',serif;
+    font-size:2.2rem;
+    font-style:italic;
+    color:var(--rose);
+}
+footer p.tagline{
+    margin-top:10px;
+    color:var(--ink-soft);
+    font-size:.9rem;
+}
+footer p.copy{
+    margin-top:20px;
+    font-size:.78rem;
+    color:#999;
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:1000px){
+    .hero{ flex-direction:column; text-align:center; gap:60px; padding-top:140px;}
+    .hero-content{ display:flex; flex-direction:column; align-items:center; }
+    .hero-content p{ margin-left:auto; margin-right:auto; }
+    .hero-line{ margin:30px auto; }
+    .hero-image-wrap{ max-width:80vw; }
+    .products{ grid-template-columns:1fr; }
+    .featured-product{ flex-direction:column; }
+    .nav-links{ display:none; }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="cursor-dot" id="dot"></div>
+<div class="cursor-ring" id="ring"></div>
+<div class="noise"></div>
+
+<nav>
+    <div class="logo-text">AHCollections4U</div>
+    <div class="nav-links">
+        <a href="categories.html">Home</a>
+        <a href="#">Fashion</a>
+        <a href="#">Beauty</a>
+        <a href="#featured">Jewellery</a>
+        <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="contact-btn">Contact Us</a>
+</nav>
+
+<section class="hero">
+
+    <div class="hero-blob b1"></div>
+    <div class="hero-blob b2"></div>
+    <div class="hero-blob b3"></div>
+
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+
+    <div class="hero-content">
+
+        <div class="hero-tag"><span id="heroTag">AHCollections4U Presents</span></div>
+
+        <div class="hero-title-wrap">
+            <h1 id="heroTitle">Jewellery<br>Collection</h1>
+        </div>
+
+        <div class="hero-line" id="heroLine"></div>
+
+        <p id="heroPara">
+            Elegant. Timeless. Made To Sparkle.<br><br>
+            Discover carefully curated jewellery, gift boxes and accessories designed to make every moment special.
+        </p>
+
+        <a href="#featured" class="hero-btn" id="heroBtn">Explore Collection ✨</a>
+
+    </div>
+
+    <div class="hero-image" id="heroImage">
+        <div class="hero-image-wrap">
+            <img src="hero-jewellery.jpeg" alt="Jewellery Collection">
+        </div>
+    </div>
+
+</section>
+
+<section id="featured" class="featured-product">
+
+    <div class="featured-image reveal-left">
+        <img src="organizer-box.jpeg" alt="Jewellery Treasure Box">
+        <div class="featured-badge">Bestseller</div>
+    </div>
+
+    <div class="featured-content reveal-right">
+
+        <span>Bestseller Collection</span>
+
+        <h2>Jewellery<br>Treasure Box</h2>
+
+        <p style="line-height:2; color:var(--ink-soft); margin-bottom:6px;">
+            A complete jewellery gift set packed inside a beautiful organizer box.
+        </p>
+
+        <ul class="featured-content">
+            <li>2 Bracelets</li>
+            <li>6 Neck Chains</li>
+            <li>Hair Accessories Set</li>
+            <li>12+ Pairs of Earrings</li>
+            <li>Chocolates</li>
+            <li>Premium Organizer Box</li>
+        </ul>
+
+        <p class="note">Limited time offer available.</p>
+
+        <div class="featured-price">₹389 Only</div>
+
+        <a href="https://wa.me/7025688577" class="glass-btn">💎 Reserve Yours</a>
+
+    </div>
+
+</section>
+
+<div class="section-head reveal">
+    <span>Curated Just For You</span>
+    <h2>More To Adore</h2>
+</div>
+
+<section class="products">
+
+    <div class="product-card" data-card>
+        <div class="product-img-wrap"><img src="earing-velvet-box.jpeg" alt="Velvet Earrings Gift Box"></div>
+        <div class="product-content">
+            <h3>🎁 Velvet Earrings Gift Box</h3>
+            <p>2 Piece Earrings with Velvet Box. Budget-friendly, elegant and perfect for gifting — a beautiful little surprise for someone special.</p>
+            <a href="https://wa.me/7025688577" class="glass-btn">✨ Enquire Now</a>
+        </div>
+    </div>
+
+    <div class="product-card" data-card>
+        <div class="product-img-wrap"><img src="butterfly-bracelet.jpeg" alt="Pearl Butterfly Bracelet"></div>
+        <div class="product-content">
+            <h3>🦋 Pearl Butterfly Bracelet</h3>
+            <p>Beautiful pearl butterfly bracelet for women and girls. Elegant, minimal and perfect for everyday wear. Limited stock available.</p>
+            <a href="https://wa.me/7025688577" class="glass-btn">✨ Enquire Now</a>
+        </div>
+    </div>
+
+    <div class="product-card" data-card>
+        <div class="product-img-wrap"><img src="rose-gold-set.jpeg" alt="Rose Gold Essentials"></div>
+        <div class="product-content">
+            <h3>💖 Rose Gold Essentials</h3>
+            <p>Heart Pendant Necklace, Crystal Stud Earrings, Rose Gold Drop Earrings, Crystal Ring, Scrunchie — a complete feminine rose-gold inspired collection.</p>
+            <a href="https://wa.me/+919400142771" class="glass-btn">✨ Enquire Now</a>
+        </div>
+    </div>
+
+</section>
+
+<section class="cta" id="contact">
+    <h2 class="reveal">Ready To Sparkle? ✨</h2>
+    <p class="reveal">
+        Whether you're looking for the perfect gift, a beautiful everyday accessory, or a luxury jewellery hamper —
+        AHCollections4U has something special waiting for you.
+    </p>
+    <a href="https://wa.me/7025688577" class="glass-btn reveal">💖 Order Via WhatsApp</a>
+</section>
+
+<footer>
+    <h3>AHCollections4U</h3>
+    <p class="tagline">Elegant Gifts • Jewellery • Hampers • Keepsakes</p>
+    <p class="copy">© 2026 AHCollections4U. All Rights Reserved.</p>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ===== CUSTOM CURSOR ===== */
+const dot=document.getElementById('dot');
+const ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e=>{
+    mx=e.clientX; my=e.clientY;
+    dot.style.left=mx+'px'; dot.style.top=my+'px';
+});
+(function loop(){
+    rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    requestAnimationFrame(loop);
+})();
+
+/* ===== HERO INTRO TIMELINE ===== */
+const tl=gsap.timeline({ defaults:{ ease:'power3.out' } });
+
+gsap.set('#heroTag span', { y:20, opacity:0 });
+gsap.set('#heroTitle', { y:60, opacity:0 });
+gsap.set('#heroLine', { width:0, opacity:0 });
+gsap.set('#heroPara', { y:20, opacity:0 });
+gsap.set('#heroBtn', { y:20, opacity:0 });
+gsap.set('#heroImage', { x:80, opacity:0, scale:.92 });
+
+tl
+  .to('#heroTag span', { y:0, opacity:1, duration:.7 })
+  .to('#heroTitle', { y:0, opacity:1, duration:1, ease:'power4.out' }, '-=0.3')
+  .to('#heroLine', { width:180, opacity:1, duration:.7, ease:'power2.out' }, '-=0.4')
+  .to('#heroPara', { y:0, opacity:1, duration:.7 }, '-=0.3')
+  .to('#heroBtn', { y:0, opacity:1, duration:.6 }, '-=0.3')
+  .to('#heroImage', { x:0, opacity:1, scale:1, duration:1.2, ease:'power3.out' }, '-=1.1');
+
+/* gentle floating animation for hero image, runs after intro */
+gsap.to('#heroImage', {
+    y:-20,
+    duration:3.2,
+    repeat:-1,
+    yoyo:true,
+    ease:'sine.inOut',
+    delay:1.6
+});
+
+/* sparkle drift */
+gsap.utils.toArray('.sparkle').forEach((s,i)=>{
+    gsap.to(s, {
+        y:-40,
+        opacity:.2,
+        duration:4+i,
+        repeat:-1,
+        yoyo:true,
+        ease:'sine.inOut',
+        delay:i*0.6
+    });
+});
+
+/* blob drift */
+gsap.to('.hero-blob.b1', { x:40, y:30, duration:10, repeat:-1, yoyo:true, ease:'sine.inOut' });
+gsap.to('.hero-blob.b2', { x:-30, y:-25, duration:12, repeat:-1, yoyo:true, ease:'sine.inOut' });
+gsap.to('.hero-blob.b3', { x:25, y:-20, duration:9, repeat:-1, yoyo:true, ease:'sine.inOut' });
+
+/* ===== FEATURED SECTION REVEAL ===== */
+gsap.to('.reveal-left', {
+    scrollTrigger:{ trigger:'.featured-product', start:'top 75%', toggleActions:'play none none reverse' },
+    x:0, opacity:1, duration:1, ease:'power3.out'
+});
+gsap.set('.reveal-left', { x:-60, opacity:0 });
+
+gsap.to('.reveal-right', {
+    scrollTrigger:{ trigger:'.featured-product', start:'top 75%', toggleActions:'play none none reverse' },
+    x:0, opacity:1, duration:1, delay:.15, ease:'power3.out'
+});
+gsap.set('.reveal-right', { x:60, opacity:0 });
+
+/* ===== GENERIC REVEAL ===== */
+gsap.utils.toArray('.reveal').forEach((el,i)=>{
+    gsap.set(el, { y:30, opacity:0 });
+    gsap.to(el, {
+        scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none reverse' },
+        y:0, opacity:1, duration:.9, delay:i*0.08, ease:'power3.out'
+    });
+});
+
+/* ===== PRODUCT CARD REVEAL + 3D TILT ===== */
+const cards=gsap.utils.toArray('[data-card]');
+
+cards.forEach((card,i)=>{
+    gsap.to(card, {
+        scrollTrigger:{ trigger:card, start:'top 88%', toggleActions:'play none none reverse' },
+        opacity:1, y:0, duration:.9, delay:i*0.1, ease:'power3.out'
+    });
+
+    card.addEventListener('mousemove', e=>{
+        const r=card.getBoundingClientRect();
+        const cx=r.left+r.width/2, cy=r.top+r.height/2;
+        const dx=(e.clientX-cx)/(r.width/2);
+        const dy=(e.clientY-cy)/(r.height/2);
+        gsap.to(card, { rotateY:dx*8, rotateX:-dy*6, duration:.4, ease:'power2.out' });
+    });
+    card.addEventListener('mouseleave', ()=>{
+        gsap.to(card, { rotateY:0, rotateX:0, duration:.6, ease:'elastic.out(1,0.5)' });
+    });
+});
+</script>
+
+</body>
+</html>

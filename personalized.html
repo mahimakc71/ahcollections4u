@@ -1,0 +1,1045 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Personalized Treasures | AHCollections4U</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+font-family:'Poppins',sans-serif;
+
+background:
+linear-gradient(
+rgba(255,248,242,.20),
+rgba(255,248,242,.20)
+),
+url("personalized-bg.jpeg");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+
+color:#5c4637;
+
+}
+
+/* HERO */
+
+.hero{
+
+padding:120px 20px 70px;
+text-align:center;
+
+}
+
+.hero h1{
+
+font-family:'Cormorant Garamond',serif;
+font-size:5rem;
+font-style:italic;
+color:#8c6a56;
+
+}
+
+.hero p{
+
+font-size:1.1rem;
+margin-top:15px;
+
+}
+
+.gold-line{
+
+width:220px;
+height:4px;
+
+margin:20px auto;
+
+border-radius:50px;
+
+background:
+linear-gradient(
+90deg,
+#b98b59,
+#f5d7a1,
+#b98b59
+);
+
+}
+
+/* TOP NAVIGATION */
+
+.category-grid{
+
+max-width:1300px;
+
+margin:auto;
+
+padding:40px;
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:30px;
+
+}
+
+.category-card{
+
+height:320px;
+
+position:relative;
+
+overflow:hidden;
+
+border-radius:30px;
+
+text-decoration:none;
+
+transition:.4s;
+
+}
+
+.category-card:hover{
+
+transform:translateY(-10px);
+
+}
+
+.category-card img{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+}
+
+.overlay{
+
+position:absolute;
+inset:0;
+
+background:
+linear-gradient(
+rgba(0,0,0,.15),
+rgba(0,0,0,.65)
+);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+}
+
+.overlay h2{
+
+font-family:'Cormorant Garamond',serif;
+font-size:3rem;
+color:white;
+
+}
+
+/* COMMON SECTION */
+
+.product-section{
+
+padding:110px 7%;
+text-align:center;
+
+}
+
+.product-section h2{
+
+font-family:'Cormorant Garamond',serif;
+font-size:3.8rem;
+
+margin-bottom:20px;
+
+}
+
+.section-text{
+
+max-width:850px;
+
+margin:auto;
+
+line-height:1.8;
+
+}
+
+/* LARGE PRODUCT CARD */
+
+.large-product-card{
+
+margin-top:50px;
+
+background:
+rgba(255,255,255,.20);
+
+backdrop-filter:blur(15px);
+
+border-radius:30px;
+
+padding:25px;
+
+display:flex;
+
+gap:30px;
+
+align-items:center;
+
+}
+
+.large-product-card img{
+
+width:450px;
+max-width:100%;
+
+border-radius:25px;
+
+}
+
+.product-info{
+
+text-align:left;
+
+}
+
+.product-info h3{
+
+font-size:2.5rem;
+
+font-family:'Cormorant Garamond',serif;
+
+margin-bottom:15px;
+
+}
+
+/* FEATURES */
+
+.feature-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+margin-top:35px;
+
+}
+
+.feature-card{
+
+background:
+rgba(255,255,255,.20);
+
+backdrop-filter:blur(12px);
+
+padding:25px;
+
+border-radius:20px;
+
+transition:.3s;
+
+}
+
+.feature-card:hover{
+
+transform:translateY(-8px);
+
+}
+
+.feature-card h4{
+
+margin-bottom:10px;
+
+}
+
+/* PRICE BOX */
+
+.price-box{
+
+width:380px;
+
+max-width:90%;
+
+margin:50px auto;
+
+padding:30px;
+
+background:
+rgba(255,255,255,.25);
+
+backdrop-filter:blur(15px);
+
+border-radius:25px;
+
+}
+
+.price-box h3{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:4rem;
+
+}
+
+/* WHATSAPP */
+
+.whatsapp-btn{
+
+display:inline-block;
+
+margin-top:20px;
+
+padding:15px 30px;
+
+background:
+linear-gradient(
+135deg,
+#25D366,
+#128C7E
+);
+
+color:white;
+
+text-decoration:none;
+
+border-radius:18px;
+
+font-weight:600;
+
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.category-grid{
+grid-template-columns:1fr;
+}
+
+.large-product-card{
+flex-direction:column;
+}
+
+.hero h1{
+font-size:3rem;
+}
+
+.product-section h2{
+font-size:2.5rem;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+
+<h1>Memories Made Beautiful</h1>
+
+<div class="gold-line"></div>
+
+<p>
+Personalized Treasures Crafted Just For You
+</p>
+
+</section>
+
+<section class="category-grid">
+
+<a href="#cups" class="category-card">
+
+<img src="cups-cover.jpeg">
+
+<div class="overlay">
+<h2>Printed Cups</h2>
+</div>
+
+</a>
+
+<a href="#keychains" class="category-card">
+
+<img src="keychain-cover.jpeg">
+
+<div class="overlay">
+<h2>QR Keychains</h2>
+</div>
+
+</a>
+
+<a href="#polaroids" class="category-card">
+
+<img src="polaroid-cover.jpeg">
+
+<div class="overlay">
+<h2>Polaroids</h2>
+</div>
+
+</a>
+
+<a href="#photo-gifts" class="category-card">
+
+<img src="frame-cover.jpeg">
+
+<div class="overlay">
+<h2>Photo Gifts</h2>
+</div>
+
+</a>
+
+</section>
+
+<!-- PRINTED CUPS -->
+
+<section id="cups" class="product-section">
+
+<h2>Create A Mug That Tells Your Story</h2>
+
+<div class="gold-line"></div>
+
+<p class="section-text">
+
+Personalized cups designed with your
+photos, names, memories and special moments.
+
+</p>
+
+<div class="large-product-card">
+
+<img src="cups.jpeg">
+
+<div class="product-info">
+
+<h3>Customized Printed Cup</h3>
+
+<p>
+
+Transform your favourite memories into
+a beautiful keepsake you can use every day.
+Perfect for gifting and personal collections.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="feature-grid">
+
+<div class="feature-card">
+
+<h4>🎨 Fully Customizable</h4>
+
+<p>
+Add photos, names, quotes and designs.
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<h4>📸 Personal Touch</h4>
+
+<p>
+Turn special moments into lasting memories.
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<h4>🎁 Perfect Gift</h4>
+
+<p>
+Ideal for birthdays, anniversaries and surprises.
+</p>
+
+</div>
+
+</div>
+
+<div class="price-box">
+
+<span>PRICE</span>
+
+<h3>₹___</h3>
+
+<p>Customizable Printed Cup</p>
+
+<a href="https://wa.me/+919400142771"
+class="whatsapp-btn">
+
+💬 Contact On WhatsApp
+
+</a>
+
+</div>
+
+</section>
+<section id="keychains" class="product-section">
+
+<h2>Scan. Listen. Remember.</h2>
+
+<div class="gold-line"></div>
+
+<p class="section-text">
+
+Scan and unlock your favorite memories —
+photos, videos, voice notes, playlists,
+special dates and more.
+
+</p>
+
+<div class="feature-grid">
+
+    <div class="feature-card">
+
+        <img src="wooden-keychain.jpeg"
+        style="width:100%;height:280px;object-fit:cover;border-radius:15px;">
+
+        <h4 style="margin-top:15px;">🌳 Wooden Finish</h4>
+
+        <p>
+            Elegant natural wooden appearance
+            with a timeless look.
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <img src="resin-keychain.jpeg"
+        style="width:100%;height:280px;object-fit:cover;border-radius:15px;">
+
+        <h4 style="margin-top:15px;">✨ Transparent Resin</h4>
+
+        <p>
+            Crystal-clear finish with a
+            premium modern aesthetic.
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <img src="glow-keychain.jpeg"
+        style="width:100%;height:280px;object-fit:cover;border-radius:15px;">
+
+        <h4 style="margin-top:15px;">🌟 Glow In The Dark</h4>
+
+        <p>
+            Lights up beautifully in darkness
+            for a magical effect.
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <img src="voice-qr.jpeg"
+        style="width:100%;height:280px;object-fit:cover;border-radius:15px;">
+
+        <h4 style="margin-top:15px;">🎙 Voice Recording QR</h4>
+
+        <p>
+            Scan to hear a special voice
+            message anytime.
+        </p>
+
+    </div>
+
+</div>
+
+
+
+    <!-- CUSTOMIZATION -->
+
+    <h2 style="margin-top:80px;font-size:2.8rem;">
+        Customizable With
+    </h2>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            🎵 Songs & Playlists
+        </div>
+
+        <div class="feature-card">
+            📸 Photos
+        </div>
+
+        <div class="feature-card">
+            🎥 Video Messages
+        </div>
+
+        <div class="feature-card">
+            🎙 Voice Notes
+        </div>
+
+        <div class="feature-card">
+            📅 Special Dates
+        </div>
+
+        <div class="feature-card">
+            💌 Personal Messages
+        </div>
+
+    </div>
+
+    <!-- OCCASIONS -->
+
+    <h2 style="margin-top:80px;font-size:2.8rem;">
+        Perfect For
+    </h2>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            ❤️ Couples
+        </div>
+
+        <div class="feature-card">
+            💝 Anniversaries
+        </div>
+
+        <div class="feature-card">
+            🎂 Birthdays
+        </div>
+
+        <div class="feature-card">
+            🎓 Graduation Gifts
+        </div>
+
+        <div class="feature-card">
+            👨‍👩‍👧 Family Memories
+        </div>
+
+        <div class="feature-card">
+            🎄 Special Occasions
+        </div>
+
+    </div>
+
+    <!-- FEATURES -->
+
+    <h2 style="margin-top:80px;font-size:2.8rem;">
+        Why You'll Love It
+    </h2>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+
+            <h4>🔒 Secure</h4>
+
+            <p>
+                Your memories stay safely linked
+                to your personalized QR code.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <h4>✨ Fully Customizable</h4>
+
+            <p>
+                Design it your way with photos,
+                songs, videos and more.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <h4>📱 Easy To Scan</h4>
+
+            <p>
+                Works with most modern smartphones.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <h4>🎁 Meaningful Keepsake</h4>
+
+            <p>
+                A thoughtful gift filled with
+                personal memories.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- PRICE BOX -->
+
+    <div class="price-box">
+
+        <span>CUSTOMIZABLE QR KEYCHAINS</span>
+
+        <h3>₹___</h3>
+
+        <p>
+            Add your own photos, songs,
+            playlists, videos and voice notes.
+        </p>
+
+        <a href="https://wa.me/+919400142771"
+        class="whatsapp-btn">
+
+        💬 Contact On WhatsApp
+
+        </a>
+
+    </div>
+
+</section>
+
+<!-- POLAROIDS -->
+
+<section id="polaroids" class="product-section">
+
+    <h2>Capture Moments. Keep Them Forever.</h2>
+
+    <div class="gold-line"></div>
+
+    <p class="section-text">
+
+        Turn your favorite photos into beautiful
+        polaroid prints and relive your memories
+        whenever you want.
+
+    </p>
+
+    <!-- POLAROID GALLERY -->
+
+    <div class="feature-grid" style="margin-top:50px;">
+
+        <div class="feature-card">
+            <img src="polaroid1.jpeg" style="width:100%;border-radius:15px;">
+        </div>
+
+        <div class="feature-card">
+            <img src="polaroid2.jpeg" style="width:100%;border-radius:15px;">
+        </div>
+
+        <div class="feature-card">
+            <img src="polaroid3.jpeg" style="width:100%;border-radius:15px;">
+        </div>
+
+        <div class="feature-card">
+            <img src="polaroid4.jpeg" style="width:100%;border-radius:15px;">
+        </div>
+
+    </div>
+
+    <!-- FEATURES -->
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+
+            <h4>📸 High Quality Prints</h4>
+
+            <p>
+                Sharp, vibrant and long-lasting prints.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <h4>💖 Memory Keepsakes</h4>
+
+            <p>
+                Preserve your most cherished moments.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <h4>🎁 Scrapbook Friendly</h4>
+
+            <p>
+                Perfect for journals and memory books.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <h4>✨ Aesthetic Room Decor</h4>
+
+            <p>
+                Decorate walls, desks and personal spaces.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- PRICE -->
+
+    <div class="price-box">
+
+        <span>20 POLAROIDS</span>
+
+        <h3>₹46</h3>
+
+        <p>
+            Affordable memories you'll love forever.
+        </p>
+
+        <a href="https://wa.me/+919400142771"
+        class="whatsapp-btn">
+
+        💬 Contact On WhatsApp
+
+        </a>
+
+    </div>
+
+</section>
+<section id="photo-gifts" class="product-section">
+
+<h2>Frame Your Favorite Memories</h2>
+
+<div class="gold-line"></div>
+
+<p class="section-text">
+Beautiful photo gifts that transform your
+special memories into elegant keepsakes.
+</p>
+<div class="feature-grid">
+
+    <div class="feature-card">
+
+        <img src="frame6x4.jpeg"
+        style="width:100%;height:320px;object-fit:cover;border-radius:15px;">
+
+        <h4 style="margin-top:15px;">
+            🖼 6 × 4 Frame
+        </h4>
+
+        <p style="
+        font-size:1.8rem;
+        font-weight:600;
+        margin-top:10px;
+        color:#80360b;">
+
+            ₹200
+
+        </p>
+
+        <p>
+
+            Perfect for family photos,
+            couple pictures and special memories.
+
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <img src="a4frame.jpeg"
+        style="width:100%;height:320px;object-fit:cover;border-radius:15px;">
+
+        <h4 style="margin-top:15px;">
+            🖼 A4 Size Frame
+        </h4>
+
+        <p style="
+        font-size:1.8rem;
+        font-weight:600;
+        margin-top:10px;
+        color:#8c6a56;">
+
+            ₹309
+
+        </p>
+
+        <p>
+
+            Elegant wall display for
+            your most treasured moments.
+
+        </p>
+
+    </div>
+
+</div>
+
+
+
+    <!-- PERFECT FOR -->
+
+    <h2 style="margin-top:80px;font-size:2.8rem;">
+        Perfect For
+    </h2>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            👨‍👩‍👧 Family Photos
+        </div>
+
+        <div class="feature-card">
+            ❤️ Couple Pictures
+        </div>
+
+        <div class="feature-card">
+            👶 Baby Memories
+        </div>
+
+        <div class="feature-card">
+            🎂 Birthday Photos
+        </div>
+
+        <div class="feature-card">
+            🎓 Graduation Moments
+        </div>
+
+        <div class="feature-card">
+            ✨ Special Memories
+        </div>
+
+    </div>
+
+    <div class="price-box">
+
+        <span>PHOTO GIFTS AVAILABLE</span>
+
+        <h3>From ₹200</h3>
+
+        <p>
+            Family photos, couple photos,
+            baby pictures and more.
+        </p>
+
+        <a href="https://wa.me/+919400142771"
+        class="whatsapp-btn">
+
+        💬 Contact On WhatsApp
+
+        </a>
+
+    </div>
+
+</section>
+
+<!-- COLLECTION GALLERY -->
+
+<section class="product-section">
+
+    <h2>Our Personalized Collection Gallery</h2>
+
+    <div class="gold-line"></div>
+
+    <p class="section-text">
+
+        A glimpse into some of our favorite
+        personalized creations.
+
+    </p>
+
+    <div class="feature-grid" style="margin-top:50px;">
+
+        <div class="feature-card">
+            <img src="gallery-pers.jpeg" style="width:100%;border-radius:15px;">
+        </div>
+
+        <div class="feature-card">
+            <img src="gallery-pers5.jpeg" style="width:100%;border-radius:15px;">
+        </div>
+
+        <div class="feature-card">
+            <img src="gallery-pers2.jpeg" style="width:100%;border-radius:15px;">
+        </div>
+
+        <div class="feature-card">
+            <img src="gallery-pers3.jpeg" style="width:100%;border-radius:15px;">
+        </div>
+
+        <div class="feature-card">
+            <img src="gallery-pers4.jpeg" style="width:100%;border-radius:15px;">
+        </div>
+
+    </div>
+
+</section>
+
+<!-- FINAL CONTACT -->
+
+<section class="product-section">
+
+    <h2>Ready To Create Something Special?</h2>
+
+    <div class="gold-line"></div>
+
+    <p class="section-text">
+
+        Let's turn your memories into beautiful,
+        meaningful keepsakes you'll treasure forever.
+
+    </p>
+
+    <div class="price-box">
+
+        <h3 style="font-size:2.5rem;">
+            💝 Let's Create Together
+        </h3>
+
+        <p style="margin-top:15px;">
+
+            Custom gifts, printed cups,
+            QR keychains, polaroids and photo gifts.
+
+        </p>
+
+        <a href="https://wa.me/+919400142771"
+        class="whatsapp-btn"
+        style="margin-top:25px;">
+
+        💬 Contact On WhatsApp
+
+        </a>
+
+    </div>
+
+</section>
+
+</body>
+</html>
+
+
+

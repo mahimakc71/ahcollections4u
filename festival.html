@@ -1,0 +1,1070 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Festival & Occasions | AH Collection</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+font-family:'Poppins',sans-serif;
+
+overflow-x:hidden;
+
+background:
+linear-gradient(
+180deg,
+#fffaf5,
+#fff7f0,
+#fffdfb
+);
+
+color:#5f4739;
+
+}
+
+/* NAVBAR */
+
+nav{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+
+padding:25px 8%;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+z-index:999;
+
+background:
+rgba(255,255,255,.35);
+
+backdrop-filter:blur(15px);
+
+}
+
+.logo{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:2.8rem;
+
+font-style:italic;
+
+color:#b07858;
+
+}
+
+.nav-links{
+
+display:flex;
+
+gap:35px;
+
+}
+
+.nav-links a{
+
+text-decoration:none;
+
+color:#7a5d4c;
+
+font-size:.95rem;
+
+transition:.3s;
+
+}
+
+.nav-links a:hover{
+
+color:#b07858;
+
+}
+
+.contact-btn{
+
+padding:12px 28px;
+
+border-radius:50px;
+
+background:
+rgba(255,255,255,.7);
+
+border:
+1px solid rgba(198,155,109,.4);
+
+text-decoration:none;
+
+color:#b07858;
+
+font-weight:500;
+
+}
+
+/* HERO */
+
+.hero{
+
+position:relative;
+
+min-height:100vh;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:140px 8%;
+
+overflow:hidden;
+
+}
+
+.hero::before{
+
+content:"";
+
+position:absolute;
+
+width:900px;
+height:900px;
+
+border-radius:50%;
+
+background:
+radial-gradient(
+circle,
+rgba(214,162,134,.18),
+transparent
+);
+
+top:-350px;
+right:-250px;
+
+}
+
+.hero::after{
+
+content:"";
+
+position:absolute;
+
+width:700px;
+height:700px;
+
+border-radius:50%;
+
+background:
+radial-gradient(
+circle,
+rgba(214,162,134,.08),
+transparent
+);
+
+bottom:-250px;
+left:-200px;
+
+}
+
+.hero-content{
+
+position:relative;
+
+max-width:700px;
+
+z-index:2;
+
+}
+
+.hero-tag{
+
+letter-spacing:4px;
+
+text-transform:uppercase;
+
+font-size:.85rem;
+
+color:#b07858;
+
+margin-bottom:25px;
+
+}
+
+.hero-content h1{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:8rem;
+
+line-height:.85;
+
+font-style:italic;
+
+font-weight:500;
+
+color:#9c684d;
+
+}
+
+.hero-line{
+
+width:180px;
+
+height:3px;
+
+margin:35px 0;
+
+border-radius:50px;
+
+background:
+
+linear-gradient(
+90deg,
+#c69b6d,
+#efd7b7,
+#c69b6d
+);
+
+}
+
+.hero-content p{
+
+font-size:1.1rem;
+
+line-height:2;
+
+max-width:550px;
+
+}
+
+.explore-btn{
+
+display:inline-block;
+
+margin-top:35px;
+
+padding:18px 40px;
+
+border-radius:50px;
+
+background:
+rgba(255,255,255,.85);
+
+border:
+1px solid rgba(198,155,109,.4);
+
+text-decoration:none;
+
+font-weight:600;
+
+color:#9c684d;
+
+transition:.4s;
+
+}
+
+.explore-btn:hover{
+
+transform:translateY(-8px);
+
+box-shadow:
+0 15px 30px rgba(0,0,0,.08);
+
+}
+
+.hero-image{
+
+position:relative;
+
+z-index:2;
+
+animation:
+floatHero 5s ease-in-out infinite;
+
+}
+
+.hero-image img{
+
+width:650px;
+
+max-width:100%;
+
+filter:
+drop-shadow(
+0 30px 50px rgba(0,0,0,.12)
+);
+
+}
+
+@keyframes floatHero{
+
+0%,100%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-25px);
+}
+
+}
+
+/* CATEGORY SECTION */
+
+.categories{
+
+padding:120px 8%;
+
+}
+
+.section-title{
+
+text-align:center;
+
+margin-bottom:80px;
+
+}
+
+.section-title h2{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:5rem;
+
+font-style:italic;
+
+font-weight:500;
+
+color:#9c684d;
+
+}
+
+.section-title p{
+
+margin-top:15px;
+
+font-size:1.05rem;
+
+}
+
+.category-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,minmax(250px,1fr));
+
+gap:35px;
+
+perspective:1500px;
+
+}
+
+.category-card{
+
+background:
+rgba(255,255,255,.75);
+
+backdrop-filter:blur(18px);
+
+border-radius:30px;
+
+overflow:hidden;
+
+box-shadow:
+0 15px 35px rgba(0,0,0,.05);
+
+transition:.6s;
+
+}
+
+.category-card:hover{
+
+transform:
+translateY(-20px)
+rotateX(5deg)
+rotateY(-5deg);
+
+}
+
+.category-card img{
+
+width:100%;
+height:300px;
+
+object-fit:cover;
+
+transition:.8s;
+
+}
+
+.category-card:hover img{
+
+transform:scale(1.08);
+
+}
+
+.category-content{
+
+padding:25px;
+
+}
+
+.category-content span{
+
+font-size:.8rem;
+
+letter-spacing:2px;
+
+color:#c69b6d;
+
+}
+
+.category-content h3{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:2.1rem;
+
+margin:10px 0;
+
+color:#9c684d;
+
+}
+
+.category-content p{
+
+line-height:1.8;
+
+}
+.featured-section{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:80px;
+
+padding:140px 8%;
+
+}
+
+.reverse{
+
+flex-direction:row-reverse;
+
+}
+
+.featured-image img{
+
+width:600px;
+
+max-width:100%;
+
+border-radius:35px;
+
+box-shadow:
+0 25px 60px rgba(0,0,0,.08);
+
+}
+
+.featured-content{
+
+max-width:600px;
+
+}
+
+.featured-content span{
+
+letter-spacing:3px;
+
+font-size:.85rem;
+
+color:#c69b6d;
+
+}
+
+.featured-content h2{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:5rem;
+
+line-height:.9;
+
+margin:20px 0;
+
+color:#9c684d;
+
+font-style:italic;
+
+}
+
+.featured-content p{
+
+line-height:2;
+
+}
+
+.featured-price{
+
+margin-top:25px;
+
+font-weight:600;
+
+color:#b07858;
+
+}
+
+.featured-btn{
+
+display:inline-block;
+
+margin-top:25px;
+
+padding:16px 35px;
+
+border-radius:50px;
+
+background:
+rgba(255,255,255,.8);
+
+border:
+1px solid rgba(198,155,109,.4);
+
+text-decoration:none;
+
+color:#9c684d;
+
+}
+
+.occasion-tags{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:12px;
+
+margin-top:25px;
+
+}
+
+.occasion-tags span{
+
+padding:12px 18px;
+
+background:
+rgba(255,255,255,.7);
+
+border-radius:50px;
+
+letter-spacing:0;
+
+font-size:.9rem;
+
+}
+
+
+
+/* OCCASION GALLERY */
+
+.occasion-gallery{
+
+padding:20px 8% 120px;
+
+}
+
+.occasion-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:22px;
+
+}
+
+.occasion-card{
+
+position:relative;
+
+height:220px;
+
+border-radius:28px;
+
+overflow:hidden;
+
+cursor:pointer;
+
+box-shadow:
+0 12px 30px rgba(0,0,0,.08);
+
+transition:.5s;
+
+}
+
+.occasion-card img{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+}
+
+.occasion-overlay{
+
+position:absolute;
+
+inset:0;
+
+background:
+linear-gradient(
+transparent 40%,
+rgba(0,0,0,.65)
+);
+
+display:flex;
+
+align-items:flex-end;
+
+justify-content:center;
+
+padding:18px;
+
+text-align:center;
+
+}
+
+.occasion-overlay h3{
+
+color:white;
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:1.8rem;
+
+font-style:italic;
+
+font-weight:500;
+
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.occasion-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.occasion-card,
+.occasion-card.large{
+
+height:280px;
+
+}
+
+}
+
+
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">
+AH Collection
+</div>
+
+<div class="nav-links">
+
+<a href="#">Home</a>
+<a href="#">Hampers</a>
+<a href="#">Cozy Corner</a>
+<a href="#">Festival & Occasions</a>
+<a href="#">Contact</a>
+
+</div>
+
+<a href="#" class="contact-btn">
+Contact Us
+</a>
+
+</nav>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<p class="hero-tag">
+AH COLLECTION PRESENTS
+</p>
+
+<h1>
+
+Festival
+&
+<br>
+Occasions
+
+</h1>
+
+<div class="hero-line"></div>
+
+<p>
+
+Celebrate festivals, milestones,
+love stories and life's most beautiful moments.
+
+Discover curated gifting experiences,
+personalized surprises and collections
+designed for every special occasion.
+
+</p>
+
+<a href="#categories" class="explore-btn">
+
+Explore Collection ✨
+
+</a>
+
+</div>
+
+<div class="hero-image">
+
+<img src="hero-main.jpeg">
+
+</div>
+
+</section>
+
+<section id="categories" class="categories">
+
+<div class="section-title">
+
+<h2>
+Celebrate Every Moment
+</h2>
+
+<p>
+Thoughtfully curated collections for every occasion.
+
+<!-- OCCASION GALLERY -->
+
+<section class="occasion-gallery">
+
+<div class="occasion-grid">
+
+<div class="occasion-card large">
+<img src="vishu-main.jpeg">
+<div class="occasion-overlay">
+<h3>🌼 Vishu</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="onam.jpeg">
+<div class="occasion-overlay">
+<h3>🌾 Onam</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="christmas-card.jpeg">
+<div class="occasion-overlay">
+<h3>🎄 Christmas</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="valentines.jpeg">
+<div class="occasion-overlay">
+<h3>❤️ Valentine's Day</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="roseday.jpeg">
+<div class="occasion-overlay">
+<h3>🌹 Rose Day</h3>
+</div>
+</div>
+
+<div class="occasion-card large">
+<img src="birthday.jpeg">
+<div class="occasion-overlay">
+<h3>🎂 Birthday</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="babyshower.jpeg">
+<div class="occasion-overlay">
+<h3>👶 Baby Shower</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="anniversary.jpeg">
+<div class="occasion-overlay">
+<h3>💍 Anniversary</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="graduation.jpeg">
+<div class="occasion-overlay">
+<h3>🎓 Graduation</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="patchup.jpeg">
+<div class="occasion-overlay">
+<h3>🤝 Patch Up</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="friendship.jpeg">
+<div class="occasion-overlay">
+<h3>🫂 Friendship Day</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="mothersday.jpeg">
+<div class="occasion-overlay">
+<h3>👩 Mother's Day</h3>
+</div>
+</div>
+
+<div class="occasion-card large">
+<img src="justbecause.jpeg">
+<div class="occasion-overlay">
+<h3>✨ Just Because</h3>
+</div>
+</div>
+
+</div>
+
+</section>
+
+
+
+</div>
+
+<div class="category-grid">
+
+<!-- Festivals -->
+<div class="category-card" data-aos="fade-up">
+<img src="festival.jpeg">
+<div class="category-content">
+<span>🌼 COLLECTION</span>
+<h3>Festivals</h3>
+<p>Vishu • Christmas • Diwali • Eid • New Year • Holi</p>
+</div>
+</div>
+
+<!-- Love -->
+<div class="category-card" data-aos="fade-up">
+<img src="romance.jpeg">
+<div class="category-content">
+<span>💕 COLLECTION</span>
+<h3>Love & Romance</h3>
+<p>Valentine's Day • Rose Day • Anniversary • Couple Gifts</p>
+</div>
+</div>
+
+<!-- Emotional -->
+<div class="category-card" data-aos="fade-up">
+<img src="emotional.jpeg">
+<div class="category-content">
+<span>🥺 COLLECTION</span>
+<h3>Emotional Moments</h3>
+<p>Breakup Recovery • Patch-Up Surprise • Missing You Gifts</p>
+</div>
+</div>
+
+<!-- Family -->
+<div class="category-card" data-aos="fade-up">
+<img src="family.jpeg">
+<div class="category-content">
+<span>👨‍👩‍👧 COLLECTION</span>
+<h3>Family</h3>
+<p>Mother's Day • Father's Day • Family Celebrations</p>
+</div>
+</div>
+
+</div>
+
+</section>
+<section class="featured-section">
+
+<div class="featured-image">
+<img src="vishu-saree.jpeg">
+</div>
+
+<div class="featured-content">
+
+<span>🌼 VISHU SPECIAL</span>
+
+<h2>
+Premium Saree
+&
+Ornament Set
+</h2>
+
+<p>
+
+Celebrate this Vishu in elegance and tradition.
+
+A carefully curated festive combo featuring
+a premium saree and matching ornament set.
+
+Perfect for gifting or celebrating the season
+in style.
+
+</p>
+
+<div class="featured-price">
+
+Pre-Booking Open ✨
+
+</div>
+
+<a href="#" class="featured-btn">
+
+Reserve Yours
+
+</a>
+
+</div>
+
+</section>
+<section class="featured-section reverse">
+
+<div class="featured-content">
+
+<span>💕 LOVE & ROMANCE</span>
+
+<h2>
+
+Made For
+Special Hearts
+
+</h2>
+
+<p>
+
+Celebrate love in every form.
+
+Valentine's Day,
+Rose Day,
+Anniversaries,
+Patch-Up Surprises,
+and meaningful gifts
+for the people who matter most.
+
+</p>
+
+<div class="occasion-tags">
+
+<span>🌹 Rose Day</span>
+<span>❤️ Valentine's</span>
+<span>💍 Anniversary</span>
+<span>🤝 Patch-Up</span>
+
+</div>
+
+</div>
+
+<div class="featured-image">
+
+<img src="romance-showcase.jpeg">
+
+</div>
+
+</section>
+<section class="featured-section">
+
+<div class="featured-image">
+
+<img src="comfort-showcase.jpeg">
+
+</div>
+
+<div class="featured-content">
+
+<span>🫂 COMFORT & CARE</span>
+
+<h2>
+
+Cozy Gifts
+For Everyday Joy
+
+</h2>
+
+<p>
+
+From breathing teddy bears
+and cute night lamps
+to cramp relief devices
+and desktop coolers,
+
+discover products designed
+to make life a little more comfortable.
+
+</p>
+
+<div class="occasion-tags">
+
+<span>🧸 Teddy</span>
+<span>🐼 Lamps</span>
+<span>❄️ Cooler</span>
+<span>🌸 Self Care</span>
+
+</div>
+
+</div>
+
+</section>

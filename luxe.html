@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxe Accessories | AHCollections4U</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+    --velvet:   #1A0E05;
+    --brown:    #5b402b;
+    --brown-2:  #7a5a44;
+    --gold:     #C9A84C;
+    --gold-lt:  #E8CB7A;
+    --blush:    #F5E6D0;
+    --cream:    #FFF8F2;
+    --glass:    rgba(255,248,242,0.10);
+    --glass-bdr:rgba(201,168,76,0.28);
+    --line:     rgba(201,168,76,0.22);
+}
+
+html { scroll-behavior:smooth; font-size:17px; }
+
+body {
+    font-family:'Jost', sans-serif;
+    font-weight:300;
+    color: var(--brown);
+    overflow-x:hidden;
+    cursor:none;
+    background:
+        linear-gradient(rgba(255,248,242,.15), rgba(255,248,242,.15)),
+        url("luxe-bg.jpeg");
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+}
+
+::selection { background:var(--gold); color:#fff; }
+
+/* ===== CUSTOM CURSOR ===== */
+.cursor-dot {
+    width:7px; height:7px; border-radius:50%;
+    background:var(--gold);
+    position:fixed; top:0; left:0;
+    pointer-events:none; z-index:9999;
+    transform:translate(-50%,-50%);
+    box-shadow:0 0 10px var(--gold);
+}
+.cursor-ring {
+    width:36px; height:36px; border-radius:50%;
+    border:1px solid rgba(201,168,76,.55);
+    position:fixed; top:0; left:0;
+    pointer-events:none; z-index:9998;
+    transform:translate(-50%,-50%);
+    transition:width .25s, height .25s, border-color .25s;
+}
+body:has(a:hover) .cursor-ring,
+body:has(.lux-card:hover) .cursor-ring {
+    width:56px; height:56px;
+    border-color:var(--gold);
+}
+
+/* ===== NOISE GRAIN ===== */
+.grain {
+    position:fixed; inset:0; z-index:5;
+    pointer-events:none; opacity:.032;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:180px;
+}
+
+/* ===== LOGO ===== */
+.logo {
+    position:fixed;
+    top:26px; left:28px;
+    width:58px; height:58px;
+    border-radius:50%;
+    object-fit:cover;
+    border:1px solid var(--glass-bdr);
+    box-shadow:0 0 20px rgba(201,168,76,.25);
+    z-index:900;
+    backdrop-filter:blur(8px);
+}
+
+/* ===== HERO ===== */
+.hero {
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:130px 24px 80px;
+    position:relative;
+    overflow:hidden;
+}
+
+/* dark vignette so text is always readable */
+.hero::before {
+    content:'';
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse at 50% 55%, rgba(255,248,242,.22) 0%, rgba(26,14,5,.35) 100%);
+    pointer-events:none;
+}
+
+.hero-inner { position:relative; z-index:2; }
+
+.hero-eyebrow {
+    display:block;
+    font-size:.72rem;
+    letter-spacing:.42em;
+    text-transform:uppercase;
+    color:var(--gold-lt);
+    margin-bottom:22px;
+    opacity:0;
+}
+
+.hero-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(3.6rem, 8vw, 8rem);
+    font-weight:300;
+    font-style:italic;
+    line-height:.95;
+    color:var(--cream);
+    letter-spacing:.02em;
+    text-shadow:0 4px 40px rgba(26,14,5,.4);
+    overflow:hidden;
+}
+.hero-title-line { display:block; overflow:hidden; }
+.hero-title-inner { display:block; }
+
+.hero-sep {
+    width:0; height:2px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin:36px auto;
+    border-radius:50px;
+}
+
+.hero-sub {
+    font-size:1.05rem;
+    line-height:1.85;
+    color:rgba(245,230,208,.85);
+    max-width:540px;
+    margin:0 auto;
+    opacity:0;
+}
+
+.hero-cta {
+    display:inline-flex; align-items:center; gap:12px;
+    margin-top:44px;
+    padding:16px 42px;
+    border:1px solid var(--glass-bdr);
+    background:rgba(201,168,76,.1);
+    backdrop-filter:blur(14px);
+    color:var(--gold-lt);
+    text-decoration:none;
+    font-size:.78rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    transition:.4s;
+    opacity:0;
+}
+.hero-cta:hover {
+    background:var(--gold);
+    color:var(--velvet);
+    border-color:var(--gold);
+    transform:translateY(-3px);
+    box-shadow:0 16px 40px rgba(201,168,76,.3);
+}
+
+/* scroll cue */
+.scroll-cue {
+    position:absolute;
+    bottom:36px; left:50%;
+    transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    z-index:2; opacity:0;
+}
+.scroll-cue span {
+    font-size:.58rem;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:rgba(245,230,208,.6);
+}
+.scroll-cue-line {
+    width:1px; height:42px;
+    background:linear-gradient(to bottom, var(--gold), transparent);
+    animation:lineDrop 2s ease-in-out infinite;
+}
+@keyframes lineDrop {
+    0%   { transform:scaleY(0); transform-origin:top; }
+    50%  { transform:scaleY(1); transform-origin:top; }
+    51%  { transform:scaleY(1); transform-origin:bottom; }
+    100% { transform:scaleY(0); transform-origin:bottom; }
+}
+
+/* ===== SECTION HEADERS ===== */
+.sec-head {
+    text-align:center;
+    padding:110px 24px 60px;
+}
+.sec-eyebrow {
+    display:block;
+    font-size:.68rem;
+    letter-spacing:.38em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:18px;
+}
+.sec-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(2.4rem, 4vw, 3.8rem);
+    font-weight:400;
+    font-style:italic;
+    color:var(--velvet);
+    line-height:1.1;
+}
+.gold-line {
+    width:0; height:3px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin:28px auto 0;
+    border-radius:50px;
+    box-shadow:0 0 14px rgba(201,168,76,.35);
+}
+
+/* ===== COLLECTION CARDS — 3D FLIP ===== */
+.collection-grid {
+    max-width:1220px;
+    margin:0 auto;
+    padding:0 30px 100px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+    gap:40px;
+}
+
+/* The flip card wrapper */
+.lux-card {
+    perspective:900px;
+    height:440px;
+    opacity:0;
+    transform:translateY(60px);
+}
+
+.lux-card-inner {
+    position:relative;
+    width:100%; height:100%;
+    transform-style:preserve-3d;
+    transition:transform .75s cubic-bezier(.4,0,.2,1);
+    cursor:none;
+}
+.lux-card:hover .lux-card-inner {
+    transform:rotateY(180deg);
+}
+
+/* FRONT */
+.lux-front, .lux-back {
+    position:absolute; inset:0;
+    border-radius:24px;
+    overflow:hidden;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+}
+.lux-front {
+    background:var(--glass);
+    backdrop-filter:blur(18px);
+    border:1px solid var(--glass-bdr);
+    box-shadow:0 24px 60px rgba(26,14,5,.12);
+}
+.lux-front img {
+    width:100%; height:64%;
+    object-fit:cover;
+    display:block;
+    transition:transform .6s ease;
+}
+.lux-card:hover .lux-front img { transform:scale(1.06); }
+.lux-front-overlay {
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height:38%;
+    padding:24px 28px;
+    background:linear-gradient(to top, rgba(26,14,5,.7) 0%, transparent 100%);
+}
+.lux-card-num {
+    font-size:.65rem;
+    letter-spacing:.32em;
+    color:var(--gold-lt);
+    margin-bottom:8px;
+    display:block;
+}
+.lux-card-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size:2rem;
+    font-weight:400;
+    font-style:italic;
+    color:var(--cream);
+    line-height:1.1;
+}
+.lux-card-sub {
+    font-size:.78rem;
+    color:rgba(245,230,208,.7);
+    margin-top:6px;
+}
+/* hover prompt on front */
+.lux-card-hint {
+    position:absolute;
+    top:18px; right:18px;
+    width:40px; height:40px;
+    border-radius:50%;
+    border:1px solid rgba(201,168,76,.5);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--gold-lt);
+    font-size:.7rem;
+    backdrop-filter:blur(6px);
+    background:rgba(201,168,76,.08);
+    transition:background .3s;
+}
+.lux-card:hover .lux-card-hint {
+    background:rgba(201,168,76,.25);
+}
+
+/* BACK */
+.lux-back {
+    transform:rotateY(180deg);
+    background:linear-gradient(145deg, rgba(201,168,76,.15), rgba(26,14,5,.85));
+    backdrop-filter:blur(24px);
+    border:1px solid rgba(201,168,76,.35);
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    padding:40px 32px;
+    text-align:center;
+    gap:20px;
+}
+.lux-back-icon {
+    font-size:2.8rem;
+    line-height:1;
+}
+.lux-back-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size:2rem;
+    font-style:italic;
+    color:var(--cream);
+}
+.lux-back-desc {
+    font-size:.88rem;
+    line-height:1.85;
+    color:rgba(245,230,208,.75);
+}
+.lux-back-btn {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 32px;
+    border:1px solid var(--gold);
+    color:var(--gold-lt);
+    text-decoration:none;
+    font-size:.72rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    transition:.35s;
+    margin-top:6px;
+}
+.lux-back-btn:hover {
+    background:var(--gold);
+    color:var(--velvet);
+    transform:translateY(-2px);
+}
+
+/* ===== GALLERY ===== */
+.gallery {
+    padding:0 30px 110px;
+    max-width:1220px;
+    margin:0 auto;
+}
+.gallery-grid {
+    column-count:3;
+    column-gap:22px;
+    margin-top:10px;
+}
+.gallery-grid img {
+    width:100%;
+    margin-bottom:22px;
+    border-radius:18px;
+    display:block;
+    break-inside:avoid;
+    border:1px solid var(--line);
+    transition:transform .5s ease, box-shadow .5s ease, filter .5s ease;
+    opacity:0;
+    filter:grayscale(.3);
+    cursor:none;
+}
+.gallery-grid img:hover {
+    transform:scale(1.025);
+    box-shadow:0 24px 60px rgba(201,168,76,.22);
+    filter:grayscale(0);
+}
+
+/* ===== CONTACT ===== */
+.contact {
+    padding:40px 30px 130px;
+    text-align:center;
+}
+.glass-panel {
+    max-width:780px;
+    margin:0 auto;
+    padding:70px 60px;
+    background:rgba(255,248,242,.14);
+    backdrop-filter:blur(22px);
+    border:1px solid var(--glass-bdr);
+    border-radius:8px;
+    box-shadow:0 40px 100px rgba(26,14,5,.12), inset 0 1px 0 rgba(255,255,255,.15);
+}
+.contact-eyebrow {
+    font-size:.68rem;
+    letter-spacing:.36em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:block;
+    margin-bottom:18px;
+}
+.contact-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(2.2rem, 3.5vw, 3.4rem);
+    font-style:italic;
+    color:var(--velvet);
+    margin-bottom:18px;
+}
+.contact-sub {
+    font-size:.92rem;
+    line-height:1.9;
+    color:var(--brown-2);
+    margin-bottom:50px;
+}
+.whatsapp-glass {
+    width:100%; max-width:460px;
+    margin:0 auto;
+    padding:22px 28px;
+    display:flex; align-items:center; gap:18px;
+    text-decoration:none;
+    background:rgba(37,211,102,.12);
+    backdrop-filter:blur(16px);
+    border:1px solid rgba(37,211,102,.35);
+    border-radius:60px;
+    box-shadow:0 0 30px rgba(37,211,102,.12);
+    transition:.4s;
+}
+.whatsapp-glass:hover {
+    transform:translateY(-6px);
+    box-shadow:0 20px 50px rgba(37,211,102,.28);
+    border-color:rgba(37,211,102,.6);
+}
+.wa-icon { font-size:2rem; }
+.wa-content { text-align:left; }
+.wa-title { color:#fff; font-size:1.05rem; font-weight:500; }
+.wa-subtitle { color:#b8f0ce; font-size:.82rem; margin-top:3px; }
+
+/* ===== MOBILE ===== */
+@media(max-width:768px){
+    .hero-title { font-size:3.2rem; }
+    .collection-grid { grid-template-columns:1fr; }
+    .lux-card { height:400px; }
+    .gallery-grid { column-count:1; }
+    .glass-panel { padding:48px 28px; }
+    .sec-title { font-size:2rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-dot" id="dot"></div>
+<div class="cursor-ring" id="ring"></div>
+<div class="grain"></div>
+
+<img src="logo.png" class="logo" alt="AHCollections4U">
+
+<a href="categories.html" style="
+    position:fixed;
+    top:26px; right:28px;
+    z-index:900;
+    padding:11px 26px;
+    border-radius:50px;
+    background:rgba(255,248,242,.1);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(201,168,76,.28);
+    color:rgba(245,230,208,.85);
+    text-decoration:none;
+    font-family:'Jost',sans-serif;
+    font-size:.78rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    transition:.35s;
+" onmouseover="this.style.borderColor='#C9A84C';this.style.color='#E8CB7A';this.style.transform='translateY(-2px)'"
+   onmouseout="this.style.borderColor='rgba(201,168,76,.28)';this.style.color='rgba(245,230,208,.85)';this.style.transform='translateY(0)'">
+    ← Collections
+</a>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+    <div class="hero-inner">
+        <span class="hero-eyebrow" id="heroEyebrow">AHCollections4U Presents</span>
+
+        <h1 class="hero-title">
+            <span class="hero-title-line"><span class="hero-title-inner" id="heroLine1">Luxe</span></span>
+            <span class="hero-title-line"><span class="hero-title-inner" id="heroLine2">Accessories</span></span>
+        </h1>
+
+        <div class="hero-sep" id="heroSep"></div>
+
+        <p class="hero-sub" id="heroSub">
+            Timeless pieces curated to elevate your everyday.
+            Watches, fragrances, and audio — chosen for those who notice the details.
+        </p>
+
+        <a href="#collection" class="hero-cta" id="heroCta">Explore The Edit →</a>
+    </div>
+
+    <div class="scroll-cue" id="scrollCue">
+        <span>Scroll</span>
+        <div class="scroll-cue-line"></div>
+    </div>
+</section>
+
+<!-- ===== COLLECTION ===== -->
+<div class="sec-head" id="collection">
+    <span class="sec-eyebrow reveal">The Collection</span>
+    <h2 class="sec-title reveal">Curated For You</h2>
+    <div class="gold-line" id="goldLine1"></div>
+</div>
+
+<div class="collection-grid">
+
+    <!-- Watches -->
+    <div class="lux-card" data-card>
+        <div class="lux-card-inner">
+            <div class="lux-front">
+                <img src="watch.jpeg" alt="Watches">
+                <div class="lux-card-hint">↺</div>
+                <div class="lux-front-overlay">
+                    <span class="lux-card-num">01</span>
+                    <h3 class="lux-card-title">Watches</h3>
+                    <p class="lux-card-sub">Elegant timepieces</p>
+                </div>
+            </div>
+            <div class="lux-back">
+                <div class="lux-back-icon">⌚</div>
+                <div class="lux-back-title">Timeless Watches</div>
+                <p class="lux-back-desc">
+                    Elegant timepieces for every occasion — from understated classics to bold statement pieces.
+                </p>
+                <a href="watches.html" class="lux-back-btn">View Collection →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Perfumes -->
+    <div class="lux-card" data-card>
+        <div class="lux-card-inner">
+            <div class="lux-front">
+                <img src="perfume.jpeg" alt="Perfumes">
+                <div class="lux-card-hint">↺</div>
+                <div class="lux-front-overlay">
+                    <span class="lux-card-num">02</span>
+                    <h3 class="lux-card-title">Perfumes</h3>
+                    <p class="lux-card-sub">Signature fragrances</p>
+                </div>
+            </div>
+            <div class="lux-back">
+                <div class="lux-back-icon">🌸</div>
+                <div class="lux-back-title">Fine Fragrances</div>
+                <p class="lux-back-desc">
+                    Signature scents that leave a lasting impression — from floral blooms to warm woody depths.
+                </p>
+                <a href="perfumes.html" class="lux-back-btn">Discover Scents →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Earpods -->
+    <div class="lux-card" data-card>
+        <div class="lux-card-inner">
+            <div class="lux-front">
+                <img src="earpods.jpeg" alt="Earpods">
+                <div class="lux-card-hint">↺</div>
+                <div class="lux-front-overlay">
+                    <span class="lux-card-num">03</span>
+                    <h3 class="lux-card-title">Earpods</h3>
+                    <p class="lux-card-sub">Immersive sound</p>
+                </div>
+            </div>
+            <div class="lux-back">
+                <div class="lux-back-icon">🎧</div>
+                <div class="lux-back-title">Premium Earpods</div>
+                <p class="lux-back-desc">
+                    Style, comfort and immersive sound — because how you listen is part of how you live.
+                </p>
+                <a href="earpods.html" class="lux-back-btn">Shop Earpods →</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== GALLERY ===== -->
+<div class="sec-head">
+    <span class="sec-eyebrow reveal">The Edit</span>
+    <h2 class="sec-title reveal">Our Luxe Gallery</h2>
+    <div class="gold-line" id="goldLine2"></div>
+</div>
+
+<section class="gallery">
+    <div class="gallery-grid">
+        <img src="luxe1.jpeg" alt="Luxe 1" data-gimg>
+        <img src="luxe2.jpeg" alt="Luxe 2" data-gimg>
+        <img src="luxe3.jpeg" alt="Luxe 3" data-gimg>
+        <img src="luxe4.jpeg" alt="Luxe 4" data-gimg>
+        <img src="luxe5.jpeg" alt="Luxe 5" data-gimg>
+    </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="contact" id="contact">
+    <div class="glass-panel reveal">
+        <span class="contact-eyebrow">Ready To Find Your Perfect Piece?</span>
+        <h2 class="contact-title">Get In Touch</h2>
+        <p class="contact-sub">
+            Whether you're looking for a statement watch, a signature scent, or premium earpods —
+            we're here to help you find exactly what you need.
+        </p>
+        <a href="https://wa.me/+919400142771?text=Hello,%20I'm%20interested%20in%20your%20Luxe%20Accessories%20collection."
+           target="_blank"
+           class="whatsapp-glass">
+            <div class="wa-icon">💬</div>
+            <div class="wa-content">
+                <div class="wa-title">Contact Us On WhatsApp</div>
+                <div class="wa-subtitle">Enquire about watches, perfumes and earpods</div>
+            </div>
+        </a>
+    </div>
+</section>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ===== CUSTOM CURSOR ===== */
+const dot=document.getElementById('dot');
+const ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e=>{
+    mx=e.clientX; my=e.clientY;
+    dot.style.left=mx+'px'; dot.style.top=my+'px';
+});
+(function loop(){
+    rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    requestAnimationFrame(loop);
+})();
+
+/* ===== HERO INTRO ===== */
+const tl = gsap.timeline({ defaults:{ ease:'power3.out' } });
+
+gsap.set('#heroEyebrow',  { y:16, opacity:0 });
+gsap.set('#heroLine1',    { y:'110%' });
+gsap.set('#heroLine2',    { y:'110%' });
+gsap.set('#heroSep',      { width:0, opacity:0 });
+gsap.set('#heroSub',      { y:14, opacity:0 });
+gsap.set('#heroCta',      { y:18, opacity:0 });
+gsap.set('#scrollCue',    { opacity:0 });
+
+tl
+  .to('#heroEyebrow', { y:0, opacity:1, duration:.7 })
+  .to('#heroLine1',   { y:'0%', duration:.9, ease:'power4.out' }, '-=0.3')
+  .to('#heroLine2',   { y:'0%', duration:.9, ease:'power4.out' }, '-=0.65')
+  .to('#heroSep',     { width:180, opacity:1, duration:.7, ease:'power2.out' }, '-=0.4')
+  .to('#heroSub',     { y:0, opacity:1, duration:.7 }, '-=0.3')
+  .to('#heroCta',     { y:0, opacity:1, duration:.6 }, '-=0.3')
+  .to('#scrollCue',   { opacity:1, duration:.5 }, '+=0.4');
+
+/* hide scroll cue when user scrolls */
+ScrollTrigger.create({
+    trigger:'#hero',
+    start:'bottom center',
+    onEnter:()=>gsap.to('#scrollCue',{opacity:0,duration:.3}),
+    onLeaveBack:()=>gsap.to('#scrollCue',{opacity:1,duration:.3}),
+});
+
+/* ===== GOLD LINES DRAW ON SCROLL ===== */
+['#goldLine1','#goldLine2'].forEach(id=>{
+    gsap.to(id, {
+        width:160, opacity:1,
+        scrollTrigger:{ trigger:id, start:'top 88%', toggleActions:'play none none reverse' },
+        duration:.8, ease:'power2.out'
+    });
+});
+
+/* ===== GENERIC REVEAL ===== */
+gsap.utils.toArray('.reveal').forEach((el,i)=>{
+    gsap.set(el, { y:32, opacity:0 });
+    gsap.to(el, {
+        scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none reverse' },
+        y:0, opacity:1, duration:.9, delay:(i%3)*.08, ease:'power3.out'
+    });
+});
+
+/* ===== COLLECTION CARDS REVEAL ===== */
+gsap.utils.toArray('[data-card]').forEach((card,i)=>{
+    gsap.to(card, {
+        scrollTrigger:{ trigger:card, start:'top 88%', toggleActions:'play none none reverse' },
+        opacity:1, y:0, duration:1, delay:i*0.12, ease:'power3.out'
+    });
+});
+
+/* ===== GALLERY IMAGES REVEAL ===== */
+gsap.utils.toArray('[data-gimg]').forEach((img,i)=>{
+    gsap.set(img, { y:40, opacity:0 });
+    gsap.to(img, {
+        scrollTrigger:{ trigger:img, start:'top 92%', toggleActions:'play none none reverse' },
+        y:0, opacity:1, filter:'grayscale(0.3)',
+        duration:1, delay:(i%3)*.12, ease:'power3.out'
+    });
+});
+</script>
+</body>
+</html>

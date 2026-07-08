@@ -1,0 +1,693 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Charming Keepsakes | AH Collection</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+
+body{
+
+font-family:'Poppins',sans-serif;
+
+background:
+
+linear-gradient(
+rgba(255,248,245,.30),
+rgba(255,248,245,.30)
+),
+
+url("charming-bg.jpeg");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+
+color:#6f5746;
+
+}
+
+
+
+/* HERO */
+
+.hero{
+
+padding:140px 20px 100px;
+
+text-align:center;
+
+}
+
+.hero h1{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:5rem;
+
+font-style:italic;
+
+color:#9c5b43;
+
+}
+
+.hero p{
+
+max-width:800px;
+
+margin:25px auto;
+
+line-height:2;
+
+font-size:1.1rem;
+
+}
+
+.gold-line{
+
+width:220px;
+height:4px;
+
+margin:25px auto;
+
+border-radius:50px;
+
+background:
+linear-gradient(
+90deg,
+#d18c72,
+#f0c2b0,
+#d18c72
+);
+
+}
+
+/* SECTION */
+
+.section-title{
+
+text-align:center;
+
+padding:90px 20px 50px;
+
+}
+
+.section-title h2{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:4rem;
+
+font-style:italic;
+
+color:#9c5b43;
+
+}
+
+.section-title p{
+
+margin-top:15px;
+
+font-size:1.05rem;
+
+}
+
+/* DIARY SECTION */
+
+.diary-section{
+
+display:flex;
+
+align-items:center;
+
+gap:60px;
+
+padding:50px 8% 100px;
+
+}
+
+.diary-image img{
+
+width:520px;
+max-width:100%;
+
+border-radius:30px;
+
+box-shadow:
+0 15px 35px rgba(0,0,0,.08);
+
+}
+
+.diary-content{
+
+flex:1;
+
+}
+
+.diary-content h3{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:3rem;
+
+color:#9c5b43;
+
+font-style:italic;
+
+}
+
+.diary-content p{
+
+margin-top:20px;
+
+line-height:2;
+
+}
+
+/* FEATURES */
+
+.features{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:15px;
+
+margin-top:25px;
+
+}
+
+.features span{
+
+padding:12px 18px;
+
+background:
+rgba(255,255,255,.7);
+
+
+backdrop-filter:blur(10px);
+
+border-radius:30px;
+
+}
+
+/* CARDS */
+
+.card-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(300px,1fr));
+
+gap:30px;
+
+padding:0 8% 100px;
+
+}
+
+.card{
+
+background:
+rgba(255,255,255,.6);
+
+backdrop-filter:blur(15px);
+
+border-radius:30px;
+
+overflow:hidden;
+
+box-shadow:
+0 15px 35px rgba(0,0,0,.06);
+
+transition:.4s;
+
+}
+
+.card:hover{
+
+transform:translateY(-8px);
+
+}
+
+.card img{
+
+width:100%;
+height:320px;
+
+object-fit:cover;
+
+}
+
+.card-content{
+
+padding:25px;
+
+}
+
+.card-content h3{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:2rem;
+
+color:#9c5b43;
+
+margin-bottom:10px;
+
+}
+
+.card-content p{
+
+line-height:1.8;
+
+}
+
+/* CUSTOM BOUQUET BOX */
+
+.custom-box{
+
+margin:0 8% 100px;
+
+padding:60px;
+
+border-radius:35px;
+
+background:
+rgba(255,255,255,.65);
+
+backdrop-filter:blur(15px);
+
+text-align:center;
+
+box-shadow:
+0 15px 35px rgba(0,0,0,.06);
+
+}
+
+.custom-box h2{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:3.5rem;
+
+font-style:italic;
+
+color:#9c5b43;
+
+}
+
+.custom-box p{
+
+max-width:900px;
+
+margin:25px auto;
+
+line-height:2;
+
+}
+
+/* PERFECT FOR */
+
+.gift-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,1fr);
+
+gap:25px;
+
+padding:0 8% 100px;
+
+}
+
+.gift-card{
+
+background:
+rgba(255,255,255,.6);
+
+backdrop-filter:blur(15px);
+
+padding:25px;
+
+border-radius:25px;
+
+text-align:center;
+
+font-size:1.1rem;
+
+}
+
+/* WHATSAPP */
+
+.order-box{
+
+text-align:center;
+
+padding:100px 8%;
+
+}
+
+.order-box h2{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:4rem;
+
+font-style:italic;
+
+color:#9c5b43;
+
+}
+
+.order-box p{
+
+max-width:700px;
+
+margin:25px auto;
+
+line-height:2;
+
+}
+
+.button-center{
+
+display:flex;
+
+justify-content:center;
+
+margin-top:30px;
+
+}
+
+.whatsapp-btn{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:18px 45px;
+
+border-radius:50px;
+
+background:
+linear-gradient(
+135deg,
+rgba(37,211,102,.25),
+rgba(37,211,102,.12)
+);
+
+backdrop-filter:blur(15px);
+
+border:1px solid rgba(37,211,102,.3);
+
+text-decoration:none;
+
+font-weight:600;
+
+color:#1f8f4f;
+
+transition:.4s;
+
+}
+
+.whatsapp-btn:hover{
+
+transform:translateY(-5px);
+
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.hero h1{
+font-size:3.5rem;
+}
+
+.section-title h2{
+font-size:3rem;
+}
+
+.diary-section{
+flex-direction:column;
+}
+
+.gift-grid{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1>Charming Keepsakes ✨</h1>
+
+<div class="gold-line"></div>
+
+<p>
+
+Thoughtful gifts.
+Beautiful blooms.
+Memories worth keeping.
+
+From elegant journals to handcrafted bouquets,
+every keepsake is chosen to make moments
+feel even more special.
+
+</p>
+
+</section>
+
+<!-- DIARIES -->
+
+<section class="section-title">
+
+<h2>📖 Journals & Diaries</h2>
+
+<p>Capture thoughts, dreams and memories.</p>
+
+</section>
+
+<section class="diary-section">
+
+<div class="diary-image">
+
+<img src="diary.jpeg">
+
+</div>
+
+<div class="diary-content">
+
+<h3>Beautiful Journals & Diaries</h3>
+
+<p>
+
+Write your thoughts.
+Capture your dreams.
+Preserve your memories.
+
+Perfect for journaling,
+planning, gratitude writing
+and daily reflections.
+
+</p>
+
+<div class="features">
+
+<span>📖 Daily Journaling</span>
+<span>✨ Elegant Designs</span>
+<span>💭 Thought Collection</span>
+<span>🎁 Perfect Gift</span>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- BOUQUETS -->
+
+<section class="section-title">
+
+<h2>💐 Bouquet Collection</h2>
+
+<p>Handcrafted with love and creativity.</p>
+
+</section>
+
+<div class="card-grid">
+
+<div class="card">
+
+<img src="flower-bouquet.jpeg">
+
+<div class="card-content">
+
+<h3>🌹 Flower Bouquet</h3>
+
+<p>
+
+Elegant handmade floral arrangements
+for birthdays, anniversaries and
+special occasions.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="choclate-bouquet.jpeg">
+
+<div class="card-content">
+
+<h3>🍫 Chocolate Bouquet</h3>
+
+<p>
+
+A sweet surprise beautifully arranged
+with chocolates and premium wrapping.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="custom-bouquet.jpeg">
+
+<div class="card-content">
+
+<h3>💝 Customized Bouquet</h3>
+
+<p>
+
+Designed according to your colors,
+theme, occasion and budget.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- CUSTOM BOUQUETS -->
+
+<section class="custom-box">
+
+<h2>🌸 Your Dream Bouquet, Made Just For You</h2>
+
+<p>
+
+Looking for something unique?
+
+Tell us your favorite flowers,
+chocolates, colors, theme,
+occasion and budget and we'll
+create a bouquet specially for you.
+
+🌹 Flower Bouquets
+🍫 Chocolate Bouquets
+🎀 Themed Bouquets
+💝 Personalized Bouquets
+✨ Custom Designs
+
+No fixed limits.
+No fixed designs.
+
+Just share your idea and we'll bring it to life beautifully.
+
+</p>
+
+</section>
+
+<!-- PERFECT FOR -->
+
+<section class="section-title">
+
+<h2>🎁 Perfect For</h2>
+
+</section>
+
+<div class="gift-grid">
+
+<div class="gift-card">🎂 Birthdays</div>
+
+<div class="gift-card">💕 Anniversaries</div>
+
+<div class="gift-card">🎓 Graduations</div>
+
+<div class="gift-card">🌹 Proposals</div>
+
+<div class="gift-card">👩 Mother's Day</div>
+
+<div class="gift-card">✨ Just Because</div>
+
+</div>
+
+<!-- WHATSAPP -->
+
+<section class="order-box">
+
+<h2>Ready To Create Something Beautiful? 🌷</h2>
+
+<p>
+
+Message us with your bouquet idea,
+favorite colors, theme or budget and
+we'll help you design the perfect keepsake.
+
+</p>
+
+<div class="button-center">
+
+<a href="https://wa.me/+919400142771"
+class="whatsapp-btn">
+
+💬 Contact On WhatsApp
+
+</a>
+
+</div>
+
+</section>
+
+</body>
+</html>
+
+
+

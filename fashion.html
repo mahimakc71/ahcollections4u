@@ -1,0 +1,741 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fashion Boutique | AH Collection</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+font-family:'Poppins',sans-serif;
+
+background:
+linear-gradient(
+rgba(255,247,243,.85),
+rgba(255,240,245,.85)
+),
+url("fashion-bg.jpeg");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+
+color:#7a3f59;
+
+}
+
+/* HERO */
+
+.hero{
+
+padding:140px 20px 100px;
+
+text-align:center;
+
+}
+
+.hero h1{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:5rem;
+
+font-style:italic;
+
+color:#a24d6e;
+
+}
+
+.hero p{
+
+max-width:700px;
+
+margin:20px auto;
+
+line-height:1.9;
+
+font-size:1.1rem;
+
+}
+
+.pink-line{
+
+width:220px;
+height:4px;
+
+margin:25px auto;
+
+border-radius:50px;
+
+background:
+linear-gradient(
+90deg,
+#e6b3c7,
+#ffdce8,
+#e6b3c7
+);
+
+}
+
+/* PRODUCT */
+
+.product{
+
+display:flex;
+
+align-items:center;
+
+gap:60px;
+
+padding:100px 8%;
+
+}
+
+.product-image img{
+
+width:520px;
+max-width:100%;
+
+border-radius:30px;
+
+box-shadow:
+0 20px 40px rgba(0,0,0,.08);
+
+}
+
+.product-content{
+
+flex:1;
+
+}
+
+.product-content h2{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:4rem;
+
+font-style:italic;
+
+color:#a24d6e;
+
+}
+
+.subtitle{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:1.8rem;
+
+font-style:italic;
+
+color:#d48ba5;
+
+margin:15px 0 25px;
+
+}
+
+.product-content p{
+
+line-height:2;
+
+}
+
+.features{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:12px;
+
+margin-top:25px;
+
+}
+
+.features span{
+
+padding:12px 18px;
+
+background:
+rgba(255,255,255,.65);
+
+backdrop-filter:blur(15px);
+
+border-radius:30px;
+
+color:#a24d6e;
+
+font-size:.95rem;
+
+}
+
+/* PRICE BOX */
+
+.price-box{
+
+margin-top:30px;
+
+padding:25px;
+
+background:
+rgba(255,255,255,.55);
+
+backdrop-filter:blur(15px);
+
+border-radius:25px;
+
+}
+
+.price-box h3{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:2.8rem;
+
+font-style:italic;
+
+color:#a24d6e;
+
+}
+
+/* WHATSAPP */
+
+.button-center{
+
+display:flex;
+
+justify-content:center;
+
+margin-top:25px;
+
+}
+
+.whatsapp-btn{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:18px 40px;
+
+border-radius:50px;
+
+background:
+linear-gradient(
+135deg,
+rgba(37,211,102,.25),
+rgba(37,211,102,.12)
+);
+
+backdrop-filter:blur(15px);
+
+border:1px solid rgba(37,211,102,.3);
+
+text-decoration:none;
+
+font-weight:600;
+
+color:#1f8f4f;
+
+transition:.4s;
+
+}
+
+.whatsapp-btn:hover{
+
+transform:translateY(-5px);
+
+}
+
+/* WHY SHOP */
+
+.fashion-features{
+
+padding:100px 8%;
+
+text-align:center;
+
+}
+
+.fashion-features h2{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:4rem;
+
+font-style:italic;
+
+color:#a24d6e;
+
+margin-bottom:50px;
+
+}
+
+.feature-grid{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:25px;
+
+}
+
+.feature-card{
+
+padding:35px;
+
+background:
+rgba(255,255,255,.55);
+
+backdrop-filter:blur(15px);
+
+border-radius:25px;
+
+font-size:1.05rem;
+
+color:#a24d6e;
+
+transition:.4s;
+
+}
+
+.feature-card:hover{
+
+transform:translateY(-8px);
+
+}
+
+/* ORDER BOX */
+
+.order-box{
+
+padding:100px 8%;
+
+text-align:center;
+
+}
+
+.order-box h2{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:4rem;
+
+font-style:italic;
+
+color:#a24d6e;
+
+margin-bottom:20px;
+
+}
+
+.order-box p{
+
+max-width:700px;
+
+margin:auto;
+
+line-height:2;
+
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.hero h1{
+font-size:3.5rem;
+}
+
+.product{
+
+flex-direction:column;
+
+}
+
+.product-content h2{
+
+font-size:3rem;
+
+}
+
+.feature-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1>Fashion Boutique</h1>
+
+<div class="pink-line"></div>
+
+<p>
+
+Style That Speaks Before You Do ✨
+
+Discover elegant everyday fashion curated
+with comfort, style and confidence in mind.
+
+</p>
+
+</section>
+
+<!-- KURTI -->
+
+<section class="product">
+
+<div class="product-image">
+<img src="kurti.jpeg">
+</div>
+
+<div class="product-content">
+
+<h2>Kalamkari Cotton Kurti</h2>
+
+<p class="subtitle">
+Elegant • Comfortable • Timeless
+</p>
+
+<p>
+
+A beautiful black Kalamkari printed cotton kurti
+designed for everyday elegance and comfort.
+
+Featuring a square neck, long sleeves and
+premium printed detailing.
+
+</p>
+
+<div class="features">
+
+<span>🌸 Kalamkari Print</span>
+<span>👗 Above Knee Length</span>
+<span>✨ Premium Cotton</span>
+<span>💖 Square Neck</span>
+<span>🌿 Daily Wear</span>
+
+</div>
+
+<div class="price-box">
+
+<h3>₹189 Only</h3>
+
+<p>Limited Stock Available</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FLORAL TOP -->
+
+<section class="product">
+
+<div class="product-image">
+<img src="floral-top.jpeg">
+</div>
+
+<div class="product-content">
+
+<h2>Floral Printed Top</h2>
+
+<p class="subtitle">
+Soft • Stylish • Perfect For Daily Wear
+</p>
+
+<p>
+
+Add a touch of elegance to your wardrobe
+with this beautiful floral printed top.
+
+A versatile everyday essential designed
+for comfort and effortless style.
+
+</p>
+
+<div class="features">
+
+<span>🌸 Floral Print</span>
+<span>💖 Soft Fabric</span>
+<span>✨ Stylish Design</span>
+<span>🎀 Daily Wear</span>
+
+</div>
+
+<div class="price-box">
+
+<h3>DM For Price</h3>
+
+<p>New Arrival 🌸</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- PRINTED SHIRT TOP -->
+
+<section class="product">
+
+<div class="product-image">
+<img src="shirt-top.jpeg">
+</div>
+
+<div class="product-content">
+
+<h2>Printed Shirt Top</h2>
+
+<p class="subtitle">
+Stay Stylish • Stay Confident
+</p>
+
+<p>
+
+Beautiful printed shirt top designed
+for women who love comfort and style.
+
+A perfect blend of everyday fashion
+and modern elegance.
+
+</p>
+
+<div class="features">
+
+<span>💜 Elegant Print</span>
+<span>✨ Comfortable Fit</span>
+<span>🌸 Everyday Fashion</span>
+<span>💖 Stylish Look</span>
+
+</div>
+
+<div class="price-box">
+
+<h3>₹336 Only</h3>
+
+<p>Shipping Charges Applicable</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FESTIVE COLLECTION -->
+
+<section class="hero" style="padding-top:40px;">
+
+<h1 style="font-size:4rem;">
+🌸 Festive Collection
+</h1>
+
+<div class="pink-line"></div>
+
+<p>
+
+Celebrate every festival in elegance,
+tradition and timeless beauty.
+
+</p>
+
+</section>
+
+<!-- VISHU SET 1 -->
+
+<section class="product">
+
+<div class="product-image">
+<img src="vishu-set1.jpeg">
+</div>
+
+<div class="product-content">
+
+<h2>Vishu Saree & Ornament Set</h2>
+
+<p class="subtitle">
+
+Celebrate Vishu In Elegance & Tradition ✨
+
+</p>
+
+<p>
+
+A premium festive combo featuring a beautiful
+saree paired with matching ornaments,
+carefully selected for a graceful and elegant look.
+
+Perfect for Vishu celebrations,
+family gatherings and festive occasions.
+
+</p>
+
+<div class="features">
+
+<span>🌸 Premium Saree</span>
+<span>💎 Ornament Set</span>
+<span>✨ Festive Collection</span>
+<span>🤍 Elegant Look</span>
+<span>🎀 Limited Pieces</span>
+
+</div>
+
+<div class="price-box">
+
+<h3>Pre-Booking Open</h3>
+
+<p>
+
+Book yours before Vishu arrives.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- VISHU SET 2 -->
+
+<section class="product">
+
+<div class="product-image">
+<img src="vishu-set2.jpeg">
+</div>
+
+<div class="product-content">
+
+<h2>Premium Vishu Combo</h2>
+
+<p class="subtitle">
+
+Limited Edition Festive Collection 🌸
+
+</p>
+
+<p>
+
+Designed for women who love elegance,
+tradition and festive fashion.
+
+This premium saree and ornament combo
+creates a complete festive look effortlessly.
+
+</p>
+
+<div class="features">
+
+<span>🌸 Saree Included</span>
+<span>💎 Ornament Included</span>
+<span>✨ Exclusive Collection</span>
+<span>🎊 Vishu Special</span>
+<span>⏳ Limited Stock</span>
+
+</div>
+
+<div class="price-box">
+
+<h3>Pre-Book Now</h3>
+
+<p>
+
+Limited pieces available.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- WHY SHOP -->
+
+<section class="fashion-features">
+
+<h2>Why You'll Love It ✨</h2>
+
+<div class="feature-grid">
+
+<div class="feature-card">
+🌸 Trendy Styles
+</div>
+
+<div class="feature-card">
+💖 Affordable Fashion
+</div>
+
+<div class="feature-card">
+✨ Comfortable Fabrics
+</div>
+
+<div class="feature-card">
+🚚 Kerala Delivery
+</div>
+
+</div>
+
+</section>
+
+<!-- ORDER -->
+
+<section class="order-box">
+
+<h2>Found Something You Love? 💖</h2>
+
+<p>
+
+DM us on WhatsApp for availability,
+sizes and ordering details.
+
+</p>
+
+<div class="button-center">
+
+<a href="https://wa.me/+919400142771"
+class="whatsapp-btn">
+
+💬 Contact On WhatsApp
+
+</a>
+
+</div>
+
+</section>
+
+</body>
+</html>
+

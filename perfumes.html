@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfume Collection | AHCollections4U</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+    --velvet:    #1A0E05;
+    --brown:     #4f3e34;
+    --brown-2:   #7a5a44;
+    --gold:      #C9A84C;
+    --gold-lt:   #E8CB7A;
+    --rose:      #8a5f73;
+    --slate:     #3d3d3d;
+    --blush:     #F5E6D0;
+    --cream:     #FFF8F2;
+    --glass:     rgba(255,248,242,0.13);
+    --glass-bdr: rgba(201,168,76,0.28);
+    --line:      rgba(201,168,76,0.22);
+}
+
+html { scroll-behavior:smooth; font-size:17px; }
+body {
+    font-family:'Jost', sans-serif;
+    font-weight:300;
+    color:#1b140f;
+    overflow-x:hidden;
+    cursor:none;
+    background:
+        linear-gradient(rgba(255,248,242,.15), rgba(255,248,242,.15)),
+        url("perfume-bg.jpeg");
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+}
+
+::selection {
+    background:var(--gold);
+    color:#fff;
+}
+
+/* ===== CURSOR ===== */
+.cursor-dot {
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--gold);
+    position:fixed;
+    top:0;
+    left:0;
+    pointer-events:none;
+    z-index:9999;
+    transform:translate(-50%,-50%);
+    box-shadow:0 0 10px var(--gold);
+}
+
+.cursor-ring {
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    border:1px solid rgba(201,168,76,.55);
+    position:fixed;
+    top:0;
+    left:0;
+    pointer-events:none;
+    z-index:9998;
+    transform:translate(-50%,-50%);
+    transition:width .25s,height .25s,border-color .25s;
+}
+
+body:has(a:hover) .cursor-ring,
+body:has(.perfume-card:hover) .cursor-ring{
+    width:56px;
+    height:56px;
+    border-color:var(--gold);
+}
+
+/* ===== GRAIN ===== */
+
+.grain{
+    position:fixed;
+    inset:0;
+    z-index:5;
+    pointer-events:none;
+    opacity:.03;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:180px;
+}
+
+/* ===== LOGO ===== */
+
+.logo{
+    position:fixed;
+    top:26px;
+    left:28px;
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    object-fit:cover;
+    border:1px solid var(--glass-bdr);
+    box-shadow:0 0 20px rgba(201,168,76,.22);
+    z-index:900;
+    backdrop-filter:blur(8px);
+}
+
+/* ===== HERO ===== */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:130px 24px 80px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:radial-gradient(ellipse at 50% 60%, rgba(255,248,242,.18) 0%, rgba(26,14,5,.38) 100%);
+    pointer-events:none;
+}
+
+.hero-inner{
+    position:relative;
+    z-index:2;
+}
+
+.hero-eyebrow{
+    display:block;
+    font-size:.82rem;
+    letter-spacing:.42em;
+    text-transform:uppercase;
+    color:#6b4518;
+    margin-bottom:22px;
+    opacity:0;
+    font-weight:500;
+}
+
+.hero-title{
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(3.8rem,8vw,8.3rem);
+    font-weight:400;
+    font-style:italic;
+    line-height:.95;
+    color:#120c08;
+    letter-spacing:.02em;
+    text-shadow:0 3px 18px rgba(255,255,255,.18);
+}
+
+.hero-title-line{
+    display:block;
+    overflow:hidden;
+}
+
+.hero-title-inner{
+    display:block;
+}
+
+.hero-sep{
+    width:0;
+    height:2px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin:36px auto;
+    border-radius:50px;
+}
+
+.hero-sub{
+    font-size:1.15rem;
+    line-height:1.9;
+    color:#2b1d15;
+    max-width:560px;
+    margin:0 auto;
+    opacity:0;
+    font-weight:400;
+}
+
+.hero-nav{
+    display:flex;
+    gap:18px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:44px;
+    opacity:0;
+}
+
+.hero-nav-btn{
+    padding:14px 36px;
+    border:1px solid var(--glass-bdr);
+    background:var(--glass);
+    backdrop-filter:blur(14px);
+    color:#2c1d13;
+    text-decoration:none;
+    font-size:.85rem;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    transition:.4s;
+    font-weight:500;
+}
+
+.hero-nav-btn:hover{
+    background:var(--gold);
+    color:var(--velvet);
+    border-color:var(--gold);
+    transform:translateY(-3px);
+}
+
+.hero-nav-btn.her{
+    border-color:rgba(138,95,115,.5);
+    color:#4a2236;
+}
+
+.hero-nav-btn.her:hover{
+    background:var(--rose);
+    color:#fff;
+    border-color:var(--rose);
+}
+
+.scroll-cue{
+    position:absolute;
+    bottom:36px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    z-index:2;
+    opacity:0;
+}
+
+.scroll-cue span{
+    font-size:.68rem;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:#2a1d14;
+    font-weight:500;
+}
+
+.scroll-cue-line{
+    width:1px;
+    height:42px;
+    background:linear-gradient(to bottom,var(--gold),transparent);
+    animation:lineDrop 2s ease-in-out infinite;
+}
+
+@keyframes lineDrop{
+    0%{transform:scaleY(0);transform-origin:top;}
+    50%{transform:scaleY(1);transform-origin:top;}
+    51%{transform:scaleY(1);transform-origin:bottom;}
+    100%{transform:scaleY(0);transform-origin:bottom;}
+}
+/* ===== CATEGORY CARDS (HER / HIM) ===== */
+
+.category-section{
+    max-width:1300px;
+    margin:0 auto;
+    padding:80px 30px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:40px;
+}
+
+.cat-card{
+    height:520px;
+    border-radius:6px;
+    overflow:hidden;
+    position:relative;
+    text-decoration:none;
+    opacity:0;
+    transform:translateY(50px);
+    display:block;
+}
+
+.cat-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform 1s cubic-bezier(.22,.61,.36,1);
+    display:block;
+}
+
+.cat-card:hover img{
+    transform:scale(1.07);
+}
+
+.cat-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top, rgba(26,14,5,.72) 0%, rgba(26,14,5,.15) 55%, transparent 82%);
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:44px;
+    transition:background .4s;
+}
+
+.cat-card:hover .cat-overlay{
+    background:linear-gradient(to top, rgba(26,14,5,.82) 0%, rgba(26,14,5,.25) 60%, transparent 85%);
+}
+
+.cat-tag{
+    font-size:.75rem;
+    letter-spacing:.35em;
+    text-transform:uppercase;
+    color:#f3d17b;
+    margin-bottom:10px;
+    font-weight:500;
+}
+
+.cat-title{
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(2.7rem,3.8vw,3.7rem);
+    font-style:italic;
+    font-weight:400;
+    color:#ffffff;
+    line-height:1.05;
+}
+
+.cat-sub{
+    font-size:.92rem;
+    color:rgba(255,255,255,.88);
+    margin-top:10px;
+    margin-bottom:24px;
+    line-height:1.7;
+}
+
+.cat-cta{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:.78rem;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:#ffe09d;
+    border-bottom:1px solid rgba(255,224,157,.55);
+    padding-bottom:3px;
+    transition:gap .3s,border-color .3s;
+    font-weight:500;
+}
+
+.cat-card:hover .cat-cta{
+    gap:14px;
+    border-color:#ffe09d;
+}
+
+
+/* ===== SECTION HEADER ===== */
+
+.sec-head{
+    text-align:center;
+    padding:110px 24px 56px;
+}
+
+.sec-eyebrow{
+    display:block;
+    font-size:.78rem;
+    letter-spacing:.38em;
+    text-transform:uppercase;
+    color:#6b4518;
+    margin-bottom:18px;
+    font-weight:500;
+}
+
+.sec-title{
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(2.7rem,4.4vw,4.2rem);
+    font-weight:500;
+    font-style:italic;
+    line-height:1.1;
+    color:#140d08;
+}
+
+.sec-title.her{
+    color:#5d2b40;
+}
+
+.sec-title.him{
+    color:#273441;
+}
+
+.sec-sub{
+    max-width:680px;
+    margin:20px auto 0;
+    font-size:1rem;
+    line-height:1.9;
+    color:#2d2119;
+    font-weight:400;
+}
+
+.gold-line{
+    width:0;
+    height:3px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin:26px auto 0;
+    border-radius:50px;
+    box-shadow:0 0 12px rgba(201,168,76,.3);
+}
+
+
+/* ===== PERFUME GRID (WOMEN) ===== */
+
+.perfume-grid{
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 30px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:28px;
+}
+
+.perfume-card{
+    background:var(--glass);
+    backdrop-filter:blur(18px);
+    border:1px solid var(--glass-bdr);
+    border-radius:20px;
+    overflow:hidden;
+    opacity:0;
+    transform:translateY(50px) scale(.95);
+    transform-style:preserve-3d;
+    transition:border-color .4s, box-shadow .4s;
+}
+
+.perfume-card:hover{
+    border-color:rgba(201,168,76,.5);
+    box-shadow:0 28px 60px rgba(26,14,5,.14),0 0 30px rgba(201,168,76,.1);
+}
+
+.perfume-img-wrap{
+    overflow:hidden;
+    height:240px;
+    position:relative;
+}
+
+.perfume-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform .8s cubic-bezier(.22,.61,.36,1);
+}
+
+.perfume-card:hover img{
+    transform:scale(1.09);
+}
+
+.perfume-img-wrap::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top, rgba(26,14,5,.5) 0%, transparent 50%);
+}
+
+.perfume-body{
+    padding:24px 22px 28px;
+    text-align:center;
+}
+
+.perfume-name{
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.6rem;
+    font-style:italic;
+    font-weight:500;
+    color:#16100c;
+    margin-bottom:8px;
+}
+
+.perfume-hint{
+    font-size:.82rem;
+    letter-spacing:.08em;
+    color:#3c2d24;
+    font-weight:400;
+    line-height:1.6;
+}
+
+
+/* ===== MEN'S GRID ===== */
+
+.mens-grid{
+    max-width:780px;
+    margin:0 auto;
+    padding:0 30px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:32px;
+}
+
+.mens-grid .perfume-img-wrap{
+    height:300px;
+}
+/* ===== PRICE BOX ===== */
+
+.price-section{
+    text-align:center;
+    padding:60px 24px 100px;
+}
+
+.combo-box{
+    display:inline-block;
+    padding:50px 60px;
+    background:var(--glass);
+    backdrop-filter:blur(22px);
+    border:1px solid var(--glass-bdr);
+    border-radius:8px;
+    box-shadow:0 40px 80px rgba(26,14,5,.1), inset 0 1px 0 rgba(255,255,255,.15);
+    min-width:340px;
+    opacity:0;
+    transform:translateY(40px);
+}
+
+.combo-label{
+    font-size:.78rem;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    color:#6b4518;
+    display:block;
+    margin-bottom:16px;
+    font-weight:500;
+}
+
+.combo-price{
+    font-family:'Cormorant Garamond', serif;
+    font-size:5.4rem;
+    font-weight:500;
+    color:#17110d;
+    line-height:1;
+    display:block;
+    margin-bottom:10px;
+}
+
+.combo-note{
+    font-size:.95rem;
+    color:#2f2219;
+    margin-bottom:38px;
+    line-height:1.8;
+    font-weight:400;
+}
+
+.whatsapp-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:16px 38px;
+    background:linear-gradient(135deg,#25D366,#128C7E);
+    color:#fff;
+    text-decoration:none;
+    font-size:.88rem;
+    letter-spacing:.1em;
+    font-weight:600;
+    border-radius:60px;
+    transition:.4s;
+    box-shadow:0 12px 30px rgba(37,211,102,.25);
+}
+
+.whatsapp-btn:hover{
+    transform:translateY(-4px);
+    box-shadow:0 20px 44px rgba(37,211,102,.4);
+}
+
+
+/* ===== PROMISE SECTION ===== */
+
+.promise-section{
+    text-align:center;
+    padding:80px 30px 140px;
+}
+
+.promise-inner{
+    max-width:760px;
+    margin:0 auto;
+    padding:70px 60px;
+    background:var(--glass);
+    backdrop-filter:blur(22px);
+    border:1px solid var(--glass-bdr);
+    border-radius:8px;
+    box-shadow:0 40px 80px rgba(26,14,5,.08);
+    opacity:0;
+    transform:translateY(40px);
+}
+
+.promise-eyebrow{
+    font-size:.78rem;
+    letter-spacing:.36em;
+    text-transform:uppercase;
+    color:#6b4518;
+    display:block;
+    margin-bottom:18px;
+    font-weight:500;
+}
+
+.promise-title{
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(2.3rem,3vw,3.3rem);
+    font-style:italic;
+    font-weight:500;
+    color:#18110d;
+    margin-bottom:24px;
+}
+
+.promise-text{
+    font-size:1rem;
+    line-height:2;
+    color:#2e221a;
+    font-weight:400;
+}
+
+
+/* ===== MOBILE ===== */
+
+@media(max-width:900px){
+
+    .category-section{
+        grid-template-columns:1fr;
+    }
+
+    .cat-card{
+        height:380px;
+    }
+
+    .perfume-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .mens-grid{
+        grid-template-columns:1fr;
+    }
+
+    .combo-box{
+        padding:40px 32px;
+        min-width:unset;
+        width:100%;
+        max-width:360px;
+    }
+
+    .promise-inner{
+        padding:48px 28px;
+    }
+}
+
+@media(max-width:600px){
+
+    .perfume-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero-title{
+        font-size:3.5rem;
+    }
+
+    .hero-sub{
+        font-size:1.05rem;
+    }
+
+    .cat-title{
+        font-size:2.6rem;
+    }
+
+    .sec-title{
+        font-size:2.8rem;
+    }
+
+    .combo-price{
+        font-size:4.4rem;
+    }
+
+    .promise-title{
+        font-size:2.4rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-dot" id="dot"></div>
+<div class="cursor-ring" id="ring"></div>
+<div class="grain"></div>
+
+<img src="logo.png" class="logo" alt="AHCollections4U">
+
+<a href="luxe.html" style="
+    position:fixed;
+    top:26px; right:28px;
+    z-index:900;
+    padding:11px 26px;
+    border-radius:50px;
+    background:rgba(255,248,242,.1);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(201,168,76,.28);
+    color:rgba(245,230,208,.85);
+    text-decoration:none;
+    font-family:'Jost',sans-serif;
+    font-size:.78rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    transition:.35s;
+" onmouseover="this.style.borderColor='#C9A84C';this.style.color='#E8CB7A';this.style.transform='translateY(-2px)'"
+   onmouseout="this.style.borderColor='rgba(201,168,76,.28)';this.style.color='rgba(245,230,208,.85)';this.style.transform='translateY(0)'">
+    ← Luxe Accessories
+</a>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+    <div class="hero-inner">
+        <span class="hero-eyebrow" id="heroEyebrow">AHCollections4U</span>
+        <h1 class="hero-title">
+            <span class="hero-title-line"><span class="hero-title-inner" id="heroLine1">Perfume</span></span>
+            <span class="hero-title-line"><span class="hero-title-inner" id="heroLine2">Collection</span></span>
+        </h1>
+        <div class="hero-sep" id="heroSep"></div>
+        <p class="hero-sub" id="heroSub">
+            Luxury fragrances curated for every personality —
+            from soft florals to bold, confident ouds.
+        </p>
+        <div class="hero-nav" id="heroNav">
+            <a href="#women-section" class="hero-nav-btn her">Her Collection</a>
+            <a href="#men-section" class="hero-nav-btn">His Collection</a>
+        </div>
+    </div>
+    <div class="scroll-cue" id="scrollCue">
+        <span>Scroll</span>
+        <div class="scroll-cue-line"></div>
+    </div>
+</section>
+
+<!-- ===== CATEGORY CARDS ===== -->
+<section class="category-section">
+
+    <a href="#women-section" class="cat-card" data-cat>
+        <img src="women-cover.jpeg" alt="Her Collection">
+        <div class="cat-overlay">
+            <span class="cat-tag">For Her</span>
+            <h2 class="cat-title">Her<br>Collection</h2>
+            <p class="cat-sub">Florals, romance & elegance</p>
+            <span class="cat-cta">Explore →</span>
+        </div>
+    </a>
+
+    <a href="#men-section" class="cat-card" data-cat>
+        <img src="men-cover.jpeg" alt="His Collection">
+        <div class="cat-overlay">
+            <span class="cat-tag">For Him</span>
+            <h2 class="cat-title">His<br>Collection</h2>
+            <p class="cat-sub">Bold, confident & timeless</p>
+            <span class="cat-cta">Explore →</span>
+        </div>
+    </a>
+
+</section>
+
+<!-- ===== WOMEN'S SECTION ===== -->
+<section id="women-section">
+    <div class="sec-head">
+        <span class="sec-eyebrow reveal">For Her</span>
+        <h2 class="sec-title her reveal">The Women's<br>Fragrance Collection</h2>
+        <div class="gold-line" id="goldLine1"></div>
+        <p class="sec-sub reveal">
+            A carefully curated set of fragrances designed to complement every mood, moment and occasion.
+        </p>
+    </div>
+
+    <div class="perfume-grid">
+
+        <div class="perfume-card" data-pcard>
+            <div class="perfume-img-wrap"><img src="rose.jpeg" alt="Bella Vita Rose"></div>
+            <div class="perfume-body">
+                <h3 class="perfume-name">Bella Vita Rose</h3>
+                <p class="perfume-hint">Floral · Feminine · Soft</p>
+            </div>
+        </div>
+
+        <div class="perfume-card" data-pcard>
+            <div class="perfume-img-wrap"><img src="glam.jpeg" alt="Bella Vita Glam"></div>
+            <div class="perfume-body">
+                <h3 class="perfume-name">Bella Vita Glam</h3>
+                <p class="perfume-hint">Bold · Glamorous · Vibrant</p>
+            </div>
+        </div>
+
+        <div class="perfume-card" data-pcard>
+            <div class="perfume-img-wrap"><img src="date.jpeg" alt="Bella Vita Date"></div>
+            <div class="perfume-body">
+                <h3 class="perfume-name">Bella Vita Date</h3>
+                <p class="perfume-hint">Romantic · Warm · Captivating</p>
+            </div>
+        </div>
+
+        <div class="perfume-card" data-pcard>
+            <div class="perfume-img-wrap"><img src="senorita.jpeg" alt="Bella Vita Senorita"></div>
+            <div class="perfume-body">
+                <h3 class="perfume-name">Bella Vita Senorita</h3>
+                <p class="perfume-hint">Exotic · Playful · Confident</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="price-section">
+        <div class="combo-box" data-combo>
+            <span class="combo-label">Women's Combo Price</span>
+            <span class="combo-price">₹699</span>
+            <p class="combo-note">All 4 fragrances — one beautiful set</p>
+            <a href="https://wa.me/+919400142771?text=Hello,%20I'm%20interested%20in%20the%20Women's%20Perfume%20Combo."
+               class="whatsapp-btn" target="_blank">
+                💬 Order On WhatsApp
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== MEN'S SECTION ===== -->
+<section id="men-section">
+    <div class="sec-head">
+        <span class="sec-eyebrow reveal">For Him</span>
+        <h2 class="sec-title him reveal">The Gentleman's<br>Fragrance Collection</h2>
+        <div class="gold-line" id="goldLine2"></div>
+        <p class="sec-sub reveal">
+            Bold, sophisticated and unforgettable fragrances crafted for confidence and style.
+        </p>
+    </div>
+
+    <div class="mens-grid">
+
+        <div class="perfume-card" data-pcard>
+            <div class="perfume-img-wrap"><img src="ceoman.jpeg" alt="CEO Man"></div>
+            <div class="perfume-body">
+                <h3 class="perfume-name">CEO Man</h3>
+                <p class="perfume-hint">Powerful · Woody · Distinguished</p>
+            </div>
+        </div>
+
+        <div class="perfume-card" data-pcard>
+            <div class="perfume-img-wrap"><img src="whiteoud.jpeg" alt="White Oud"></div>
+            <div class="perfume-body">
+                <h3 class="perfume-name">White Oud</h3>
+                <p class="perfume-hint">Luxurious · Smoky · Timeless</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="price-section">
+        <div class="combo-box" data-combo>
+            <span class="combo-label">Men's Combo Price</span>
+            <span class="combo-price">₹206</span>
+            <p class="combo-note">Both fragrances — crafted for him</p>
+            <a href="https://wa.me/+919400142771?text=Hello,%20I'm%20interested%20in%20the%20Men's%20Perfume%20Combo."
+               class="whatsapp-btn" target="_blank">
+                💬 Order On WhatsApp
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== PROMISE ===== -->
+<section class="promise-section">
+    <div class="promise-inner" data-promise>
+        <span class="promise-eyebrow">Our Guarantee</span>
+        <h2 class="promise-title">The Fragrance Promise</h2>
+        <p class="promise-text">
+            Carefully selected fragrances crafted to complement every mood, occasion and personality.
+            Whether you're looking for a thoughtful gift or your next signature scent,
+            our collection brings elegance, confidence and charm to every single moment.
+        </p>
+    </div>
+</section>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ===== CURSOR ===== */
+const dot=document.getElementById('dot');
+const ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+    mx=e.clientX; my=e.clientY;
+    dot.style.left=mx+'px'; dot.style.top=my+'px';
+});
+(function loop(){
+    rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    requestAnimationFrame(loop);
+})();
+
+/* ===== HERO INTRO ===== */
+const tl = gsap.timeline({ defaults:{ ease:'power3.out' } });
+gsap.set('#heroEyebrow', { y:16, opacity:0 });
+gsap.set('#heroLine1',   { y:'110%' });
+gsap.set('#heroLine2',   { y:'110%' });
+gsap.set('#heroSep',     { width:0, opacity:0 });
+gsap.set('#heroSub',     { y:14, opacity:0 });
+gsap.set('#heroNav',     { y:18, opacity:0 });
+gsap.set('#scrollCue',   { opacity:0 });
+
+tl
+  .to('#heroEyebrow', { y:0, opacity:1, duration:.7 })
+  .to('#heroLine1',   { y:'0%', duration:.9, ease:'power4.out' }, '-=0.3')
+  .to('#heroLine2',   { y:'0%', duration:.9, ease:'power4.out' }, '-=0.65')
+  .to('#heroSep',     { width:180, opacity:1, duration:.7, ease:'power2.out' }, '-=0.4')
+  .to('#heroSub',     { y:0, opacity:1, duration:.7 }, '-=0.3')
+  .to('#heroNav',     { y:0, opacity:1, duration:.6 }, '-=0.3')
+  .to('#scrollCue',   { opacity:1, duration:.5 }, '+=0.4');
+
+ScrollTrigger.create({
+    trigger:'#hero', start:'bottom center',
+    onEnter:()=>gsap.to('#scrollCue',{opacity:0,duration:.3}),
+    onLeaveBack:()=>gsap.to('#scrollCue',{opacity:1,duration:.3}),
+});
+
+/* ===== CATEGORY CARDS ===== */
+gsap.utils.toArray('[data-cat]').forEach((card,i)=>{
+    gsap.to(card, {
+        scrollTrigger:{ trigger:card, start:'top 88%', toggleActions:'play none none reverse' },
+        opacity:1, y:0, duration:1, delay:i*0.15, ease:'power3.out'
+    });
+});
+
+/* ===== GOLD LINES ===== */
+['#goldLine1','#goldLine2'].forEach(id=>{
+    gsap.to(id, {
+        width:140, opacity:1,
+        scrollTrigger:{ trigger:id, start:'top 90%', toggleActions:'play none none reverse' },
+        duration:.8, ease:'power2.out'
+    });
+});
+
+/* ===== REVEALS ===== */
+gsap.utils.toArray('.reveal').forEach((el,i)=>{
+    gsap.set(el,{ y:30, opacity:0 });
+    gsap.to(el, {
+        scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none reverse' },
+        y:0, opacity:1, duration:.9, delay:(i%3)*.08, ease:'power3.out'
+    });
+});
+
+/* ===== PERFUME CARDS — reveal + 3D tilt ===== */
+gsap.utils.toArray('[data-pcard]').forEach((card,i)=>{
+    gsap.to(card, {
+        scrollTrigger:{ trigger:card, start:'top 90%', toggleActions:'play none none reverse' },
+        opacity:1, y:0, scale:1, duration:.9, delay:(i%4)*.1, ease:'power3.out'
+    });
+    card.addEventListener('mousemove', e=>{
+        const r=card.getBoundingClientRect();
+        const dx=(e.clientX-r.left-r.width/2)/(r.width/2);
+        const dy=(e.clientY-r.top-r.height/2)/(r.height/2);
+        gsap.to(card,{ rotateY:dx*8, rotateX:-dy*6, duration:.4, ease:'power2.out' });
+    });
+    card.addEventListener('mouseleave',()=>{
+        gsap.to(card,{ rotateY:0, rotateX:0, duration:.6, ease:'elastic.out(1,.5)' });
+    });
+});
+
+/* ===== COMBO BOXES ===== */
+gsap.utils.toArray('[data-combo]').forEach(el=>{
+    gsap.to(el, {
+        scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none reverse' },
+        opacity:1, y:0, duration:.9, ease:'power3.out'
+    });
+});
+
+/* ===== PROMISE ===== */
+gsap.to('[data-promise]', {
+    scrollTrigger:{ trigger:'[data-promise]', start:'top 88%', toggleActions:'play none none reverse' },
+    opacity:1, y:0, duration:1, ease:'power3.out'
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Earpods Collection | AHCollections4U</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:
+    linear-gradient(
+    rgba(0,0,0,.55),
+    rgba(0,0,0,.65)
+    ),
+    url("earpods-bg.jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+
+    color:white;
+}
+
+/* LOGO */
+
+.logo{
+
+    position:absolute;
+
+    top:25px;
+    left:25px;
+
+    width:90px;
+
+    z-index:100;
+}
+
+/* HERO */
+
+.hero{
+
+    text-align:center;
+
+    padding:120px 20px 70px;
+}
+
+.hero h1{
+
+    font-family:'Orbitron',sans-serif;
+
+    font-size:4.5rem;
+
+    letter-spacing:5px;
+
+    color:#eaf7ff;
+
+    text-transform:uppercase;
+
+    text-shadow:
+    0 0 20px rgba(0,180,255,.4);
+}
+
+.hero p{
+
+    margin-top:20px;
+
+    font-size:1.1rem;
+
+    color:#b9d8ea;
+}
+
+.blue-line{
+
+    width:220px;
+
+    height:4px;
+
+    margin:25px auto;
+
+    border-radius:50px;
+
+    background:
+    linear-gradient(
+    90deg,
+    transparent,
+    #00bfff,
+    transparent
+    );
+
+    box-shadow:
+    0 0 20px #00bfff;
+}
+
+/* PRODUCT */
+
+.product-section{
+
+    padding:40px 8% 120px;
+}
+
+.product-card{
+
+    max-width:1400px;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:70px;
+
+    padding:40px;
+
+    border-radius:35px;
+
+    background:
+    rgba(10,15,30,.55);
+
+    backdrop-filter:blur(18px);
+
+    border:
+    1px solid rgba(0,180,255,.2);
+
+    box-shadow:
+    0 0 35px rgba(0,180,255,.15);
+}
+
+/* IMAGE */
+
+.product-image{
+
+    flex:1;
+
+    position:relative;
+}
+
+.product-image::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:350px;
+    height:350px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+    circle,
+    rgba(0,180,255,.35),
+    transparent 70%
+    );
+
+    left:50%;
+    top:50%;
+
+    transform:
+    translate(-50%,-50%);
+}
+
+.product-image img{
+
+    width:100%;
+
+    max-width:550px;
+
+    position:relative;
+
+    z-index:2;
+}
+
+/* INFO */
+
+.product-info{
+
+    flex:1;
+}
+
+.tag{
+
+    display:inline-block;
+
+    padding:12px 22px;
+
+    border-radius:50px;
+
+    border:
+    1px solid rgba(0,180,255,.4);
+
+    color:#77d8ff;
+
+    letter-spacing:2px;
+
+    font-size:.85rem;
+}
+
+.product-info h2{
+
+    margin-top:25px;
+
+    font-family:'Orbitron',sans-serif;
+
+    font-size:3.5rem;
+
+    line-height:1.1;
+
+    color:white;
+}
+
+.product-info h2 span{
+
+    color:#00bfff;
+}
+
+.product-desc{
+
+    margin-top:25px;
+
+    font-size:1.05rem;
+
+    line-height:2;
+
+    color:#c6d6e6;
+}
+
+/* PRICE */
+
+.price-box{
+
+    width:250px;
+
+    margin-top:35px;
+
+    text-align:center;
+
+    padding:25px;
+
+    border-radius:25px;
+
+    background:
+    rgba(0,180,255,.08);
+
+    border:
+    1px solid rgba(0,180,255,.3);
+
+    box-shadow:
+    0 0 25px rgba(0,180,255,.15);
+}
+
+.price-box span{
+
+    color:#7fdcff;
+
+    letter-spacing:2px;
+
+    font-size:.8rem;
+}
+
+.price-box h3{
+
+    font-size:4rem;
+
+    color:#00bfff;
+
+    margin-top:8px;
+}
+
+/* WHATSAPP */
+
+.whatsapp-btn{
+
+    display:inline-block;
+
+    margin-top:30px;
+
+    padding:18px 35px;
+
+    text-decoration:none;
+
+    color:white;
+
+    border-radius:18px;
+
+    font-weight:600;
+
+    background:
+    linear-gradient(
+    135deg,
+    #25D366,
+    #128C7E
+    );
+
+    transition:.35s;
+}
+
+.whatsapp-btn:hover{
+
+    transform:
+    translateY(-5px);
+
+    box-shadow:
+    0 0 20px rgba(37,211,102,.4);
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .hero h1{
+
+        font-size:2.7rem;
+    }
+
+    .product-card{
+
+        flex-direction:column;
+    }
+
+    .product-info h2{
+
+        font-size:2.4rem;
+    }
+
+    .price-box{
+
+        width:100%;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<img src="logo.png" class="logo">
+
+<section class="hero">
+
+    <h1>WIRELESS EARPODS</h1>
+
+    <div class="blue-line"></div>
+
+    <p>
+        Immersive Sound • Modern Design • Everyday Freedom
+    </p>
+
+</section>
+
+<section class="product-section">
+
+    <div class="product-card">
+
+        <div class="product-image">
+
+            <img src="earpod1.jpeg" alt="Earpods">
+
+        </div>
+
+        <div class="product-info">
+
+            <span class="tag">
+                PREMIUM AUDIO
+            </span>
+
+            <h2>
+                Elite <span>Wireless</span><br>
+                Earpods
+            </h2>
+
+            <p class="product-desc">
+
+                Experience crystal-clear audio, deep bass and seamless connectivity in a sleek modern design.
+
+                Perfect for music, workouts, calls and everyday use while delivering comfort and premium performance.
+
+            </p>
+
+            <div class="price-box">
+
+                <span>SPECIAL PRICE</span>
+
+                <h3>₹899</h3>
+
+            </div>
+
+            <a href="https://wa.me/+919400142771?text=Hello,%20I'm%20interested%20in%20your%20Wireless%20Earpods."
+               class="whatsapp-btn"
+               target="_blank">
+
+                💬 Enquire On WhatsApp
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

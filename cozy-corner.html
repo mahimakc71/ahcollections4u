@@ -1,0 +1,815 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cozy Corner | AH Collection</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+font-family:'Poppins',sans-serif;
+
+background:
+linear-gradient(
+rgba(248,242,235,.85),
+rgba(239,227,212,.85)
+),
+url("cozy-bg.jpeg");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+
+color:#6f5746;
+
+}
+
+/* HERO */
+
+.hero{
+
+padding:140px 20px 100px;
+
+text-align:center;
+
+}
+
+.hero h1{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:5rem;
+
+font-style:italic;
+
+color:#8c6a56;
+
+}
+
+.hero p{
+
+max-width:750px;
+
+margin:25px auto;
+
+line-height:2;
+
+font-size:1.1rem;
+
+}
+
+.brown-line{
+
+width:220px;
+height:4px;
+
+margin:25px auto;
+
+border-radius:50px;
+
+background:
+linear-gradient(
+90deg,
+#b08968,
+#d6b89b,
+#b08968
+);
+
+}
+
+/* SECTION TITLE */
+
+.section-title{
+
+text-align:center;
+
+padding:80px 20px 50px;
+
+}
+
+.section-title h2{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:4rem;
+
+font-style:italic;
+
+color:#8c6a56;
+
+}
+
+.section-title p{
+
+margin-top:15px;
+
+font-size:1.05rem;
+
+}
+
+/* GRID */
+
+.cozy-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(280px,1fr));
+
+gap:30px;
+
+padding:0 8% 80px;
+
+}
+
+.cozy-card{
+
+background:
+rgba(255,255,255,.55);
+
+backdrop-filter:blur(15px);
+
+border-radius:30px;
+
+overflow:hidden;
+
+box-shadow:
+0 15px 35px rgba(0,0,0,.08);
+
+transition:.4s;
+
+}
+
+.cozy-card:hover{
+
+transform:translateY(-10px);
+
+}
+
+.cozy-card img{
+
+width:100%;
+height:320px;
+
+object-fit:cover;
+
+}
+
+.cozy-card h3{
+
+padding:20px 20px 10px;
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:2rem;
+
+color:#8c6a56;
+
+}
+
+.cozy-card p{
+
+padding:0 20px;
+
+line-height:1.8;
+
+}
+
+.cozy-card span{
+
+display:block;
+
+margin:20px;
+
+padding:12px;
+
+text-align:center;
+
+border-radius:15px;
+
+background:#f3e7db;
+
+font-weight:600;
+
+color:#8c6a56;
+
+}
+
+/* GIFT CARDS */
+
+.gift-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:25px;
+
+padding:0 8% 80px;
+
+}
+
+.gift-card{
+
+background:
+rgba(255,255,255,.55);
+
+backdrop-filter:blur(15px);
+
+border-radius:25px;
+
+padding:20px;
+
+text-align:center;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.05);
+
+}
+
+.gift-card img{
+
+width:100%;
+height:220px;
+
+object-fit:cover;
+
+border-radius:15px;
+
+margin-bottom:15px;
+
+}
+
+.gift-card h4{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:1.8rem;
+
+color:#8c6a56;
+
+}
+
+.gift-card p{
+
+margin-top:10px;
+
+font-weight:600;
+
+}
+
+/* WHATSAPP */
+
+.button-center{
+
+display:flex;
+
+justify-content:center;
+
+margin-top:25px;
+
+}
+
+.whatsapp-btn{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:18px 40px;
+
+border-radius:50px;
+
+background:
+linear-gradient(
+135deg,
+rgba(37,211,102,.25),
+rgba(37,211,102,.12)
+);
+
+backdrop-filter:blur(15px);
+
+border:1px solid rgba(37,211,102,.3);
+
+text-decoration:none;
+
+font-weight:600;
+
+color:#1f8f4f;
+
+transition:.4s;
+
+}
+
+.whatsapp-btn:hover{
+
+transform:translateY(-5px);
+
+}
+
+/* ORDER BOX */
+
+.order-box{
+
+padding:100px 8%;
+
+text-align:center;
+
+}
+
+.order-box h2{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:4rem;
+
+font-style:italic;
+
+color:#8c6a56;
+
+}
+
+.order-box p{
+
+max-width:700px;
+
+margin:20px auto;
+
+line-height:2;
+
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.hero h1{
+font-size:3.5rem;
+}
+
+.section-title h2{
+font-size:3rem;
+}
+
+.gift-grid{
+
+grid-template-columns:
+repeat(2,1fr);
+
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1>Cozy Corner ☁️🤎</h1>
+
+<div class="brown-line"></div>
+
+<p>
+
+Little comforts.
+Cute moments.
+Everyday happiness.
+
+Discover adorable gifts, cozy essentials,
+room décor and comforting companions
+carefully selected to brighten your day.
+
+</p>
+
+</section>
+
+<!-- COMFORT ESSENTIALS -->
+
+<section class="section-title">
+
+<h2>☁️ Comfort Essentials</h2>
+
+<p>Everyday comfort made better.</p>
+
+</section>
+
+<div class="cozy-grid">
+
+<div class="cozy-card">
+
+<img src="period-relief.jpeg">
+
+<h3>Period Cramp Relief Massager</h3>
+
+<p>
+
+Portable cordless relief for period cramps.
+Comfort whenever you need it.
+
+</p>
+
+<span>DM For Price</span>
+
+</div>
+
+<div class="cozy-card">
+
+<img src="air-cooler.jpeg">
+
+<h3>Mini Desktop Air Cooler</h3>
+
+<p>
+
+Multi-speed cooling with mist function.
+Perfect for desks and study spaces.
+
+</p>
+
+<span>₹599</span>
+
+</div>
+
+<div class="cozy-card">
+
+<img src="charge-protector.jpeg">
+
+<h3>Charger Protector</h3>
+
+<p>
+
+Protect your charging cable while adding
+a cute touch to your setup.
+
+</p>
+
+<span>DM For Price</span>
+
+</div>
+
+</div>
+
+```html
+<!-- CUTE & COZY COLLECTION -->
+
+<section class="section-title">
+
+<h2>🧸 Cute & Cozy Collection</h2>
+
+<p>Your cozy companions await.</p>
+
+</section>
+
+<div class="cozy-grid">
+
+<div class="cozy-card">
+
+<img src="panda-plushie.jpeg">
+
+<h3>Panda Plushie</h3>
+
+<p>
+
+Too cute to miss 🐼😍
+
+Perfect gift for your loved ones
+and a cozy addition to any room.
+
+</p>
+
+<span>₹195 (Shipping Included)</span>
+
+</div>
+
+
+<div class="cozy-card">
+
+<img src="breathing-teddy.jpeg">
+
+<h3>Breathing Teddy Bear</h3>
+
+<p>
+
+Interactive teddy featuring
+music, lights and breathing motion.
+
+A comforting companion for children
+and teddy lovers alike.
+
+</p>
+
+<span>DM For Price</span>
+
+</div>
+
+
+<div class="cozy-card">
+
+<video controls autoplay muted loop
+style="width:100%;height:320px;object-fit:cover;">
+
+<source src="burger-lamp.mp4" type="video/mp4">
+
+</video>
+
+<h3>Burger Lamp</h3>
+
+<p>
+
+Fun, unique and cozy lighting
+for bedrooms, desks and gift boxes.
+
+</p>
+
+<span>From ₹120 Onwards</span>
+
+</div>
+
+
+<div class="cozy-card">
+
+<img src="deer-showpiece.jpeg">
+
+<h3>Cute Deer Showpiece</h3>
+
+<p>
+
+Perfect for home décor,
+shelves and thoughtful gifting.
+
+</p>
+
+<span>₹198 Only</span>
+
+</div>
+
+
+<div class="cozy-card">
+
+<img src="cute-showpiece.jpeg">
+
+<h3> Cute Showpiece</h3>
+
+<p>
+
+Adorable decorative piece
+for your desk, shelf or room.
+
+</p>
+
+<span>₹144 Only</span>
+
+</div>
+
+</div>
+
+
+
+<!-- TINY GIFTS -->
+
+<section class="section-title">
+
+<h2>💕 Tiny Gifts Under ₹200</h2>
+
+<p>Small gifts. Big smiles.</p>
+
+</section>
+
+<div class="gift-grid">
+
+<div class="gift-card">
+
+<img src="heart-box.jpeg">
+
+<h4>Heart Gift Box</h4>
+
+<p>₹119 / ₹149</p>
+
+</div>
+
+
+<div class="gift-card">
+
+<img src="flower-clips.jpeg">
+
+<h4>Flower Hair Clips</h4>
+
+<p>DM For Price</p>
+
+</div>
+
+
+<div class="gift-card">
+
+<img src="pear-keychain.jpeg">
+
+<h4>Twin Pear Keychain</h4>
+
+<p>₹159</p>
+
+</div>
+
+
+<div class="gift-card">
+
+<img src="spinner.jpeg">
+
+<h4>Marvel Spinner</h4>
+
+<p>₹179</p>
+
+</div>
+
+</div>
+
+<!-- COZY DESK & HOME -->
+
+<section class="section-title">
+
+<h2>☕ Cozy Desk & Home</h2>
+
+<p>Create a warm and happy space.</p>
+
+</section>
+
+<div class="cozy-grid">
+
+<div class="cozy-card">
+
+<img src="coffee-mug.jpeg">
+
+<h3>Glass Coffee Mug</h3>
+
+<p>
+
+Elegant 350ml glass coffee mug
+perfect for coffee, tea and cozy evenings.
+
+A must-have for every cozy corner.
+
+</p>
+
+<span>DM For Price</span>
+
+</div>
+
+
+<div class="cozy-card">
+
+<img src="animal-lamp.jpeg">
+
+<h3>Animal Night Lamps</h3>
+
+<p>
+
+Good nights start with cute lights 🌙
+
+Sleeping pandas and adorable
+animal lamps now available.
+
+</p>
+
+<span>From ₹120 Onwards</span>
+
+</div>
+
+</div>
+
+
+
+<!-- PERFECT GIFT IDEAS -->
+
+<section class="section-title">
+
+<h2>🎁 Perfect Gift Ideas</h2>
+
+<p>Thoughtful gifts for every occasion.</p>
+
+</section>
+
+<div class="gift-grid">
+
+<div class="gift-card">
+
+<h4>🎂 Birthdays</h4>
+
+<p>
+Cute surprises they'll never forget.
+</p>
+
+</div>
+
+
+<div class="gift-card">
+
+<h4>💖 Best Friends</h4>
+
+<p>
+Tiny gifts with big emotions.
+</p>
+
+</div>
+
+
+<div class="gift-card">
+
+<h4>🧸 Cute Surprises</h4>
+
+<p>
+Perfect for anyone who loves adorable things.
+</p>
+
+</div>
+
+
+<div class="gift-card">
+
+<h4>🌸 Self-Care Days</h4>
+
+<p>
+Comfort essentials for relaxing moments.
+</p>
+
+</div>
+
+
+<div class="gift-card">
+
+<h4>🏡 Room Décor</h4>
+
+<p>
+Add charm and personality to any space.
+</p>
+
+</div>
+
+
+<div class="gift-card">
+
+<h4>✨ Just Because</h4>
+
+<p>
+Sometimes the best gifts need no reason.
+</p>
+
+</div>
+
+</div>
+
+
+
+<!-- WHATSAPP -->
+
+<section class="order-box">
+
+<h2>Looking For Something Cozy? 🤎</h2>
+
+<p>
+
+We're always adding new comfort products,
+cute gifts, décor pieces and cozy essentials.
+
+Message us for availability and orders.
+
+</p>
+
+<div class="button-center">
+
+<a href="https://wa.me/+919400142771"
+class="whatsapp-btn">
+
+💬 Contact On WhatsApp
+
+</a>
+
+</div>
+
+</section>
+
+</body>
+</html>
+
+
+

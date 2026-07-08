@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gift Hampers | AHCollections4U</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+    --velvet:    #120904;
+    --brown:     #7a4d30;
+    --brown-2:   #a07050;
+    --gold:      #C49B63;
+    --gold-lt:   #F5D7A1;
+    --cream:     #FFF8F2;
+    --glass:     rgba(255,248,242,0.12);
+    --glass-bdr: rgba(196,155,99,0.28);
+    --line:      rgba(196,155,99,0.22);
+}
+
+html { scroll-behavior:smooth; font-size:17px; }
+
+body {
+    font-family:'Jost', sans-serif;
+    font-weight:300;
+    color:#1a120d;
+    overflow-x:hidden;
+    cursor:none;
+    background:
+        linear-gradient(rgba(255,248,242,.22), rgba(255,248,242,.22)),
+        url("hamper-bg.jpeg");
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+}
+::selection { background:var(--gold); color:#fff; }
+
+/* ===== CURSOR ===== */
+.cursor-dot {
+    width:7px; height:7px; border-radius:50%;
+    background:var(--gold);
+    position:fixed; top:0; left:0;
+    pointer-events:none; z-index:9999;
+    transform:translate(-50%,-50%);
+    box-shadow:0 0 10px var(--gold);
+}
+.cursor-ring {
+    width:36px; height:36px; border-radius:50%;
+    border:1px solid rgba(196,155,99,.55);
+    position:fixed; top:0; left:0;
+    pointer-events:none; z-index:9998;
+    transform:translate(-50%,-50%);
+    transition:width .25s, height .25s, border-color .25s;
+}
+body:has(a:hover) .cursor-ring,
+body:has(.item-card:hover) .cursor-ring,
+body:has(.step-card:hover) .cursor-ring {
+    width:56px; height:56px;
+    border-color:var(--gold);
+}
+
+/* ===== GRAIN ===== */
+.grain {
+    position:fixed; inset:0; z-index:5;
+    pointer-events:none; opacity:.03;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:180px;
+}
+
+/* ===== NAV ===== */
+.nav-logo {
+    position:fixed; top:26px; left:28px;
+    width:56px; height:56px; border-radius:50%;
+    object-fit:cover;
+    border:1px solid var(--glass-bdr);
+    box-shadow:0 0 20px rgba(196,155,99,.22);
+    z-index:900; backdrop-filter:blur(8px);
+}
+.back-btn {
+    position:fixed; top:26px; right:28px;
+    z-index:900;
+    padding:11px 26px; border-radius:50px;
+    background:var(--glass); backdrop-filter:blur(12px);
+    border:1px solid var(--glass-bdr);
+    color:#2d1d12;
+    text-decoration:none;
+    font-family:'Jost',sans-serif;
+    font-size:.84rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    transition:.35s;
+}
+.back-btn:hover {
+    border-color:var(--gold);
+    color:#000;
+    transform:translateY(-2px);
+}
+
+/* ===== HERO ===== */
+.hero {
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:130px 24px 80px;
+    position:relative;
+    overflow:hidden;
+}
+.hero::before {
+    content:'';
+    position:absolute;
+    inset:0;
+    background:radial-gradient(ellipse at 50% 60%, rgba(255,248,242,.2) 0%, rgba(18,9,4,.4) 100%);
+    pointer-events:none;
+}
+.hero-inner {
+    position:relative;
+    z-index:2;
+}
+.hero-eyebrow {
+    display:block;
+    font-size:.82rem;
+    letter-spacing:.42em;
+    text-transform:uppercase;
+    color:#5c3b17;
+    margin-bottom:22px;
+    opacity:0;
+}
+.hero-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(3.8rem, 8.4vw, 8.5rem);
+    font-weight:300;
+    font-style:italic;
+    line-height:.95;
+    color:#18110c;
+    text-shadow:0 4px 40px rgba(4, 0, 0, 0.929);
+}
+.hero-title-line {
+    display:block;
+    overflow:hidden;
+}
+.hero-title-inner {
+    display:block;
+}
+.hero-sep {
+    width:0;
+    height:2px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin:36px auto;
+    border-radius:50px;
+}
+.hero-sub {
+    font-size:1.16rem;
+    line-height:1.9;
+    color:#2b1b11;
+    max-width:600px;
+    margin:0 auto;
+    opacity:0;
+}
+.hero-cta {
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    margin-top:44px;
+    padding:16px 44px;
+    border:1px solid var(--glass-bdr);
+    background:var(--glass);
+    backdrop-filter:blur(14px);
+    color:#1b120c;
+    text-decoration:none;
+    font-size:.84rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    transition:.4s;
+    opacity:0;
+}
+.hero-cta:hover {
+    background:var(--gold);
+    color:#fff;
+    border-color:var(--gold);
+    transform:translateY(-3px);
+    box-shadow:0 16px 40px rgba(0,0,0,.4);
+}
+.scroll-cue {
+    position:absolute;
+    bottom:36px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    z-index:2;
+    opacity:0;
+}
+.scroll-cue span {
+    font-size:.68rem;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:#2d1d12;
+}
+.scroll-cue-line {
+    width:1px;
+    height:42px;
+    background:linear-gradient(to bottom, var(--gold), transparent);
+    animation:lineDrop 2s ease-in-out infinite;
+}
+@keyframes lineDrop {
+    0% { transform:scaleY(0); transform-origin:top; }
+    50% { transform:scaleY(1); transform-origin:top; }
+    51% { transform:scaleY(1); transform-origin:bottom; }
+    100% { transform:scaleY(0); transform-origin:bottom; }
+}
+
+/* ===== SECTION HEADER ===== */
+.sec-head {
+    text-align:center;
+    padding:110px 24px 56px;
+}
+
+.sec-eyebrow {
+    display:block;
+    font-size:.78rem;
+    letter-spacing:.38em;
+    text-transform:uppercase;
+    color:#130a00;
+    margin-bottom:18px;
+}
+
+.sec-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(2.7rem, 4.3vw, 4.1rem);
+    font-weight:400;
+    font-style:italic;
+    color:#1a120d;
+    line-height:1.1;
+}
+
+.sec-sub {
+    max-width:760px;
+    margin:18px auto 0;
+    font-size:1.02rem;
+    line-height:1.9;
+    color:#2d1d12;
+}
+
+.gold-line {
+    width:0;
+    height:3px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin:26px auto 0;
+    border-radius:50px;
+    box-shadow:0 0 12px rgba(26,15,1,.93);
+}
+
+/* ===== STEPS ===== */
+.steps-grid {
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 30px 100px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+    gap:28px;
+}
+
+.step-card {
+    background:var(--glass);
+    backdrop-filter:blur(18px);
+    border:1px solid var(--glass-bdr);
+    border-radius:20px;
+    padding:40px 30px;
+    text-align:center;
+    opacity:0;
+    transform:translateY(50px);
+    transition:border-color .4s, box-shadow .4s;
+}
+
+.step-card:hover {
+    border-color:rgba(54,35,7,.92);
+    box-shadow:0 24px 55px rgba(0,0,0,.93), 0 0 24px rgba(37,21,0,.89);
+    transform:translateY(-6px) !important;
+}
+
+.step-icon {
+    font-size:2.6rem;
+    margin-bottom:18px;
+    display:block;
+}
+
+.step-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.9rem;
+    font-style:italic;
+    color:#1a120d;
+    margin-bottom:12px;
+}
+
+.step-desc {
+    font-size:1rem;
+    line-height:1.85;
+    color:#2d1d12;
+}
+
+.step-num {
+    display:inline-block;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    border:1px solid var(--glass-bdr);
+    font-size:.8rem;
+    letter-spacing:.1em;
+    color:#f3dca8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 20px;
+    background:rgba(0,0,0,.93);
+}
+
+/* ===== ITEMS GRID ===== */
+.items-grid {
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 30px 100px;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:24px;
+}
+
+.item-box {
+    text-align:center;
+    opacity:0;
+    transform:translateY(40px);
+}
+
+.item-card {
+    height:160px;
+    background:var(--glass);
+    backdrop-filter:blur(15px);
+    border:1px solid var(--glass-bdr);
+    border-radius:18px;
+    overflow:hidden;
+    transition:transform .45s cubic-bezier(.22,.61,.36,1),
+               box-shadow .45s,
+               border-color .45s;
+}
+
+.item-card:hover {
+    transform:translateY(-8px) scale(1.03);
+    box-shadow:0 20px 45px rgba(20,7,0,.91),
+               0 0 20px rgba(50,30,3,.97);
+    border-color:rgba(15,9,1,.94);
+}
+
+.item-card img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform .6s ease;
+}
+
+.item-card:hover img {
+    transform:scale(1.09);
+}
+
+.item-label {
+    margin-top:12px;
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.28rem;
+    font-style:italic;
+    color:#1a120d;
+}
+/* ===== CREATIONS (editorial layout) ===== */
+.creations-wrap {
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 30px 100px;
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+}
+
+.creation-card {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    min-height:460px;
+    overflow:hidden;
+    border-radius:4px;
+    border:1px solid var(--line);
+    opacity:0;
+    transform:translateY(60px);
+}
+
+.creation-card.flip {
+    direction:rtl;
+}
+.creation-card.flip > * {
+    direction:ltr;
+}
+
+.creation-media {
+    position:relative;
+    overflow:hidden;
+}
+
+.creation-media img,
+.creation-media video {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform 1s cubic-bezier(.22,.61,.36,1);
+}
+
+.creation-card:hover .creation-media img,
+.creation-card:hover .creation-media video {
+    transform:scale(1.05);
+}
+
+.creation-body {
+    background:rgba(255,255,255,.22);
+    backdrop-filter:blur(18px);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:60px 55px;
+}
+
+.creation-tag {
+    font-size:.75rem;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    color:#5c3b17;
+    margin-bottom:18px;
+    display:block;
+}
+
+.creation-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size:2.5rem;
+    font-style:italic;
+    color:#1a120d;
+    margin-bottom:18px;
+    line-height:1.15;
+}
+
+.creation-desc {
+    font-size:1rem;
+    line-height:2;
+    color:#2d1d12;
+}
+
+/* ===== CUSTOMISE GRID ===== */
+
+.custom-grid {
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 30px 100px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:28px;
+}
+
+.custom-item {
+    opacity:0;
+    transform:translateY(40px);
+    text-align:center;
+}
+
+.custom-card {
+    height:190px;
+    background:var(--glass);
+    backdrop-filter:blur(15px);
+    border:1px solid var(--glass-bdr);
+    border-radius:18px;
+    overflow:hidden;
+    transition:transform .45s cubic-bezier(.22,.61,.36,1),
+               box-shadow .45s,
+               border-color .45s;
+}
+
+.custom-card:hover {
+    transform:translateY(-8px);
+    box-shadow:0 20px 45px rgba(32,12,1,.25),
+               0 0 20px rgba(4,2,0,.12);
+    border-color:rgba(26,16,1,.35);
+}
+
+.custom-card img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform .6s;
+}
+
+.custom-card:hover img {
+    transform:scale(1.08);
+}
+
+.custom-label {
+    margin-top:12px;
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.3rem;
+    font-style:italic;
+    color:#1a120d;
+}
+
+/* ===== GALLERY ===== */
+
+.gallery-wrap {
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 30px 100px;
+    columns:3;
+    column-gap:20px;
+}
+
+.gallery-wrap img,
+.gallery-wrap video {
+    width:100%;
+    margin-bottom:20px;
+    border-radius:16px;
+    display:block;
+    break-inside:avoid;
+    border:1px solid var(--line);
+    opacity:0;
+    transition:transform .5s, box-shadow .5s;
+}
+
+.gallery-wrap img:hover {
+    transform:scale(1.025);
+    box-shadow:0 20px 50px rgba(22,13,1,.18);
+}
+
+.gallery-wrap video {
+    opacity:1;
+}
+
+/* ===== ORDER BOX ===== */
+
+.order-section {
+    padding:40px 30px 130px;
+    text-align:center;
+}
+
+.order-glass {
+    max-width:820px;
+    margin:0 auto;
+    padding:70px 60px;
+    background:var(--glass);
+    backdrop-filter:blur(22px);
+    border:1px solid var(--glass-bdr);
+    border-radius:8px;
+    box-shadow:
+        0 40px 100px rgba(28,10,1,.20),
+        inset 0 1px 0 rgba(255,255,255,.35);
+    opacity:0;
+    transform:translateY(40px);
+}
+
+.order-eyebrow {
+    font-size:.78rem;
+    letter-spacing:.36em;
+    text-transform:uppercase;
+    color:#5c3b17;
+    display:block;
+    margin-bottom:18px;
+}
+
+.order-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(2.3rem,3.8vw,3.5rem);
+    font-style:italic;
+    color:#1a120d;
+    margin-bottom:22px;
+}
+
+.order-sub {
+    font-size:1.02rem;
+    line-height:2;
+    color:#2d1d12;
+    max-width:600px;
+    margin:0 auto 50px;
+}
+
+.whatsapp-btn {
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:18px 44px;
+    background:linear-gradient(135deg,#25D366,#128C7E);
+    color:#fff;
+    text-decoration:none;
+    font-size:.92rem;
+    letter-spacing:.1em;
+    font-weight:500;
+    border-radius:60px;
+    box-shadow:0 14px 35px rgba(37,211,102,.28);
+    transition:.4s;
+}
+
+.whatsapp-btn:hover {
+    transform:translateY(-4px);
+    box-shadow:0 22px 48px rgba(37,211,102,.4);
+}
+
+/* ===== FOOTER ===== */
+
+footer {
+    padding:60px 24px 50px;
+    text-align:center;
+    background:rgba(255,248,242,.15);
+    backdrop-filter:blur(12px);
+    border-top:1px solid var(--line);
+}
+
+.foot-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size:2.3rem;
+    font-style:italic;
+    color:#1a120d;
+}
+
+.foot-sub {
+    margin-top:12px;
+    font-size:1rem;
+    line-height:1.8;
+    color:#2d1d12;
+}
+
+.foot-copy {
+    margin-top:22px;
+    font-size:.8rem;
+    color:#5f4a3a;
+}
+
+/* ===== MOBILE ===== */
+
+@media(max-width:900px){
+
+    .items-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .custom-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .creation-card{
+        grid-template-columns:1fr;
+        min-height:auto;
+    }
+
+    .creation-card.flip{
+        direction:ltr;
+    }
+
+    .creation-body{
+        padding:40px 30px;
+    }
+
+    .gallery-wrap{
+        columns:2;
+    }
+
+    .order-glass{
+        padding:48px 28px;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .items-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .custom-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .gallery-wrap{
+        columns:1;
+    }
+
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-dot" id="dot"></div>
+<div class="cursor-ring" id="ring"></div>
+<div class="grain"></div>
+
+<img src="logo.png" class="nav-logo" alt="AHCollections4U">
+<a href="categories.html" class="back-btn">← Collections</a>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+    <div class="hero-inner">
+        <span class="hero-eyebrow" id="heroEyebrow">AHCollections4U</span>
+        <h1 class="hero-title">
+            <span class="hero-title-line"><span class="hero-title-inner" id="heroLine1">Gift</span></span>
+            <span class="hero-title-line"><span class="hero-title-inner" id="heroLine2">Hampers</span></span>
+        </h1>
+        <div class="hero-sep" id="heroSep"></div>
+        <p class="hero-sub" id="heroSub">
+            Not just a hamper — a memory, curated just for you.
+            Every hamper is uniquely designed around your budget,
+            favourite products, colours, theme and special moment.
+        </p>
+        <a href="#how" class="hero-cta" id="heroCta">Build Your Hamper →</a>
+    </div>
+    <div class="scroll-cue" id="scrollCue">
+        <span>Scroll</span>
+        <div class="scroll-cue-line"></div>
+    </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<div class="sec-head" id="how">
+    <span class="sec-eyebrow reveal">Simple Process</span>
+    <h2 class="sec-title reveal">Create Your Own Hamper</h2>
+    <div class="gold-line" id="goldLine1"></div>
+    <p class="sec-sub reveal">
+        Whether your budget is ₹300 or ₹3000+, we'll curate a hamper
+        that's personal, beautiful and unforgettable.
+    </p>
+</div>
+
+<div class="steps-grid">
+    <div class="step-card" data-step>
+        <div class="step-num">01</div>
+        <span class="step-icon">💰</span>
+        <h3 class="step-title">Choose Budget</h3>
+        <p class="step-desc">Tell us how much you'd like to spend — we work with every budget.</p>
+    </div>
+    <div class="step-card" data-step>
+        <div class="step-num">02</div>
+        <span class="step-icon">🎁</span>
+        <h3 class="step-title">Pick Products</h3>
+        <p class="step-desc">Choose the products you'd love to include in your hamper.</p>
+    </div>
+    <div class="step-card" data-step>
+        <div class="step-num">03</div>
+        <span class="step-icon">🎨</span>
+        <h3 class="step-title">Select Theme</h3>
+        <p class="step-desc">Choose colours, characters, names and occasions.</p>
+    </div>
+    <div class="step-card" data-step>
+        <div class="step-num">04</div>
+        <span class="step-icon">✨</span>
+        <h3 class="step-title">We Create Magic</h3>
+        <p class="step-desc">We beautifully curate and deliver your hamper.</p>
+    </div>
+</div>
+
+<!-- ===== WHAT'S INCLUDED ===== -->
+<div class="sec-head">
+    <span class="sec-eyebrow reveal">Mix & Match</span>
+    <h2 class="sec-title reveal">What Can Be Included?</h2>
+    <div class="gold-line" id="goldLine2"></div>
+    <p class="sec-sub reveal">Pick and choose your favourite products to create a hamper that's uniquely yours.</p>
+</div>
+
+<div class="items-grid">
+    <div class="item-box" data-item><div class="item-card"><img src="hotwheels-hamper.jpeg" alt="Hot Wheels"></div><p class="item-label">Hot Wheels</p></div>
+    <div class="item-box" data-item><div class="item-card"><img src="choclates.jpeg" alt="Chocolates"></div><p class="item-label">Chocolates</p></div>
+    <div class="item-box" data-item><div class="item-card"><img src="polaroids.jpeg" alt="Polaroids"></div><p class="item-label">Polaroids</p></div>
+    <div class="item-box" data-item><div class="item-card"><img src="frames.jpeg" alt="Frames"></div><p class="item-label">Frames</p></div>
+    <div class="item-box" data-item><div class="item-card"><img src="jewellery.jpeg" alt="Jewellery"></div><p class="item-label">Jewellery</p></div>
+    <div class="item-box" data-item><div class="item-card"><img src="dresses.jpeg" alt="Dresses"></div><p class="item-label">Dresses</p></div>
+    <div class="item-box" data-item><div class="item-card"><img src="toys.jpeg" alt="Toys"></div><p class="item-label">Toys</p></div>
+    <div class="item-box" data-item><div class="item-card"><img src="hairaccessories.jpeg" alt="Hair Accessories"></div><p class="item-label">Hair Accessories</p></div>
+    <div class="item-box" data-item><div class="item-card"><img src="bouquets.jpeg" alt="Bouquets"></div><p class="item-label">Bouquets</p></div>
+    <div class="item-box" data-item><div class="item-card"><img src="personalizedgifts.jpeg" alt="Personalized Gifts"></div><p class="item-label">Personalized Gifts</p></div>
+</div>
+
+<!-- ===== CREATIONS ===== -->
+<div class="sec-head">
+    <span class="sec-eyebrow reveal">Our Work</span>
+    <h2 class="sec-title reveal">Hamper Creations</h2>
+    <div class="gold-line" id="goldLine3"></div>
+    <p class="sec-sub reveal">Every hamper is designed around the customer's budget, preferences and special occasion.</p>
+</div>
+
+<div class="creations-wrap">
+
+    <div class="creation-card" data-creation>
+        <div class="creation-media"><video autoplay muted loop playsinline>
+                <source src="back-to-school.mp4" type="video/mp4">
+            </video></div>
+        <div class="creation-body">
+            <span class="creation-tag">For Students</span>
+            <h3 class="creation-title">Back To School Hamper</h3>
+            <p class="creation-desc">A thoughtfully curated hamper featuring school essentials, accessories and personalised surprises for students starting a new chapter.</p>
+        </div>
+    </div>
+
+    <div class="creation-card flip" data-creation>
+        <div class="creation-media"><img src="comfort-trolley.jpeg" alt="Comfort Trolley Hamper"></div>
+        <div class="creation-body">
+            <span class="creation-tag">For Comfort</span>
+            <h3 class="creation-title">Comfort Trolley Hamper</h3>
+            <p class="creation-desc">Designed to bring comfort and joy — filled with cute keepsakes, gifts and personalised touches that make any moment feel special.</p>
+        </div>
+    </div>
+
+    <div class="creation-card" data-creation>
+        <div class="creation-media"><img src="hotwheels-hamper.jpeg" alt="Hot Wheels Hamper"></div>
+        <div class="creation-body">
+            <span class="creation-tag">For Collectors</span>
+            <h3 class="creation-title">Hot Wheels Hamper</h3>
+            <p class="creation-desc">Perfect for Hot Wheels lovers — featuring collectible cars, themed decorations and customised gifting elements that every enthusiast will love.</p>
+        </div>
+    </div>
+
+    <div class="creation-card flip" data-creation>
+        <div class="creation-media">
+            <video autoplay muted loop playsinline>
+                <source src="kids-trolley-hamper.mp4" type="video/mp4">
+                <img src="hampers.jpeg" alt="Kids Trolley Hamper">
+            </video>
+        </div>
+        <div class="creation-body">
+            <span class="creation-tag">For Children</span>
+            <h3 class="creation-title">Kids Trolley Hamper</h3>
+            <p class="creation-desc">A fun-filled hamper featuring dresses, fancy toys and exciting surprises — every child's dream gift delivered beautifully.</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== CUSTOMISATION ===== -->
+<div class="sec-head">
+    <span class="sec-eyebrow reveal">Made For You</span>
+    <h2 class="sec-title reveal">Fully Customisable</h2>
+    <div class="gold-line" id="goldLine4"></div>
+</div>
+
+<div class="custom-grid">
+    <div class="custom-item" data-custom><div class="custom-card"><img src="color-theme.jpeg" alt="Color Themes"></div><p class="custom-label">Color Themes</p></div>
+    <div class="custom-item" data-custom><div class="custom-card"><img src="character-theme.jpeg" alt="Character Themes"></div><p class="custom-label">Character Themes</p></div>
+    <div class="custom-item" data-custom><div class="custom-card"><img src="name-printing.jpeg" alt="Name Printing"></div><p class="custom-label">Name Printing</p></div>
+    <div class="custom-item" data-custom><div class="custom-card"><img src="photo-custom.jpeg" alt="Photo Personalization"></div><p class="custom-label">Photo Personalisation</p></div>
+    <div class="custom-item" data-custom><div class="custom-card"><img src="birthday-theme.jpeg" alt="Birthday Themes"></div><p class="custom-label">Birthday Themes</p></div>
+    <div class="custom-item" data-custom><div class="custom-card"><img src="festival-theme.jpeg" alt="Festival Themes"></div><p class="custom-label">Festival Themes</p></div>
+    <div class="custom-item" data-custom><div class="custom-card"><img src="budget.jpeg" alt="Budget Based"></div><p class="custom-label">Budget Based</p></div>
+    <div class="custom-item" data-custom><div class="custom-card"><img src="custom-message.jpeg" alt="Custom Messages"></div><p class="custom-label">Custom Messages</p></div>
+</div>
+
+<!-- ===== GALLERY ===== -->
+<div class="sec-head">
+    <span class="sec-eyebrow reveal">Gallery</span>
+    <h2 class="sec-title reveal">More Creations</h2>
+    <div class="gold-line" id="goldLine5"></div>
+</div>
+
+<div class="gallery-wrap">
+    <video controls loop><source src="video1.mp4" type="video/mp4"></video>
+    <video controls loop><source src="video2.mp4" type="video/mp4"></video>
+    <video controls loop><source src="video3.mp4" type="video/mp4"></video>
+    <video controls loop><source src="video4.mp4" type="video/mp4"></video>
+    <video controls loop><source src="video5.mp4" type="video/mp4"></video>
+</div>
+
+<!-- ===== ORDER ===== -->
+<section class="order-section">
+    <div class="order-glass" data-order>
+        <span class="order-eyebrow">Let's Build Something Beautiful</span>
+        <h2 class="order-title">Create Your Dream Hamper</h2>
+        <p class="order-sub">
+            Whether your budget is ₹300, ₹1000, ₹3000 or more —
+            we'll curate a hamper that feels personal, meaningful and unforgettable.
+            Tell us your favourite products, theme, colours and occasion.
+        </p>
+        <a href="https://wa.me/+919400142771?text=Hello,%20I'd%20like%20to%20create%20a%20custom%20hamper."
+           class="whatsapp-btn" target="_blank">
+            💬 Contact On WhatsApp
+        </a>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <h3 class="foot-title">AHCollections4U ✨</h3>
+    <p class="foot-sub">Not Just A Hamper — A Memory, Curated With Love 💝</p>
+    <p class="foot-copy">© 2026 AHCollections4U. All Rights Reserved.</p>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* CURSOR */
+const dot=document.getElementById('dot'), ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
+(function loop(){ rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
+
+/* HERO */
+const tl=gsap.timeline({defaults:{ease:'power3.out'}});
+gsap.set('#heroEyebrow',{y:16,opacity:0});
+gsap.set('#heroLine1',{y:'110%'}); gsap.set('#heroLine2',{y:'110%'});
+gsap.set('#heroSep',{width:0,opacity:0});
+gsap.set('#heroSub',{y:14,opacity:0}); gsap.set('#heroCta',{y:18,opacity:0}); gsap.set('#scrollCue',{opacity:0});
+tl.to('#heroEyebrow',{y:0,opacity:1,duration:.7})
+  .to('#heroLine1',{y:'0%',duration:.9,ease:'power4.out'},'-=0.3')
+  .to('#heroLine2',{y:'0%',duration:.9,ease:'power4.out'},'-=0.65')
+  .to('#heroSep',{width:180,opacity:1,duration:.7,ease:'power2.out'},'-=0.4')
+  .to('#heroSub',{y:0,opacity:1,duration:.7},'-=0.3')
+  .to('#heroCta',{y:0,opacity:1,duration:.6},'-=0.3')
+  .to('#scrollCue',{opacity:1,duration:.5},'+=0.4');
+ScrollTrigger.create({ trigger:'#hero', start:'bottom center',
+    onEnter:()=>gsap.to('#scrollCue',{opacity:0,duration:.3}),
+    onLeaveBack:()=>gsap.to('#scrollCue',{opacity:1,duration:.3}) });
+
+/* GOLD LINES */
+['#goldLine1','#goldLine2','#goldLine3','#goldLine4','#goldLine5'].forEach(id=>{
+    gsap.to(id,{ width:140, scrollTrigger:{ trigger:id, start:'top 90%', toggleActions:'play none none reverse' }, duration:.8, ease:'power2.out' });
+});
+
+/* REVEALS */
+gsap.utils.toArray('.reveal').forEach((el,i)=>{
+    gsap.set(el,{y:30,opacity:0});
+    gsap.to(el,{ scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none reverse' }, y:0, opacity:1, duration:.9, delay:(i%3)*.08, ease:'power3.out' });
+});
+
+/* STEP CARDS */
+gsap.utils.toArray('[data-step]').forEach((el,i)=>{
+    gsap.to(el,{ scrollTrigger:{ trigger:el, start:'top 90%', toggleActions:'play none none reverse' }, opacity:1, y:0, duration:.9, delay:i*.1, ease:'power3.out' });
+});
+
+/* ITEM BOXES */
+gsap.utils.toArray('[data-item]').forEach((el,i)=>{
+    gsap.to(el,{ scrollTrigger:{ trigger:el, start:'top 92%', toggleActions:'play none none reverse' }, opacity:1, y:0, duration:.8, delay:(i%5)*.08, ease:'power3.out' });
+});
+
+/* CREATIONS */
+gsap.utils.toArray('[data-creation]').forEach((el,i)=>{
+    gsap.to(el,{ scrollTrigger:{ trigger:el, start:'top 85%', toggleActions:'play none none reverse' }, opacity:1, y:0, duration:1, ease:'power3.out' });
+});
+
+/* CUSTOM ITEMS */
+gsap.utils.toArray('[data-custom]').forEach((el,i)=>{
+    gsap.to(el,{ scrollTrigger:{ trigger:el, start:'top 92%', toggleActions:'play none none reverse' }, opacity:1, y:0, duration:.8, delay:(i%4)*.08, ease:'power3.out' });
+});
+
+/* GALLERY IMAGES */
+gsap.utils.toArray('[data-gimg]').forEach((el,i)=>{
+    gsap.to(el,{ scrollTrigger:{ trigger:el, start:'top 92%', toggleActions:'play none none reverse' }, opacity:1, y:0, duration:1, delay:(i%3)*.12, ease:'power3.out' });
+});
+
+/* ORDER */
+gsap.to('[data-order]',{ scrollTrigger:{ trigger:'[data-order]', start:'top 88%', toggleActions:'play none none reverse' }, opacity:1, y:0, duration:1, ease:'power3.out' });
+</script>
+</body>
+</html>

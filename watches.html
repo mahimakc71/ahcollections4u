@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Watches | AHCollections4U</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:url("watch-bg.jpeg");
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+
+    color:#4f3e34;
+}
+
+/* LOGO */
+
+.logo{
+
+    position:absolute;
+
+    top:25px;
+    left:25px;
+
+    width:90px;
+}
+
+/* HERO */
+
+.hero{
+
+    text-align:center;
+
+    padding:100px 20px 50px;
+}
+
+.hero h1{
+
+    font-family:'Cormorant Garamond',serif;
+
+    font-size:5rem;
+    font-style:italic;
+
+    color:#5f3f2f;
+}
+
+.gold-line{
+
+    width:220px;
+
+    height:4px;
+
+    margin:20px auto;
+
+    border-radius:50px;
+
+    background:
+    linear-gradient(
+    90deg,
+    #c69a72,
+    #f2d2b3,
+    #c69a72
+    );
+}
+
+.hero p{
+
+    font-size:1.1rem;
+    font-style:italic;
+
+    color:#6b5b51;
+}
+
+/* WATCH SECTION */
+
+.watch-section{
+
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:60px 8%;
+}
+
+.watch-container{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:70px;
+}
+
+.watch-image{
+
+    flex:1;
+}
+
+.watch-image img{
+
+    width:100%;
+
+    border-radius:35px;
+
+    box-shadow:
+    0 20px 50px rgba(0,0,0,.15);
+}
+
+.watch-info{
+
+    flex:1;
+}
+
+.watch-tag{
+
+    display:inline-block;
+
+    padding:12px 22px;
+
+    border:1px solid rgba(198,154,114,.4);
+
+    border-radius:50px;
+
+    color:#a17a58;
+}
+
+.watch-info h2{
+
+    margin-top:25px;
+
+    font-size:5rem;
+    font-style:italic;
+
+    line-height:.9;
+
+    font-family:'Cormorant Garamond',serif;
+
+    color:#5f3f2f;
+}
+
+.watch-info h2 span{
+
+    display:block;
+
+    font-size:4rem;
+    font-style:italic;
+
+    color:#c69a72;
+
+    font-style:italic;
+
+    font-weight:400;
+}
+
+.mini-line{
+
+    width:220px;
+
+    height:3px;
+
+    margin:25px 0;
+
+    background:
+    linear-gradient(
+    90deg,
+    transparent,
+    #c69a72,
+    transparent
+    );
+}
+
+.watch-description{
+
+    font-size:1.05rem;
+    font-style:italic;
+
+    line-height:1.9;
+
+    color:#5f5148;
+
+    margin-bottom:15px;
+}
+
+.price-box{
+
+    width:260px;
+
+    margin-top:35px;
+
+    padding:25px;
+
+    text-align:center;
+
+    border-radius:25px;
+
+    background:
+    rgba(255,255,255,.25);
+
+    backdrop-filter:blur(12px);
+
+    border:1px solid rgba(198,154,114,.3);
+}
+
+.price-box h3{
+
+    font-size:4rem;
+    font-style:italic;
+
+    color:#5f3f2f;
+
+    font-family:'Cormorant Garamond',serif;
+}
+
+.whatsapp-btn{
+
+    display:inline-block;
+
+    margin-top:30px;
+
+    padding:18px 35px;
+
+    text-decoration:none;
+
+    color:white;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #25D366,
+    #128C7E
+    );
+
+    transition:.3s;
+}
+
+.whatsapp-btn:hover{
+
+    transform:translateY(-5px);
+}
+
+@media(max-width:900px){
+
+    .watch-container{
+
+        flex-direction:column;
+    }
+
+    .hero h1{
+
+        font-size:3rem;
+        font-style:italic;
+    }
+
+    .watch-info h2{
+
+        font-size:3rem;
+        font-style:italic;
+    }
+
+    .watch-info h2 span{
+
+        font-size:2.5rem;
+        font-style:italic;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<img src="logo.png" class="logo">
+
+<section class="hero">
+
+    <h1>WATCH COLLECTION</h1>
+
+    <div class="gold-line"></div>
+
+    <p>
+        Elegant timepieces curated for every occasion.
+    </p>
+
+</section>
+
+<section class="watch-section">
+
+    <div class="watch-container">
+
+        <div class="watch-image">
+
+            <img src="watch1.jpeg">
+
+        </div>
+
+        <div class="watch-info">
+
+            <span class="watch-tag">
+                WOMEN'S COMBO SET ✨
+            </span>
+
+            <h2>
+                ELEGANT
+                <span>Watch Combo</span>
+            </h2>
+
+            <div class="mini-line"></div>
+
+            <p class="watch-description">
+                A stunning rose gold watch paired with two matching bracelets, crafted to add elegance and charm to every outfit.
+            </p>
+
+            <p class="watch-description">
+                Perfect for festive occasions, gifting and everyday wear. A beautiful combination of style, sophistication and timeless design.
+            </p>
+
+            <p class="watch-description">
+                Designed for modern women who appreciate elegant accessories and graceful details.
+            </p>
+
+            <div class="price-box">
+
+                <div>SPECIAL PRICE</div>
+
+                <h3>₹349</h3>
+
+            </div>
+
+            <a href="https://wa.me/+919400142771?text=Hello,%20I'm%20interested%20in%20the%20Elegant%20Watch%20Combo."
+               target="_blank"
+               class="whatsapp-btn">
+
+               💬 Contact On WhatsApp
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

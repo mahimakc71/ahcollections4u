@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AHCollections4U | Luxury Gifting</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ================================
+       RESET & ROOT
+    ================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream:      #F8F3EC;
+      --champagne:  #EFE0C4;
+      --blush:      #E8C9BE;
+      --gold:       #C49A3C;
+      --gold-light: #E2C27D;
+      --ink:        #1A1208;
+      --ink-soft:   #3D2F1E;
+      --glass-bg:   rgba(255,248,235,0.18);
+      --glass-bdr:  rgba(196,154,60,0.22);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 18px; /* base — all rem units scale from here */
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ================================
+       CUSTOM CURSOR
+    ================================ */
+    .cursor-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s ease;
+    }
+    .cursor-ring {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s ease, width 0.2s, height 0.2s, border-color 0.2s;
+      opacity: 0.6;
+    }
+    body:has(a:hover) .cursor-ring,
+    body:has(button:hover) .cursor-ring {
+      width: 54px; height: 54px;
+      border-color: var(--gold-light);
+      opacity: 1;
+    }
+
+    /* ================================
+       NOISE TEXTURE OVERLAY
+    ================================ */
+    .noise {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 180px;
+    }
+
+    /* ================================
+       MARKETPLACE STRIP
+    ================================ */
+    .marketplace-section {
+      padding: 70px 80px;
+      background: var(--champagne);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      border-top: 1px solid rgba(196,154,60,0.2);
+      border-bottom: 1px solid rgba(196,154,60,0.2);
+    }
+    .marketplace-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(232,201,190,0.4) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .marketplace-label {
+      position: relative; z-index: 1;
+      font-size: 0.85rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+      display: block;
+    }
+    .marketplace-title {
+      position: relative; z-index: 1;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--ink);
+      margin-bottom: 46px;
+    }
+    .marketplace-logos {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+    .marketplace-badge {
+      display: flex; align-items: center; justify-content: center;
+      width: 220px; height: 92px;
+      background: rgba(255,252,245,0.7);
+      border: 1px solid rgba(196,154,60,0.28);
+      border-radius: 6px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), box-shadow 0.4s, border-color 0.4s;
+    }
+    .marketplace-badge:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(26,18,8,0.1);
+      border-color: var(--gold);
+    }
+    .marketplace-badge img {
+      max-width: 70%;
+      max-height: 50%;
+      object-fit: contain;
+    }
+    .marketplace-badge .placeholder-text {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-soft);
+      font-weight: 400;
+    }
+
+    /* ================================
+       NAVBAR
+    ================================ */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 900;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+    }
+    .navbar::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(250, 240, 225, 0.55);
+      backdrop-filter: blur(16px) saturate(140%);
+      border-bottom: 1px solid rgba(196,154,60,0.18);
+      pointer-events: none;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+      position: relative; z-index: 1;
+    }
+    .nav-logo img {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--gold);
+    }
+    .nav-logo span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+    }
+    .navbar nav {
+      display: flex; gap: 38px;
+      position: relative; z-index: 1;
+    }
+    .navbar nav a {
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: color 0.3s;
+      font-weight: 400;
+    }
+    .navbar nav a:hover { color: var(--gold); }
+
+    /* ================================
+       HERO  — cinematic centred title card
+    ================================ */
+    .hero {
+      position: relative;
+      height: 100vh; width: 100%;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      padding-top: 70px;
+
+      background-image: url("hero-bg.jpeg");
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Gradient blobs */
+    .hero-blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(90px); pointer-events: none;
+    }
+    .blob-1 {
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(232,201,190,0.5) 0%, transparent 70%);
+      top: -160px; right: -160px;
+    }
+    .blob-2 {
+      width: 560px; height: 560px;
+      background: radial-gradient(circle, rgba(196,154,60,0.15) 0%, transparent 70%);
+      bottom: -100px; left: -100px;
+    }
+    .blob-3 {
+      width: 480px; height: 480px;
+      background: radial-gradient(circle, rgba(239,224,196,0.55) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Thin decorative lines */
+    .hero-line {
+      position: absolute;
+      background: linear-gradient(to right, transparent, var(--gold-light), transparent);
+      height: 1px; width: 50%; left: 25%; opacity: 0.35;
+    }
+    .hero-line-top    { top: 12%; }
+    .hero-line-bottom { bottom: 12%; }
+
+    /* ---- centred stage ---- */
+    .hero-inner {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      gap: 0;
+    }
+
+    /* Logo */
+    .hero-logo-col {
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 36px;
+    }
+    .hero-logo-wrap {
+      position: relative;
+      width: 240px; height: 240px;
+      transform-style: preserve-3d;
+    }
+    .hero-logo-wrap::before {
+      content: '';
+      position: absolute; inset: -16px;
+      border-radius: 50%;
+      border: 1px solid rgba(196,154,60,0.35);
+      animation: rotate-ring 12s linear infinite;
+    }
+    .hero-logo-wrap::after {
+      content: '';
+      position: absolute; inset: -32px;
+      border-radius: 50%;
+      border: 1px solid rgba(196,154,60,0.14);
+      animation: rotate-ring 22s linear infinite reverse;
+    }
+    @keyframes rotate-ring {
+      to { transform: rotate(360deg); }
+    }
+    .hero-logo-wrap img {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 50px rgba(196,154,60,0.28), 0 0 100px rgba(196,154,60,0.1);
+      display: block;
+      transform-style: preserve-3d;
+      backface-visibility: visible;
+    }
+
+    /* Text block — sits below logo */
+    .hero-text-col {
+      display: flex; flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* Brand name */
+    .hero-title-wrap { overflow: hidden; }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.8rem, 7vw, 7.5rem);
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, var(--ink) 0%, var(--gold) 50%, var(--ink-soft) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      filter: drop-shadow(0 2px 12px rgba(196,154,60,0.18));
+    }
+
+    /* Tagline */
+    .hero-tagline-wrap { overflow: hidden; margin-top: 18px; }
+    .hero-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.18em;
+      color: var(--ink-soft);
+      display: block;
+    }
+
+    /* Gold line separator */
+    .hero-sep {
+      width: 0; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 32px auto;
+    }
+
+    /* CTA */
+    .hero-cta-wrap { overflow: hidden; }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 16px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      padding: 18px 48px;
+      border: 1px solid var(--gold);
+      position: relative;
+      overflow: hidden;
+      transition: color 0.4s;
+    }
+    .hero-cta::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--gold);
+      transform: translateX(-101%);
+      transition: transform 0.4s ease;
+    }
+    .hero-cta:hover { color: var(--cream); }
+    .hero-cta:hover::before { transform: translateX(0); }
+    .hero-cta span { position: relative; z-index: 1; }
+    .hero-cta-glow {
+      position: absolute; inset: -2px;
+      background: transparent;
+      box-shadow: 0 0 20px rgba(196,154,60,0.4), 0 0 40px rgba(196,154,60,0.2);
+      pointer-events: none;
+      animation: glow-pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes glow-pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute; bottom: 36px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      z-index: 2; opacity: 0;
+    }
+    .hero-scroll span {
+      font-size: 0.52rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+    .hero-scroll-line {
+      width: 1px; height: 44px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scroll-drop 2s ease-in-out infinite;
+    }
+    @keyframes scroll-drop {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ================================
+       STORY + COLLECTIONS (PINNED)
+    ================================ */
+    .collections-wrapper {
+      position: relative;
+    }
+
+    /* Sticky panel that holds hero-shrunk + cards */
+    .cinematic-stage {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Left: shrunk hero panel */
+    .panel-left {
+      position: sticky; top: 0;
+      width: 35%;
+      height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 60px 40px;
+      background: linear-gradient(135deg, var(--cream) 0%, var(--champagne) 100%);
+      border-right: 1px solid rgba(196,154,60,0.18);
+      z-index: 10;
+      overflow: hidden;
+    }
+    .panel-left::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(232,201,190,0.4) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 80%, rgba(196,154,60,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .panel-logo {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 30px rgba(196,154,60,0.2);
+      margin-bottom: 28px;
+      position: relative; z-index: 1;
+    }
+    .panel-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      text-align: center;
+      color: var(--ink);
+      margin-bottom: 20px;
+      position: relative; z-index: 1;
+    }
+    .panel-line {
+      width: 40px; height: 1px;
+      background: var(--gold);
+      margin: 0 auto 20px;
+    }
+    .panel-text {
+      font-size: 0.8rem;
+      line-height: 2;
+      letter-spacing: 0.04em;
+      color: var(--ink-soft);
+      text-align: center;
+      max-width: 280px;
+      position: relative; z-index: 1;
+    }
+
+    /* Right: scrollable cards */
+    .panel-right {
+      flex: 1;
+      padding: 100px 60px 100px 70px;
+      display: flex; flex-direction: column; gap: 40px;
+    }
+
+    /* Collection cards */
+    .lux-card {
+      display: flex;
+      min-height: 380px;
+      border-radius: 4px;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(255,252,245,0.9), rgba(239,224,196,0.4));
+      border: 1px solid rgba(196,154,60,0.2);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 60px rgba(26,18,8,0.07), 0 4px 16px rgba(26,18,8,0.04);
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+                  box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      will-change: transform;
+      opacity: 0;
+      transform: translateY(60px) translateZ(-80px);
+    }
+    .lux-card:hover {
+      box-shadow: 0 40px 100px rgba(26,18,8,0.12), 0 8px 32px rgba(196,154,60,0.12);
+    }
+    .lux-card-img {
+      flex: 0 0 45%;
+      position: relative; overflow: hidden;
+    }
+    .lux-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+      display: block;
+    }
+    .lux-card:hover .lux-card-img img {
+      transform: scale(1.06);
+    }
+    .lux-card-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, transparent 60%, rgba(248,243,236,0.8));
+    }
+    .lux-card-body {
+      flex: 1;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 50px 50px 50px 40px;
+    }
+    .lux-card-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+    .lux-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.6rem;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+    .lux-card-desc {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--ink-soft);
+      max-width: 300px;
+      margin-bottom: 30px;
+    }
+    .lux-card-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.85rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(196,154,60,0.3);
+      padding-bottom: 4px;
+      transition: gap 0.3s, border-color 0.3s;
+    }
+    .lux-card-link:hover { gap: 16px; border-color: var(--gold); }
+
+    /* ================================
+       OCCASIONS
+    ================================ */
+    .occasions-section {
+      padding: 140px 80px;
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+    .occasions-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(239,224,196,0.5) 0%, transparent 60%);
+    }
+    .occ-header {
+      text-align: center; margin-bottom: 80px;
+      position: relative; z-index: 1;
+    }
+    .occ-eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block; margin-bottom: 18px;
+    }
+    .occ-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 4vw, 4.5rem);
+      font-weight: 300;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+    .occ-sub {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--ink-soft);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .occ-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      position: relative; z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .occ-card {
+      aspect-ratio: 1;
+      position: relative;
+      display: flex; align-items: flex-end; justify-content: center;
+      text-align: center;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--glass-bdr);
+      background: var(--glass-bg);
+      backdrop-filter: blur(14px);
+      cursor: default;
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+                  box-shadow 0.4s, background 0.4s;
+      transform-style: preserve-3d;
+    }
+    .occ-card-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.23,1,0.32,1);
+    }
+    .occ-card:hover .occ-card-img {
+      transform: scale(1.08);
+    }
+    .occ-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,18,8,0.72) 0%, rgba(26,18,8,0.15) 55%, transparent 80%);
+      z-index: 1;
+    }
+    .occ-card:hover {
+      background: rgba(196,154,60,0.1);
+      box-shadow: 0 20px 50px rgba(26,18,8,0.1), 0 0 0 1px rgba(196,154,60,0.3);
+    }
+    .occ-card h3 {
+      position: relative; z-index: 2;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--champagne);
+      line-height: 1.3;
+      padding: 0 16px 20px;
+    }
+    /* Float animation assigned per card */
+    .occ-card:nth-child(odd)  { animation: float-a 4s ease-in-out infinite; }
+    .occ-card:nth-child(even) { animation: float-b 5s ease-in-out infinite; }
+    .occ-card:nth-child(3n)   { animation: float-a 4.5s ease-in-out 0.8s infinite; }
+    @keyframes float-a {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    @keyframes float-b {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-9px); }
+    }
+
+    /* ================================
+       FEATURED PRODUCTS
+    ================================ */
+    .featured-section {
+      padding: 140px 80px;
+      background: linear-gradient(180deg, var(--cream) 0%, var(--champagne) 100%);
+      position: relative;
+    }
+    .feat-header {
+      text-align: center; margin-bottom: 100px;
+    }
+    .feat-eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block; margin-bottom: 18px;
+    }
+    .feat-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 4vw, 4.5rem);
+      font-weight: 300;
+      color: var(--ink);
+    }
+
+    .editorial {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: 600px;
+      margin-bottom: 2px;
+      overflow: hidden;
+      border-radius: 4px;
+      border: 1px solid rgba(196,154,60,0.15);
+    }
+    .editorial.flip { direction: rtl; }
+    .editorial.flip > * { direction: ltr; }
+    .ed-image {
+      position: relative; overflow: hidden;
+    }
+    .ed-image img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .editorial:hover .ed-image img { transform: scale(1.04); }
+    .ed-badge {
+      position: absolute; top: 30px; left: 30px;
+      background: var(--gold);
+      color: var(--cream);
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+    }
+    .ed-body {
+      background: var(--cream);
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 70px 70px;
+    }
+    .ed-category {
+      font-size: 0.8rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .ed-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    .ed-desc {
+      font-size: 1rem;
+      line-height: 2;
+      color: var(--ink-soft);
+      margin-bottom: 12px;
+    }
+    .ed-desc li { list-style: none; padding: 2px 0; }
+    .ed-desc li::before { content: '— '; color: var(--gold); }
+    .ed-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 500;
+      color: var(--gold);
+      margin-bottom: 36px;
+    }
+    .ed-cta {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 0.85rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+      background: var(--ink);
+      padding: 18px 42px;
+      align-self: flex-start;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .ed-cta:hover { background: var(--gold); transform: translateY(-2px); }
+
+    /* ================================
+       ABOUT
+    ================================ */
+    .about-section {
+      padding: 160px 80px;
+      position: relative; overflow: hidden;
+      background: var(--ink);
+    }
+    .about-bg-word {
+      position: absolute;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(80px, 12vw, 160px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.025);
+      letter-spacing: 0.04em;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+    .about-inner {
+      position: relative; z-index: 1;
+      max-width: 720px; margin: 0 auto;
+      text-align: center;
+    }
+    .about-eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block; margin-bottom: 24px;
+    }
+    .about-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 4vw, 4.5rem);
+      font-weight: 300;
+      color: var(--champagne);
+      margin-bottom: 40px;
+      line-height: 1.2;
+    }
+    .about-line {
+      width: 40px; height: 1px;
+      background: var(--gold); margin: 0 auto 40px;
+    }
+    .about-text {
+      font-size: 1.05rem;
+      line-height: 2.2;
+      color: rgba(239,224,196,0.7);
+    }
+    .about-text p { margin-bottom: 20px; }
+
+    /* ================================
+       CONTACT
+    ================================ */
+    .contact-section {
+      padding: 160px 80px;
+      background: var(--cream);
+      position: relative; overflow: hidden;
+    }
+    .contact-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(196,154,60,0.07) 0%, transparent 70%);
+    }
+    .glass-panel {
+      position: relative; z-index: 1;
+      max-width: 860px; margin: 0 auto;
+      background: rgba(255,252,245,0.6);
+      border: 1px solid rgba(196,154,60,0.22);
+      backdrop-filter: blur(24px);
+      border-radius: 4px;
+      padding: 80px 80px;
+      text-align: center;
+      box-shadow: 0 40px 100px rgba(26,18,8,0.06), inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+    .contact-eyebrow {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block; margin-bottom: 20px;
+    }
+    .contact-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 4vw, 4rem);
+      font-weight: 300;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    .contact-sub {
+      font-size: 0.82rem;
+      line-height: 2;
+      color: var(--ink-soft);
+      margin-bottom: 56px;
+      max-width: 480px; margin-left: auto; margin-right: auto;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      max-width: 480px; margin: 0 auto;
+    }
+    .contact-item {
+      display: flex; align-items: center; justify-content: center;
+      padding: 18px 24px;
+      border: 1px solid rgba(196,154,60,0.25);
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+      gap: 10px;
+    }
+    .contact-item:hover {
+      background: var(--ink);
+      color: var(--champagne);
+      border-color: var(--ink);
+    }
+    .contact-item.plain { cursor: default; }
+    .contact-item.plain:hover {
+      background: rgba(196,154,60,0.08);
+      color: var(--gold);
+      border-color: rgba(196,154,60,0.4);
+    }
+
+    /* ================================
+       FOOTER
+    ================================ */
+    footer {
+      background: var(--ink);
+      padding: 80px 80px 40px;
+      text-align: center;
+    }
+    .footer-logo {
+      width: 54px; height: 54px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(196,154,60,0.4);
+      margin-bottom: 20px;
+    }
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--champagne);
+      margin-bottom: 8px;
+    }
+    .footer-tagline {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(239,224,196,0.4);
+      margin-bottom: 48px;
+    }
+    .footer-nav {
+      display: flex; justify-content: center; gap: 36px;
+      margin-bottom: 36px;
+    }
+    .footer-nav a {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(239,224,196,0.5);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-nav a:hover { color: var(--gold); }
+    .footer-social {
+      display: flex; justify-content: center; gap: 24px;
+      margin-bottom: 48px;
+    }
+    .footer-social a {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(196,154,60,0.3);
+      padding-bottom: 2px;
+      transition: border-color 0.3s;
+    }
+    .footer-social a:hover { border-color: var(--gold); }
+    .footer-copy {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: rgba(239,224,196,0.25);
+    }
+    .footer-divider {
+      width: 40px; height: 1px;
+      background: rgba(196,154,60,0.3);
+      margin: 0 auto 40px;
+    }
+
+    /* ================================
+       SECTION TRANSITIONS (generic fade up)
+    ================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Cursors -->
+  <div class="cursor-dot" id="dot"></div>
+  <div class="cursor-ring" id="ring"></div>
+
+  <!-- Noise -->
+  <div class="noise"></div>
+
+  <!-- ========================
+       NAVBAR
+  ======================== -->
+  <header class="navbar">
+    <div class="nav-logo">
+      <img src="logo.png" alt="AHCollections4U Logo" />
+      <span>AHCollections4U</span>
+    </div>
+    <nav>
+      <a href="#hero">Home</a>
+      <a href="#collections">Collections</a>
+      <a href="#featured">Featured</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- ========================
+       HERO
+  ======================== -->
+  <section class="hero" id="hero">
+    <div class="hero-blob blob-1"></div>
+    <div class="hero-blob blob-2"></div>
+    <div class="hero-blob blob-3"></div>
+    <div class="hero-line hero-line-top"></div>
+    <div class="hero-line hero-line-bottom"></div>
+
+    <div class="hero-inner">
+
+      <!-- LOGO — animates from far left, rolls in -->
+      <div class="hero-logo-col" id="heroLogoCol">
+        <div class="hero-logo-wrap">
+          <img src="logo.png" alt="AHCollections4U" id="heroLogoImg" />
+        </div>
+      </div>
+
+      <!-- TEXT block — pops up from below the logo -->
+      <div class="hero-text-col" id="heroTextCol">
+
+        <!-- Brand name -->
+        <div class="hero-title-wrap">
+          <h1 class="hero-title" id="heroTitle">AHCollections4U</h1>
+        </div>
+
+        <!-- Tagline -->
+        <div class="hero-tagline-wrap">
+          <span class="hero-tagline" id="heroTagline">From Our Hearts To Your Hands</span>
+        </div>
+
+        <!-- Gold separator line -->
+        <div class="hero-sep" id="heroSep"></div>
+
+        <!-- CTA -->
+        <div class="hero-cta-wrap">
+          <a href="categories.html" class="hero-cta" id="heroCta">
+            <div class="hero-cta-glow"></div>
+            <span>Explore Collection</span>
+            <span>→</span>
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="hero-scroll" id="heroScroll">
+      <span>Scroll to Discover</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ========================
+       MARKETPLACE AVAILABILITY
+  ======================== -->
+  <section class="marketplace-section reveal">
+    <span class="marketplace-label">Shop With Us, Anywhere</span>
+    <h2 class="marketplace-title">Our collections are also available on Meesho & Flipkart</h2>
+    <div class="marketplace-logos">
+      <div class="marketplace-badge">
+         <img src="meesho-logo.png" alt="Meesho" />
+        <span class="placeholder-text">Meesho </span>
+      </div>
+      <div class="marketplace-badge">
+       <img src="flipkart-logo.png" alt="Flipkart" />
+        <span class="placeholder-text">Flipkart </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       COLLECTIONS (PINNED STORY)
+  ======================== -->
+  <section class="collections-wrapper" id="collections">
+    <div class="cinematic-stage">
+
+      <!-- STICKY LEFT PANEL (story/brand info) -->
+      <div class="panel-left">
+        <img src="logo.png" class="panel-logo" alt="Logo" />
+        <h2 class="panel-brand">AHCollections4U</h2>
+        <div class="panel-line"></div>
+        <p class="panel-text">
+          Luxury gifting is not simply about giving something beautiful.<br /><br />
+          It is about preserving memories, celebrating emotions, and creating moments that stay forever.<br /><br />
+          Every collection chosen with elegance, crafted with care, wrapped with love.
+        </p>
+      </div>
+
+      <!-- SCROLLABLE CARDS on the right -->
+      <div class="panel-right">
+
+        <div class="lux-card" data-card>
+          <div class="lux-card-img">
+            <img src="personalized.jpeg" alt="Personalized Gifts" />
+          </div>
+          <div class="lux-card-body">
+            <div class="lux-card-num">01</div>
+            <h2 class="lux-card-title">Personalized Gifts</h2>
+            <p class="lux-card-desc">Unique treasures designed exclusively for your loved ones. Every detail tells a story.</p>
+            <a href="#featured" class="lux-card-link">Explore <span>→</span></a>
+          </div>
+        </div>
+
+        <div class="lux-card" data-card>
+          <div class="lux-card-img">
+            <img src="jewellery.jpeg" alt="Jewellery" />
+          </div>
+          <div class="lux-card-body">
+            <div class="lux-card-num">02</div>
+            <h2 class="lux-card-title">Jewellery</h2>
+            <p class="lux-card-desc">Elegant jewellery curated to celebrate every unforgettable occasion.</p>
+            <a href="#featured" class="lux-card-link">Explore <span>→</span></a>
+          </div>
+        </div>
+
+        <div class="lux-card" data-card>
+          <div class="lux-card-img">
+            <img src="festival.jpeg" alt="Festival Collection" />
+          </div>
+          <div class="lux-card-body">
+            <div class="lux-card-num">03</div>
+            <h2 class="lux-card-title">Festival Collection</h2>
+            <p class="lux-card-desc">Celebrate traditions with luxurious gifts filled with warmth and elegance.</p>
+            <a href="#featured" class="lux-card-link">Explore <span>→</span></a>
+          </div>
+        </div>
+
+        <div class="lux-card" data-card>
+          <div class="lux-card-img">
+            <img src="fashion.jpeg" alt="Fashion" />
+          </div>
+          <div class="lux-card-body">
+            <div class="lux-card-num">04</div>
+            <h2 class="lux-card-title">Fashion</h2>
+            <p class="lux-card-desc">Curated fashion accessories that make every outfit memorable.</p>
+            <a href="#featured" class="lux-card-link">Explore <span>→</span></a>
+          </div>
+        </div>
+
+        <div class="lux-card" data-card>
+          <div class="lux-card-img">
+            <img src="hampers.jpeg" alt="Gift Hampers" />
+          </div>
+          <div class="lux-card-body">
+            <div class="lux-card-num">05</div>
+            <h2 class="lux-card-title">Gift Hampers</h2>
+            <p class="lux-card-desc">Premium hampers beautifully arranged for every celebration.</p>
+            <a href="#featured" class="lux-card-link">Explore <span>→</span></a>
+          </div>
+        </div>
+
+        <div class="lux-card" data-card>
+          <div class="lux-card-img">
+            <img src="bouquet.jpg" alt="Custom Bouquets" />
+          </div>
+          <div class="lux-card-body">
+            <div class="lux-card-num">06</div>
+            <h2 class="lux-card-title">Custom Bouquets</h2>
+            <p class="lux-card-desc">Beautiful floral arrangements crafted exactly the way you imagine.</p>
+            <a href="#featured" class="lux-card-link">Explore <span>→</span></a>
+          </div>
+        </div>
+
+        <div class="lux-card" data-card>
+          <div class="lux-card-img">
+            <img src="beauty.jpeg" alt="Beauty & Self Care" />
+          </div>
+          <div class="lux-card-body">
+            <div class="lux-card-num">07</div>
+            <h2 class="lux-card-title">Beauty & Self Care</h2>
+            <p class="lux-card-desc">Luxury self-care collections made to delight and inspire.</p>
+            <a href="#featured" class="lux-card-link">Explore <span>→</span></a>
+          </div>
+        </div>
+
+        <div class="lux-card" data-card>
+          <div class="lux-card-img">
+            <img src="watches.jpeg" alt="Elegant Watches" />
+          </div>
+          <div class="lux-card-body">
+            <div class="lux-card-num">08</div>
+            <h2 class="lux-card-title">Elegant Watches</h2>
+            <p class="lux-card-desc">Timeless gifts for timeless memories.</p>
+            <a href="#featured" class="lux-card-link">Explore <span>→</span></a>
+          </div>
+        </div>
+
+        <div class="lux-card" data-card>
+          <div class="lux-card-img">
+            <img src="frames.jpeg" alt="Photo Frames" />
+          </div>
+          <div class="lux-card-body">
+            <div class="lux-card-num">09</div>
+            <h2 class="lux-card-title">Photo Frames</h2>
+            <p class="lux-card-desc">Preserve your favourite memories with handcrafted elegance.</p>
+            <a href="#featured" class="lux-card-link">Explore <span>→</span></a>
+          </div>
+        </div>
+
+        <div class="lux-card" data-card>
+          <div class="lux-card-img">
+            <img src="cozy.jpeg" alt="Cozy Corner" />
+          </div>
+          <div class="lux-card-body">
+            <div class="lux-card-num">10</div>
+            <h2 class="lux-card-title">Cozy Corner</h2>
+            <p class="lux-card-desc">Warm comforts and meaningful little luxuries for every home.</p>
+            <a href="#featured" class="lux-card-link">Explore <span>→</span></a>
+          </div>
+        </div>
+
+      </div><!-- .panel-right -->
+    </div><!-- .cinematic-stage -->
+  </section>
+
+  <!-- ========================
+       OCCASIONS
+  ======================== -->
+  <section class="occasions-section">
+    <div class="occ-header reveal">
+      <span class="occ-eyebrow">Every Moment Deserves Something Beautiful</span>
+      <h2 class="occ-title">Celebrate Every Occasion</h2>
+      <p class="occ-sub">Whether it's a birthday, wedding, anniversary, or festive celebration — AHCollections4U makes every memory unforgettable.</p>
+    </div>
+    <div class="occ-grid">
+      <div class="occ-card reveal"><img src="occasion-birthday.jpeg" class="occ-card-img" alt="Birthday"><h3>Birthday</h3></div>
+      <div class="occ-card reveal"><img src="occasion-anniversary.jpg" class="occ-card-img" alt="Anniversary"><h3>Anniversary</h3></div>
+      <div class="occ-card reveal"><img src="occasion-wedding.jpg" class="occ-card-img" alt="Wedding"><h3>Wedding</h3></div>
+      <div class="occ-card reveal"><img src="occasion-engagement.jpeg" class="occ-card-img" alt="Engagement"><h3>Engagement</h3></div>
+      <div class="occ-card reveal"><img src="occasion-babyshower.jpeg" class="occ-card-img" alt="Baby Shower"><h3>Baby Shower</h3></div>
+      <div class="occ-card reveal"><img src="occasion-housewarming.jpeg" class="occ-card-img" alt="Housewarming"><h3>Housewarming</h3></div>
+      <div class="occ-card reveal"><img src="occasion-graduation.jpeg" class="occ-card-img" alt="Graduation"><h3>Graduation</h3></div>
+      <div class="occ-card reveal"><img src="occasion-valentines.jpeg" class="occ-card-img" alt="Valentine's Day"><h3>Valentine's Day</h3></div>
+      <div class="occ-card reveal"><img src="occasion-mothersday.jpeg" class="occ-card-img" alt="Mother's Day"><h3>Mother's Day</h3></div>
+      <div class="occ-card reveal"><img src="occasion-fathersday.jpeg" class="occ-card-img" alt="Father's Day"><h3>Father's Day</h3></div>
+      <div class="occ-card reveal"><img src="occasion-christmas.jpeg" class="occ-card-img" alt="Christmas"><h3>Christmas</h3></div>
+      <div class="occ-card reveal"><img src="occasion-onam.jpeg" class="occ-card-img" alt="Onam"><h3>Onam</h3></div>
+      <div class="occ-card reveal"><img src="occasion-vishu.jpeg" class="occ-card-img" alt="Vishu"><h3>Vishu</h3></div>
+      <div class="occ-card reveal"><img src="occasion-eid.jpg" class="occ-card-img" alt="Eid"><h3>Eid</h3></div>
+      <div class="occ-card reveal"><img src="occasion-diwali.jpg" class="occ-card-img" alt="Diwali"><h3>Diwali</h3></div>
+    </div>
+  </section>
+
+  <!-- ========================
+       FEATURED PRODUCTS
+  ======================== -->
+  <section class="featured-section" id="featured">
+    <div class="feat-header reveal">
+      <span class="feat-eyebrow">Editor's Pick</span>
+      <h2 class="feat-title">Featured Treasures</h2>
+    </div>
+
+    <!-- Product 1 -->
+    <div class="editorial reveal" style="margin-bottom: 2px;">
+      <div class="ed-image">
+        <img src="organizer-box.jpeg" alt="Luxury Jewellery Organizer Box" />
+        <div class="ed-badge">Best Seller</div>
+      </div>
+      <div class="ed-body">
+        <span class="ed-category">Jewellery</span>
+        <h2 class="ed-title">Luxury Jewellery Organizer Box</h2>
+        <ul class="ed-desc">
+          <li>2 Bracelets</li>
+          <li>6 Neck Chains</li>
+          <li>2 Hair Accessory Sets</li>
+          <li>12+ Stud Earrings</li>
+          <li>Chocolates</li>
+        </ul>
+        <div class="ed-price">₹389</div>
+        <a href="https://wa.me/+919400142771" class="ed-cta">Order Now →</a>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="editorial flip reveal" style="margin-bottom: 2px;">
+      <div class="ed-image">
+        <img src="butterfly-bracelet.jpeg" alt="Pearl Butterfly Bracelet" />
+        <div class="ed-badge">Limited Stock</div>
+      </div>
+      <div class="ed-body">
+        <span class="ed-category">Jewellery</span>
+        <h2 class="ed-title">Pearl Butterfly Bracelet</h2>
+        <p class="ed-desc">Elegant pearl bracelet designed for everyday beauty. Perfect for gifting and memorable occasions.</p>
+        <a href="https://wa.me/+919400142771" class="ed-cta">Enquire Now →</a>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="editorial reveal">
+      <div class="ed-image">
+        <img src="rose-gold-set.jpeg" alt="Heart Pendant Gift Set" />
+        <div class="ed-badge">Popular Pick</div>
+      </div>
+      <div class="ed-body">
+        <span class="ed-category">Gift Set</span>
+        <h2 class="ed-title">Heart Pendant Gift Set</h2>
+        <ul class="ed-desc">
+          <li>Heart Pendant Necklace</li>
+          <li>Crystal Stud Earrings</li>
+          <li>Rose Gold Drop Earrings</li>
+          <li>Crystal Ring</li>
+          <li>Scrunchie</li>
+        </ul>
+        <a href="https://wa.me/+919400142771" class="ed-cta">Order Now →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       ABOUT
+  ======================== -->
+  <section class="about-section" id="about">
+    <div class="about-bg-word">AHCollections4U</div>
+    <div class="about-inner">
+      <span class="about-eyebrow reveal">Our Story</span>
+      <h2 class="about-title reveal">Luxury Wrapped<br/>With Emotion</h2>
+      <div class="about-line reveal"></div>
+      <div class="about-text reveal">
+        <p>At AHCollections4U, every gift tells a story. What began as a passion for creating meaningful memories has grown into a destination for elegant gifting.</p>
+        <p>Every jewellery piece, every bouquet, every personalised keepsake, every hamper — chosen with love and attention to detail.</p>
+        <p>We believe gifts should never feel ordinary. They should create unforgettable emotions. Because the smallest surprise often becomes the biggest memory.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       CONTACT
+  ======================== -->
+  <section class="contact-section" id="contact">
+    <div class="glass-panel reveal">
+      <span class="contact-eyebrow">Let's Create Something Beautiful</span>
+      <h2 class="contact-title">Get In Touch</h2>
+      <p class="contact-sub">Whether you're looking for personalised gifts, luxury jewellery, custom bouquets, festival hampers, or premium surprises — we're here to make every celebration unforgettable.</p>
+      <div class="contact-grid">
+        <a href="https://wa.me/+919400142771" class="contact-item">WhatsApp</a>
+        <a href="https://www.instagram.com/ahcollections_4u?igsh=NWN3MGttaWFzYnBu"" class="contact-item">Instagram</a>
+        <a href="mailto:ahcollections4u@gmail.com" class="contact-item">Email</a>
+        <div class="contact-item plain">Kerala, India</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       FOOTER
+  ======================== -->
+  <footer>
+    <img src="logo.png" class="footer-logo" alt="AHCollections4U" />
+    <h2 class="footer-brand">AHCollections4U</h2>
+    <p class="footer-tagline">From Our Hearts To Your Hands</p>
+    <div class="footer-divider"></div>
+    <div class="footer-nav">
+      <a href="#hero">Home</a>
+      <a href="#collections">Collections</a>
+      <a href="#featured">Featured</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/ahcollections_4u?igsh=NWN3MGttaWFzYnBu">Instagram</a>
+      <a href="https://wa.me/+919400142771">WhatsApp</a>
+    </div>
+    <p class="footer-copy">© 2026 AHCollections4U. All Rights Reserved.</p>
+  </footer>
+
+  <!-- ========================
+       SCRIPTS
+  ======================== -->
+  <script>
+    /* =========================================
+       CURSOR
+    ========================================= */
+    const dot  = document.getElementById('dot');
+    const ring = document.getElementById('ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left  = mx + 'px';
+      dot.style.top   = my + 'px';
+    });
+
+    (function animRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(animRing);
+    })();
+
+    /* =========================================
+       GSAP SETUP
+    ========================================= */
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* =========================================
+       HERO INTRO ANIMATION
+       Logo rolls in from far left → center
+       Title slides from right
+       Tagline + CTA fade in
+    ========================================= */
+    /* =========================================
+       HERO INTRO
+       1. Logo shoots in from far left, spinning
+       2. Logo brakes to a stop at centre
+       3. Brand name pops up from below
+       4. Tagline pops up from below
+       5. Gold line expands
+       6. CTA rises in
+       7. Scroll hint appears
+    ========================================= */
+    const logoCol  = document.getElementById('heroLogoCol');
+    const logoImg  = document.getElementById('heroLogoImg');
+    const textCol  = document.getElementById('heroTextCol');
+    const heroTitle   = document.getElementById('heroTitle');
+    const heroTagline = document.getElementById('heroTagline');
+    const heroSep     = document.getElementById('heroSep');
+    const heroCta     = document.getElementById('heroCta');
+    const scroll      = document.getElementById('heroScroll');
+
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    /* --- initial hidden states --- */
+    // Logo starts far off-screen left
+    gsap.set(logoCol,      { x: '-110vw' });
+    gsap.set(logoImg,      { rotationY: 0, rotationZ: 0 });
+    // Text block hidden below
+    gsap.set(textCol,      { opacity: 0 });
+    gsap.set(heroTitle,    { y: '120%', opacity: 0 });
+    gsap.set(heroTagline,  { y: '120%', opacity: 0 });
+    gsap.set(heroSep,      { width: 0, opacity: 0 });
+    gsap.set(heroCta,      { y: 30, opacity: 0 });
+    gsap.set(scroll,       { opacity: 0 });
+
+    // Enable perspective on the logo wrap for 3D effect
+    gsap.set('.hero-logo-wrap', { perspective: 600 });
+
+    tl
+      /* PHASE 1 — logo rolls slowly across screen with 3D spin */
+      .to(logoCol, {
+        x: 0,
+        duration: 2.8,
+        ease: 'power2.inOut',
+      })
+      // Z rotation = rolling motion (720 = exact 2 full turns, lands upright)
+      .to(logoImg, {
+        rotationZ: 720,
+        duration: 2.8,
+        ease: 'power2.inOut',
+      }, '<')
+      // Y rotation = 3D depth wobble during the roll
+      .to(logoImg, {
+        rotationY: 360,
+        duration: 2.8,
+        ease: 'sine.inOut',
+      }, '<')
+
+      /* PHASE 2 — settle: snap rotation clean so no drift */
+      .set(logoImg, { rotationZ: 0, rotationY: 0 })
+
+      /* PHASE 3 — brand name pops up from below */
+      .set(textCol, { opacity: 1 })
+      .to(heroTitle, {
+        y: '0%', opacity: 1,
+        duration: 0.85,
+        ease: 'back.out(1.5)',
+      }, '-=0.05')
+
+      /* PHASE 4 — tagline pops up from below */
+      .to(heroTagline, {
+        y: '0%', opacity: 1,
+        duration: 0.7,
+        ease: 'back.out(1.2)',
+      }, '-=0.4')
+
+      /* PHASE 5 — gold line expands */
+      .to(heroSep, {
+        width: 260, opacity: 1,
+        duration: 0.7,
+        ease: 'power2.out',
+      }, '-=0.25')
+
+      /* PHASE 6 — CTA rises */
+      .to(heroCta, {
+        y: 0, opacity: 1,
+        duration: 0.6,
+        ease: 'power3.out',
+      }, '-=0.25')
+
+      /* PHASE 7 — scroll indicator */
+      .to(scroll, { opacity: 1, duration: 0.5 }, '+=0.6');
+
+    /* =========================================
+       COLLECTION CARDS — scroll reveal
+       Each card comes up from below with depth
+    ========================================= */
+    const cards = document.querySelectorAll('[data-card]');
+
+    cards.forEach((card, i) => {
+      gsap.to(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        },
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        delay: i * 0.05,
+        ease: 'power3.out',
+      });
+    });
+
+    /* 3D tilt on cards */
+    cards.forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const cx = r.left + r.width  / 2;
+        const cy = r.top  + r.height / 2;
+        const dx = (e.clientX - cx) / (r.width  / 2);
+        const dy = (e.clientY - cy) / (r.height / 2);
+        gsap.to(card, {
+          rotateY:  dx * 6,
+          rotateX: -dy * 4,
+          duration: 0.4,
+          ease: 'power2.out',
+        });
+      });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotateY: 0, rotateX: 0,
+          duration: 0.6,
+          ease: 'elastic.out(1, 0.5)',
+        });
+      });
+    });
+
+    /* =========================================
+       OCCASIONS CARDS — 3D tilt
+    ========================================= */
+    document.querySelectorAll('.occ-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r  = card.getBoundingClientRect();
+        const cx = r.left + r.width  / 2;
+        const cy = r.top  + r.height / 2;
+        const dx = (e.clientX - cx) / (r.width  / 2);
+        const dy = (e.clientY - cy) / (r.height / 2);
+        gsap.to(card, {
+          rotateY:  dx * 12,
+          rotateX: -dy * 12,
+          scale: 1.04,
+          duration: 0.35,
+          ease: 'power2.out',
+        });
+      });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotateY: 0, rotateX: 0, scale: 1,
+          duration: 0.5,
+          ease: 'elastic.out(1, 0.6)',
+        });
+      });
+    });
+
+    /* =========================================
+       GENERIC REVEAL — .reveal elements
+    ========================================= */
+    gsap.utils.toArray('.reveal').forEach((el, i) => {
+      gsap.to(el, {
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          toggleActions: 'play none none reverse',
+        },
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        delay: i * 0.04,
+        ease: 'power3.out',
+      });
+    });
+
+    /* =========================================
+       HERO SCROLL HIDE
+    ========================================= */
+    ScrollTrigger.create({
+      trigger: '#hero',
+      start: 'bottom center',
+      onEnter:       () => gsap.to('#heroScroll', { opacity: 0, duration: 0.3 }),
+      onLeaveBack:   () => gsap.to('#heroScroll', { opacity: 1, duration: 0.3 }),
+    });
+
+  </script>
+</body>
+</html>
