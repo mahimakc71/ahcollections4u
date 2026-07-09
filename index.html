@@ -43,6 +43,7 @@
       font-family: 'Jost', sans-serif;
       font-weight: 300;
       overflow-x: hidden;
+      width: 100%;
       cursor: none;
     }
 
@@ -75,6 +76,11 @@
       width: 54px; height: 54px;
       border-color: var(--gold-light);
       opacity: 1;
+    }
+    /* Hide the custom cursor entirely on touch devices — there is no mouse to track */
+    @media (pointer: coarse) {
+      body { cursor: auto; }
+      .cursor-dot, .cursor-ring { display: none; }
     }
 
     /* ================================
@@ -209,6 +215,25 @@
     }
     .navbar nav a:hover { color: var(--gold); }
 
+    /* Hamburger toggle button — hidden on desktop */
+    .nav-toggle {
+      display: none;
+      position: relative; z-index: 2;
+      width: 32px; height: 24px;
+      background: none; border: none;
+      cursor: pointer;
+      flex-direction: column; justify-content: space-between;
+      padding: 0;
+    }
+    .nav-toggle span {
+      display: block; width: 100%; height: 2px;
+      background: var(--ink);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .navbar.nav-open .nav-toggle span:nth-child(1) { transform: translateY(11px) rotate(45deg); }
+    .navbar.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+    .navbar.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-11px) rotate(-45deg); }
+
     /* ================================
        HERO  — cinematic centred title card
     ================================ */
@@ -262,6 +287,8 @@
       align-items: center; justify-content: center;
       text-align: center;
       gap: 0;
+      width: 100%;
+      padding: 0 24px;
     }
 
     /* Logo */
@@ -307,16 +334,17 @@
       display: flex; flex-direction: column;
       align-items: center;
       overflow: hidden;
+      width: 100%;
     }
 
     /* Brand name */
-    .hero-title-wrap { overflow: hidden; }
+    .hero-title-wrap { overflow: hidden; width: 100%; }
     .hero-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3.8rem, 7vw, 7.5rem);
+      font-size: clamp(2.6rem, 7vw, 7.5rem);
       font-weight: 600;
       line-height: 1;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.04em;
       background: linear-gradient(135deg, var(--ink) 0%, var(--gold) 50%, var(--ink-soft) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -326,13 +354,13 @@
     }
 
     /* Tagline */
-    .hero-tagline-wrap { overflow: hidden; margin-top: 18px; }
+    .hero-tagline-wrap { overflow: hidden; margin-top: 18px; width: 100%; }
     .hero-tagline {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      font-size: clamp(1rem, 2vw, 1.6rem);
       font-weight: 300;
       font-style: italic;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.1em;
       color: var(--ink-soft);
       display: block;
     }
@@ -349,12 +377,12 @@
     .hero-cta {
       display: inline-flex; align-items: center; gap: 16px;
       font-family: 'Jost', sans-serif;
-      font-size: 0.82rem;
-      letter-spacing: 0.28em;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--gold);
       text-decoration: none;
-      padding: 18px 48px;
+      padding: 16px 32px;
       border: 1px solid var(--gold);
       position: relative;
       overflow: hidden;
@@ -479,6 +507,7 @@
       flex: 1;
       padding: 100px 60px 100px 70px;
       display: flex; flex-direction: column; gap: 40px;
+      min-width: 0;
     }
 
     /* Collection cards */
@@ -523,6 +552,7 @@
       flex: 1;
       display: flex; flex-direction: column; justify-content: center;
       padding: 50px 50px 50px 40px;
+      min-width: 0;
     }
     .lux-card-num {
       font-family: 'Cormorant Garamond', serif;
@@ -698,8 +728,8 @@
       border-radius: 4px;
       border: 1px solid rgba(196,154,60,0.15);
     }
-    .editorial.flip { direction: rtl; }
-    .editorial.flip > * { direction: ltr; }
+    .editorial.flip .ed-image { order: 2; }
+    .editorial.flip .ed-body  { order: 1; }
     .ed-image {
       position: relative; overflow: hidden;
     }
@@ -724,6 +754,7 @@
       display: flex; flex-direction: column;
       justify-content: center;
       padding: 70px 70px;
+      min-width: 0;
     }
     .ed-category {
       font-size: 0.8rem;
@@ -929,6 +960,7 @@
     .footer-nav {
       display: flex; justify-content: center; gap: 36px;
       margin-bottom: 36px;
+      flex-wrap: wrap;
     }
     .footer-nav a {
       font-size: 0.65rem;
@@ -942,6 +974,7 @@
     .footer-social {
       display: flex; justify-content: center; gap: 24px;
       margin-bottom: 48px;
+      flex-wrap: wrap;
     }
     .footer-social a {
       font-size: 0.65rem;
@@ -972,6 +1005,119 @@
       opacity: 0;
       transform: translateY(40px);
     }
+
+    /* =====================================================
+       RESPONSIVE — TABLET (<=1024px)
+       ===================================================== */
+    @media (max-width: 1024px) {
+      .panel-left { width: 40%; padding: 50px 30px; }
+      .panel-right { padding: 80px 40px; }
+      .occ-grid { grid-template-columns: repeat(3, 1fr); }
+      .editorial { grid-template-columns: 1fr; min-height: auto; }
+      .editorial.flip .ed-image { order: 1; }
+      .editorial.flip .ed-body  { order: 2; }
+      .ed-image { min-height: 340px; }
+    }
+
+    /* =====================================================
+       RESPONSIVE — MOBILE / SMALL TABLET (<=768px)
+       ===================================================== */
+    @media (max-width: 768px) {
+
+      html { font-size: 16px; }
+
+      /* ---- Navbar -> hamburger ---- */
+      .navbar {
+        padding: 16px 20px;
+        flex-wrap: wrap;
+      }
+      .nav-toggle { display: flex; }
+      .navbar nav {
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        background: rgba(250, 240, 225, 0.98);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid rgba(196,154,60,0.18);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease;
+      }
+      .navbar.nav-open nav { max-height: 400px; }
+      .navbar nav a {
+        width: 100%;
+        text-align: center;
+        padding: 16px 0;
+        border-top: 1px solid rgba(196,154,60,0.12);
+      }
+
+      /* ---- Hero ---- */
+      .hero-logo-wrap { width: 150px; height: 150px; }
+      .hero-cta { padding: 14px 26px; font-size: 0.7rem; letter-spacing: 0.16em; }
+
+      /* ---- Marketplace ---- */
+      .marketplace-section { padding: 50px 24px; }
+      .marketplace-logos { gap: 20px; }
+      .marketplace-badge { width: 100%; max-width: 260px; height: 80px; }
+
+      /* ---- Collections: stop the side-by-side pinned layout, stack instead ---- */
+      .cinematic-stage { flex-direction: column; min-height: 0; }
+      .panel-left {
+        position: relative; top: auto;
+        width: 100%; height: auto;
+        padding: 50px 24px;
+      }
+      .panel-right {
+        padding: 50px 20px;
+        gap: 24px;
+      }
+      .lux-card { flex-direction: column; min-height: 0; }
+      .lux-card-img { flex: 0 0 auto; height: 220px; }
+      .lux-card-img::after { background: none; }
+      .lux-card-body { padding: 30px 24px; }
+      .lux-card-title { font-size: 2rem; }
+      .lux-card-desc { max-width: none; }
+
+      /* ---- Occasions ---- */
+      .occasions-section { padding: 70px 20px; }
+      .occ-header { margin-bottom: 48px; }
+      .occ-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .occ-card h3 { font-size: 1rem; padding: 0 10px 14px; }
+
+      /* ---- Featured ---- */
+      .featured-section { padding: 70px 20px; }
+      .feat-header { margin-bottom: 56px; }
+      .editorial { grid-template-columns: 1fr; min-height: auto; }
+      .editorial.flip .ed-image { order: 1; }
+      .editorial.flip .ed-body  { order: 2; }
+      .ed-image { min-height: 280px; }
+      .ed-body { padding: 40px 24px; }
+      .ed-title { font-size: 2rem; }
+      .ed-cta { padding: 16px 30px; align-self: center; }
+
+      /* ---- About ---- */
+      .about-section { padding: 90px 24px; }
+      .about-text { font-size: 0.95rem; }
+
+      /* ---- Contact ---- */
+      .contact-section { padding: 90px 20px; }
+      .glass-panel { padding: 48px 24px; }
+      .contact-grid { grid-template-columns: 1fr 1fr; gap: 12px; max-width: 100%; }
+      .contact-item { padding: 14px 12px; font-size: 0.62rem; }
+
+      /* ---- Footer ---- */
+      footer { padding: 60px 24px 30px; }
+      .footer-nav { gap: 18px 28px; }
+      .footer-social { gap: 18px; }
+    }
+
+    @media (max-width: 420px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .hero-title { letter-spacing: 0.02em; }
+      .occ-grid { grid-template-columns: repeat(2, 1fr); }
+    }
   </style>
 </head>
 
@@ -987,18 +1133,21 @@
   <!-- ========================
        NAVBAR
   ======================== -->
-  <header class="navbar">
+  <header class="navbar" id="navbar">
     <div class="nav-logo">
       <img src="logo.png" alt="AHCollections4U Logo" />
       <span>AHCollections4U</span>
     </div>
-    <nav>
+    <nav id="navLinks">
       <a href="#hero">Home</a>
       <a href="#collections">Collections</a>
       <a href="#featured">Featured</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
   <!-- ========================
@@ -1338,7 +1487,7 @@
       <p class="contact-sub">Whether you're looking for personalised gifts, luxury jewellery, custom bouquets, festival hampers, or premium surprises — we're here to make every celebration unforgettable.</p>
       <div class="contact-grid">
         <a href="https://wa.me/+919400142771" class="contact-item">WhatsApp</a>
-        <a href="https://www.instagram.com/ahcollections_4u?igsh=NWN3MGttaWFzYnBu"" class="contact-item">Instagram</a>
+        <a href="https://www.instagram.com/ahcollections_4u?igsh=NWN3MGttaWFzYnBu" class="contact-item">Instagram</a>
         <a href="mailto:ahcollections4u@gmail.com" class="contact-item">Email</a>
         <div class="contact-item plain">Kerala, India</div>
       </div>
@@ -1372,6 +1521,24 @@
   ======================== -->
   <script>
     /* =========================================
+       MOBILE NAV TOGGLE
+    ========================================= */
+    const navbarEl  = document.getElementById('navbar');
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+
+    navToggle.addEventListener('click', () => {
+      const isOpen = navbarEl.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navbarEl.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    /* =========================================
        CURSOR
     ========================================= */
     const dot  = document.getElementById('dot');
@@ -1398,20 +1565,7 @@
     gsap.registerPlugin(ScrollTrigger);
 
     /* =========================================
-       HERO INTRO ANIMATION
-       Logo rolls in from far left → center
-       Title slides from right
-       Tagline + CTA fade in
-    ========================================= */
-    /* =========================================
        HERO INTRO
-       1. Logo shoots in from far left, spinning
-       2. Logo brakes to a stop at centre
-       3. Brand name pops up from below
-       4. Tagline pops up from below
-       5. Gold line expands
-       6. CTA rises in
-       7. Scroll hint appears
     ========================================= */
     const logoCol  = document.getElementById('heroLogoCol');
     const logoImg  = document.getElementById('heroLogoImg');
@@ -1425,10 +1579,8 @@
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
     /* --- initial hidden states --- */
-    // Logo starts far off-screen left
     gsap.set(logoCol,      { x: '-110vw' });
     gsap.set(logoImg,      { rotationY: 0, rotationZ: 0 });
-    // Text block hidden below
     gsap.set(textCol,      { opacity: 0 });
     gsap.set(heroTitle,    { y: '120%', opacity: 0 });
     gsap.set(heroTagline,  { y: '120%', opacity: 0 });
@@ -1436,77 +1588,28 @@
     gsap.set(heroCta,      { y: 30, opacity: 0 });
     gsap.set(scroll,       { opacity: 0 });
 
-    // Enable perspective on the logo wrap for 3D effect
     gsap.set('.hero-logo-wrap', { perspective: 600 });
 
     tl
-      /* PHASE 1 — logo rolls slowly across screen with 3D spin */
-      .to(logoCol, {
-        x: 0,
-        duration: 2.8,
-        ease: 'power2.inOut',
-      })
-      // Z rotation = rolling motion (720 = exact 2 full turns, lands upright)
-      .to(logoImg, {
-        rotationZ: 720,
-        duration: 2.8,
-        ease: 'power2.inOut',
-      }, '<')
-      // Y rotation = 3D depth wobble during the roll
-      .to(logoImg, {
-        rotationY: 360,
-        duration: 2.8,
-        ease: 'sine.inOut',
-      }, '<')
-
-      /* PHASE 2 — settle: snap rotation clean so no drift */
+      .to(logoCol, { x: 0, duration: 2.8, ease: 'power2.inOut' })
+      .to(logoImg, { rotationZ: 720, duration: 2.8, ease: 'power2.inOut' }, '<')
+      .to(logoImg, { rotationY: 360, duration: 2.8, ease: 'sine.inOut' }, '<')
       .set(logoImg, { rotationZ: 0, rotationY: 0 })
-
-      /* PHASE 3 — brand name pops up from below */
       .set(textCol, { opacity: 1 })
-      .to(heroTitle, {
-        y: '0%', opacity: 1,
-        duration: 0.85,
-        ease: 'back.out(1.5)',
-      }, '-=0.05')
-
-      /* PHASE 4 — tagline pops up from below */
-      .to(heroTagline, {
-        y: '0%', opacity: 1,
-        duration: 0.7,
-        ease: 'back.out(1.2)',
-      }, '-=0.4')
-
-      /* PHASE 5 — gold line expands */
-      .to(heroSep, {
-        width: 260, opacity: 1,
-        duration: 0.7,
-        ease: 'power2.out',
-      }, '-=0.25')
-
-      /* PHASE 6 — CTA rises */
-      .to(heroCta, {
-        y: 0, opacity: 1,
-        duration: 0.6,
-        ease: 'power3.out',
-      }, '-=0.25')
-
-      /* PHASE 7 — scroll indicator */
+      .to(heroTitle, { y: '0%', opacity: 1, duration: 0.85, ease: 'back.out(1.5)' }, '-=0.05')
+      .to(heroTagline, { y: '0%', opacity: 1, duration: 0.7, ease: 'back.out(1.2)' }, '-=0.4')
+      .to(heroSep, { width: 260, opacity: 1, duration: 0.7, ease: 'power2.out' }, '-=0.25')
+      .to(heroCta, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, '-=0.25')
       .to(scroll, { opacity: 1, duration: 0.5 }, '+=0.6');
 
     /* =========================================
        COLLECTION CARDS — scroll reveal
-       Each card comes up from below with depth
     ========================================= */
     const cards = document.querySelectorAll('[data-card]');
 
     cards.forEach((card, i) => {
       gsap.to(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse',
-        },
+        scrollTrigger: { trigger: card, start: 'top 85%', toggleActions: 'play none none reverse' },
         opacity: 1,
         y: 0,
         duration: 0.9,
@@ -1515,67 +1618,43 @@
       });
     });
 
-    /* 3D tilt on cards */
-    cards.forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const r = card.getBoundingClientRect();
-        const cx = r.left + r.width  / 2;
-        const cy = r.top  + r.height / 2;
-        const dx = (e.clientX - cx) / (r.width  / 2);
-        const dy = (e.clientY - cy) / (r.height / 2);
-        gsap.to(card, {
-          rotateY:  dx * 6,
-          rotateX: -dy * 4,
-          duration: 0.4,
-          ease: 'power2.out',
+    /* 3D tilt on cards — only on devices with a real pointer/mouse */
+    if (window.matchMedia('(pointer: fine)').matches) {
+      cards.forEach(card => {
+        card.addEventListener('mousemove', e => {
+          const r = card.getBoundingClientRect();
+          const cx = r.left + r.width  / 2;
+          const cy = r.top  + r.height / 2;
+          const dx = (e.clientX - cx) / (r.width  / 2);
+          const dy = (e.clientY - cy) / (r.height / 2);
+          gsap.to(card, { rotateY: dx * 6, rotateX: -dy * 4, duration: 0.4, ease: 'power2.out' });
+        });
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, { rotateY: 0, rotateX: 0, duration: 0.6, ease: 'elastic.out(1, 0.5)' });
         });
       });
-      card.addEventListener('mouseleave', () => {
-        gsap.to(card, {
-          rotateY: 0, rotateX: 0,
-          duration: 0.6,
-          ease: 'elastic.out(1, 0.5)',
-        });
-      });
-    });
 
-    /* =========================================
-       OCCASIONS CARDS — 3D tilt
-    ========================================= */
-    document.querySelectorAll('.occ-card').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const r  = card.getBoundingClientRect();
-        const cx = r.left + r.width  / 2;
-        const cy = r.top  + r.height / 2;
-        const dx = (e.clientX - cx) / (r.width  / 2);
-        const dy = (e.clientY - cy) / (r.height / 2);
-        gsap.to(card, {
-          rotateY:  dx * 12,
-          rotateX: -dy * 12,
-          scale: 1.04,
-          duration: 0.35,
-          ease: 'power2.out',
+      document.querySelectorAll('.occ-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+          const r  = card.getBoundingClientRect();
+          const cx = r.left + r.width  / 2;
+          const cy = r.top  + r.height / 2;
+          const dx = (e.clientX - cx) / (r.width  / 2);
+          const dy = (e.clientY - cy) / (r.height / 2);
+          gsap.to(card, { rotateY: dx * 12, rotateX: -dy * 12, scale: 1.04, duration: 0.35, ease: 'power2.out' });
+        });
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, { rotateY: 0, rotateX: 0, scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.6)' });
         });
       });
-      card.addEventListener('mouseleave', () => {
-        gsap.to(card, {
-          rotateY: 0, rotateX: 0, scale: 1,
-          duration: 0.5,
-          ease: 'elastic.out(1, 0.6)',
-        });
-      });
-    });
+    }
 
     /* =========================================
        GENERIC REVEAL — .reveal elements
     ========================================= */
     gsap.utils.toArray('.reveal').forEach((el, i) => {
       gsap.to(el, {
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 88%',
-          toggleActions: 'play none none reverse',
-        },
+        scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none reverse' },
         opacity: 1,
         y: 0,
         duration: 0.9,
