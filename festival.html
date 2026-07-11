@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,6 +29,7 @@ body{
 font-family:'Poppins',sans-serif;
 
 overflow-x:hidden;
+width:100%;
 
 background:
 linear-gradient(
@@ -54,7 +54,7 @@ left:0;
 
 width:100%;
 
-padding:25px 8%;
+padding:20px 8%;
 
 display:flex;
 
@@ -75,11 +75,14 @@ backdrop-filter:blur(15px);
 
 font-family:'Cormorant Garamond',serif;
 
-font-size:2.8rem;
+font-size:2.4rem;
 
 font-style:italic;
 
 color:#b07858;
+
+position:relative;
+z-index:2;
 
 }
 
@@ -88,6 +91,7 @@ color:#b07858;
 display:flex;
 
 gap:35px;
+align-items:center;
 
 }
 
@@ -100,6 +104,8 @@ color:#7a5d4c;
 font-size:.95rem;
 
 transition:.3s;
+
+white-space:nowrap;
 
 }
 
@@ -127,6 +133,40 @@ color:#b07858;
 
 font-weight:500;
 
+white-space:nowrap;
+
+}
+
+/* mobile nav toggle */
+.nav-toggle{
+
+display:none;
+
+width:30px;
+height:22px;
+
+background:none;
+border:none;
+cursor:pointer;
+
+flex-direction:column;
+justify-content:space-between;
+
+position:relative;
+z-index:2;
+
+}
+
+.nav-toggle span{
+
+display:block;
+width:100%;
+height:2px;
+
+background:#9c684d;
+
+transition:.3s;
+
 }
 
 /* HERO */
@@ -142,10 +182,13 @@ display:flex;
 align-items:center;
 
 justify-content:space-between;
+flex-wrap:wrap;
 
-padding:140px 8%;
+padding:140px 8% 80px;
 
 overflow:hidden;
+
+gap:40px;
 
 }
 
@@ -223,9 +266,9 @@ margin-bottom:25px;
 
 font-family:'Cormorant Garamond',serif;
 
-font-size:8rem;
+font-size:clamp(2.6rem, 9vw, 8rem);
 
-line-height:.85;
+line-height:.95;
 
 font-style:italic;
 
@@ -310,6 +353,11 @@ z-index:2;
 animation:
 floatHero 5s ease-in-out infinite;
 
+flex:1 1 300px;
+
+display:flex;
+justify-content:center;
+
 }
 
 .hero-image img{
@@ -357,7 +405,7 @@ margin-bottom:80px;
 
 font-family:'Cormorant Garamond',serif;
 
-font-size:5rem;
+font-size:clamp(2.4rem, 6vw, 5rem);
 
 font-style:italic;
 
@@ -380,7 +428,7 @@ font-size:1.05rem;
 display:grid;
 
 grid-template-columns:
-repeat(4,minmax(250px,1fr));
+repeat(4,1fr);
 
 gap:35px;
 
@@ -465,6 +513,9 @@ color:#9c684d;
 line-height:1.8;
 
 }
+
+/* FEATURED SECTION */
+
 .featured-section{
 
 display:flex;
@@ -472,6 +523,8 @@ display:flex;
 align-items:center;
 
 justify-content:center;
+
+flex-wrap:wrap;
 
 gap:80px;
 
@@ -482,6 +535,15 @@ padding:140px 8%;
 .reverse{
 
 flex-direction:row-reverse;
+
+}
+
+.featured-image{
+
+flex:1 1 320px;
+
+display:flex;
+justify-content:center;
 
 }
 
@@ -502,6 +564,8 @@ box-shadow:
 
 max-width:600px;
 
+flex:1 1 320px;
+
 }
 
 .featured-content span{
@@ -518,9 +582,9 @@ color:#c69b6d;
 
 font-family:'Cormorant Garamond',serif;
 
-font-size:5rem;
+font-size:clamp(2.2rem, 6vw, 5rem);
 
-line-height:.9;
+line-height:.95;
 
 margin:20px 0;
 
@@ -682,9 +746,172 @@ font-weight:500;
 
 }
 
-/* MOBILE */
+/* =====================================================
+   RESPONSIVE — TABLET (<=1024px)
+   ===================================================== */
+@media(max-width:1024px){
 
-@media(max-width:900px){
+.category-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.occasion-grid{
+grid-template-columns:repeat(3,1fr);
+}
+
+.hero{
+padding:130px 6% 60px;
+}
+
+.featured-section{
+padding:100px 6%;
+gap:50px;
+}
+
+}
+
+/* =====================================================
+   RESPONSIVE — MOBILE (<=768px)
+   ===================================================== */
+@media(max-width:768px){
+
+nav{ padding:16px 6%; }
+
+.nav-toggle{ display:flex; }
+
+.nav-links{
+
+position:absolute;
+
+top:100%;
+left:0;
+right:0;
+
+flex-direction:column;
+align-items:center;
+
+gap:0;
+
+background:rgba(255,250,245,.98);
+backdrop-filter:blur(15px);
+
+max-height:0;
+overflow:hidden;
+
+transition:max-height .35s ease;
+
+}
+
+nav.nav-open .nav-links{ max-height:420px; }
+
+.nav-links a{
+
+width:100%;
+text-align:center;
+
+padding:16px 0;
+
+border-top:1px solid rgba(198,155,109,.2);
+
+}
+
+.contact-btn{
+
+width:100%;
+text-align:center;
+
+border-top:1px solid rgba(198,155,109,.2);
+
+border-radius:0;
+
+background:transparent;
+
+border-left:none;
+border-right:none;
+border-bottom:none;
+
+padding:16px 0;
+
+}
+
+.hero{
+
+padding:120px 6% 60px;
+
+text-align:center;
+
+justify-content:center;
+
+}
+
+.hero-content{
+
+margin:0 auto;
+
+}
+
+.hero-content p{
+
+max-width:100%;
+
+}
+
+.hero-line{
+
+margin:30px auto;
+
+}
+
+.categories{ padding:70px 6%; }
+
+.section-title{ margin-bottom:50px; }
+
+.category-grid{
+
+grid-template-columns:1fr;
+
+gap:24px;
+
+}
+
+.featured-section,
+.featured-section.reverse{
+
+flex-direction:column;
+
+padding:70px 6%;
+
+text-align:center;
+
+gap:30px;
+
+}
+
+.occasion-tags{ justify-content:center; }
+
+.occasion-gallery{ padding:10px 6% 70px; }
+
+.occasion-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+gap:16px;
+
+}
+
+.occasion-card,
+.occasion-card.large{
+
+height:200px;
+
+}
+
+}
+
+/* =====================================================
+   RESPONSIVE — SMALL PHONE (<=480px)
+   ===================================================== */
+@media(max-width:480px){
 
 .occasion-grid{
 
@@ -695,13 +922,13 @@ grid-template-columns:1fr;
 .occasion-card,
 .occasion-card.large{
 
-height:280px;
+height:220px;
 
 }
 
+.logo{ font-size:1.9rem; }
+
 }
-
-
 
 </style>
 
@@ -709,13 +936,13 @@ height:280px;
 
 <body>
 
-<nav>
+<nav id="siteNav">
 
 <div class="logo">
 AH Collection
 </div>
 
-<div class="nav-links">
+<div class="nav-links" id="navLinks">
 
 <a href="#">Home</a>
 <a href="#">Hampers</a>
@@ -723,11 +950,15 @@ AH Collection
 <a href="#">Festival & Occasions</a>
 <a href="#">Contact</a>
 
-</div>
-
 <a href="#" class="contact-btn">
 Contact Us
 </a>
+
+</div>
+
+<button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+<span></span><span></span><span></span>
+</button>
 
 </nav>
 
@@ -771,7 +1002,7 @@ Explore Collection ✨
 
 <div class="hero-image">
 
-<img src="hero-main.jpeg">
+<img src="hero-main.jpeg" alt="Festival gifting collection">
 
 </div>
 
@@ -787,109 +1018,7 @@ Celebrate Every Moment
 
 <p>
 Thoughtfully curated collections for every occasion.
-
-<!-- OCCASION GALLERY -->
-
-<section class="occasion-gallery">
-
-<div class="occasion-grid">
-
-<div class="occasion-card large">
-<img src="vishu-main.jpeg">
-<div class="occasion-overlay">
-<h3>🌼 Vishu</h3>
-</div>
-</div>
-
-<div class="occasion-card">
-<img src="onam.jpeg">
-<div class="occasion-overlay">
-<h3>🌾 Onam</h3>
-</div>
-</div>
-
-<div class="occasion-card">
-<img src="christmas-card.jpeg">
-<div class="occasion-overlay">
-<h3>🎄 Christmas</h3>
-</div>
-</div>
-
-<div class="occasion-card">
-<img src="valentines.jpeg">
-<div class="occasion-overlay">
-<h3>❤️ Valentine's Day</h3>
-</div>
-</div>
-
-<div class="occasion-card">
-<img src="roseday.jpeg">
-<div class="occasion-overlay">
-<h3>🌹 Rose Day</h3>
-</div>
-</div>
-
-<div class="occasion-card large">
-<img src="birthday.jpeg">
-<div class="occasion-overlay">
-<h3>🎂 Birthday</h3>
-</div>
-</div>
-
-<div class="occasion-card">
-<img src="babyshower.jpeg">
-<div class="occasion-overlay">
-<h3>👶 Baby Shower</h3>
-</div>
-</div>
-
-<div class="occasion-card">
-<img src="anniversary.jpeg">
-<div class="occasion-overlay">
-<h3>💍 Anniversary</h3>
-</div>
-</div>
-
-<div class="occasion-card">
-<img src="graduation.jpeg">
-<div class="occasion-overlay">
-<h3>🎓 Graduation</h3>
-</div>
-</div>
-
-<div class="occasion-card">
-<img src="patchup.jpeg">
-<div class="occasion-overlay">
-<h3>🤝 Patch Up</h3>
-</div>
-</div>
-
-<div class="occasion-card">
-<img src="friendship.jpeg">
-<div class="occasion-overlay">
-<h3>🫂 Friendship Day</h3>
-</div>
-</div>
-
-<div class="occasion-card">
-<img src="mothersday.jpeg">
-<div class="occasion-overlay">
-<h3>👩 Mother's Day</h3>
-</div>
-</div>
-
-<div class="occasion-card large">
-<img src="justbecause.jpeg">
-<div class="occasion-overlay">
-<h3>✨ Just Because</h3>
-</div>
-</div>
-
-</div>
-
-</section>
-
-
+</p>
 
 </div>
 
@@ -897,7 +1026,7 @@ Thoughtfully curated collections for every occasion.
 
 <!-- Festivals -->
 <div class="category-card" data-aos="fade-up">
-<img src="festival.jpeg">
+<img src="festival.jpeg" alt="Festivals collection">
 <div class="category-content">
 <span>🌼 COLLECTION</span>
 <h3>Festivals</h3>
@@ -907,7 +1036,7 @@ Thoughtfully curated collections for every occasion.
 
 <!-- Love -->
 <div class="category-card" data-aos="fade-up">
-<img src="romance.jpeg">
+<img src="romance.jpeg" alt="Love and romance collection">
 <div class="category-content">
 <span>💕 COLLECTION</span>
 <h3>Love & Romance</h3>
@@ -917,7 +1046,7 @@ Thoughtfully curated collections for every occasion.
 
 <!-- Emotional -->
 <div class="category-card" data-aos="fade-up">
-<img src="emotional.jpeg">
+<img src="emotional.jpeg" alt="Emotional moments collection">
 <div class="category-content">
 <span>🥺 COLLECTION</span>
 <h3>Emotional Moments</h3>
@@ -927,7 +1056,7 @@ Thoughtfully curated collections for every occasion.
 
 <!-- Family -->
 <div class="category-card" data-aos="fade-up">
-<img src="family.jpeg">
+<img src="family.jpeg" alt="Family collection">
 <div class="category-content">
 <span>👨‍👩‍👧 COLLECTION</span>
 <h3>Family</h3>
@@ -938,10 +1067,111 @@ Thoughtfully curated collections for every occasion.
 </div>
 
 </section>
+
+<!-- OCCASION GALLERY -->
+<section class="occasion-gallery">
+
+<div class="occasion-grid">
+
+<div class="occasion-card large">
+<img src="vishu-main.jpeg" alt="Vishu">
+<div class="occasion-overlay">
+<h3>🌼 Vishu</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="onam.jpeg" alt="Onam">
+<div class="occasion-overlay">
+<h3>🌾 Onam</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="christmas-card.jpeg" alt="Christmas">
+<div class="occasion-overlay">
+<h3>🎄 Christmas</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="valentines.jpeg" alt="Valentine's Day">
+<div class="occasion-overlay">
+<h3>❤️ Valentine's Day</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="roseday.jpeg" alt="Rose Day">
+<div class="occasion-overlay">
+<h3>🌹 Rose Day</h3>
+</div>
+</div>
+
+<div class="occasion-card large">
+<img src="birthday.jpeg" alt="Birthday">
+<div class="occasion-overlay">
+<h3>🎂 Birthday</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="babyshower.jpeg" alt="Baby Shower">
+<div class="occasion-overlay">
+<h3>👶 Baby Shower</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="anniversary.jpeg" alt="Anniversary">
+<div class="occasion-overlay">
+<h3>💍 Anniversary</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="graduation.jpeg" alt="Graduation">
+<div class="occasion-overlay">
+<h3>🎓 Graduation</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="patchup.jpeg" alt="Patch Up">
+<div class="occasion-overlay">
+<h3>🤝 Patch Up</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="friendship.jpeg" alt="Friendship Day">
+<div class="occasion-overlay">
+<h3>🫂 Friendship Day</h3>
+</div>
+</div>
+
+<div class="occasion-card">
+<img src="mothersday.jpeg" alt="Mother's Day">
+<div class="occasion-overlay">
+<h3>👩 Mother's Day</h3>
+</div>
+</div>
+
+<div class="occasion-card large">
+<img src="justbecause.jpeg" alt="Just Because">
+<div class="occasion-overlay">
+<h3>✨ Just Because</h3>
+</div>
+</div>
+
+</div>
+
+</section>
+
 <section class="featured-section">
 
 <div class="featured-image">
-<img src="vishu-saree.jpeg">
+<img src="vishu-saree.jpeg" alt="Premium saree and ornament set">
 </div>
 
 <div class="featured-content">
@@ -981,6 +1211,7 @@ Reserve Yours
 </div>
 
 </section>
+
 <section class="featured-section reverse">
 
 <div class="featured-content">
@@ -1020,16 +1251,17 @@ for the people who matter most.
 
 <div class="featured-image">
 
-<img src="romance-showcase.jpeg">
+<img src="romance-showcase.jpeg" alt="Love and romance showcase">
 
 </div>
 
 </section>
+
 <section class="featured-section">
 
 <div class="featured-image">
 
-<img src="comfort-showcase.jpeg">
+<img src="comfort-showcase.jpeg" alt="Cozy comfort gifts showcase">
 
 </div>
 
@@ -1068,3 +1300,32 @@ to make life a little more comfortable.
 </div>
 
 </section>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+
+AOS.init({
+duration: 800,
+once: true
+});
+
+const siteNav  = document.getElementById('siteNav');
+const navToggle = document.getElementById('navToggle');
+const navLinks  = document.getElementById('navLinks');
+
+navToggle.addEventListener('click', () => {
+const isOpen = siteNav.classList.toggle('nav-open');
+navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+link.addEventListener('click', () => {
+siteNav.classList.remove('nav-open');
+navToggle.setAttribute('aria-expanded', 'false');
+});
+});
+
+</script>
+
+</body>
+</html>
