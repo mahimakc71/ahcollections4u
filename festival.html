@@ -1304,10 +1304,20 @@ to make life a little more comfortable.
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
 
+if (typeof AOS !== 'undefined') {
 AOS.init({
 duration: 800,
 once: true
 });
+} else {
+console.warn('AOS library did not load — showing content without scroll animations.');
+// AOS's own CSS hides [data-aos] elements until it adds the "aos-animate" class.
+// If the library failed to load, force those elements visible so nothing stays hidden.
+document.querySelectorAll('[data-aos]').forEach(el => {
+el.style.opacity = '1';
+el.style.transform = 'none';
+});
+}
 
 const siteNav  = document.getElementById('siteNav');
 const navToggle = document.getElementById('navToggle');
